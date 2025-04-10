@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  🛠️ Tools &amp; Technology Stack
+  #
+
+This section outlines the recommended tools, frameworks, and platforms used in building and testing the Smart Library System (Microservices Architecture).
+
+
+  🚀 Language &amp; Framework Preferences
+  #
+
+Choose any language or framework from below, depending on your expertise or lab instruction:
+
+  🐍 Python
+  #
+
+
+  
+      
+          Framework
+          Description
+      
+  
+  
+      
+          FastAPI
+          High-performance, modern API framework using ASGI. Ideal for microservices.
+      
+      
+          Flask
+          Lightweight WSGI framework. Easy to use, good for learning microservice patterns.
+      
+      
+          Django
+          Full-featured web framework. Use with Django REST Framework for API-based microservices.
+      
+  
+
+
+  🌐 Node.js
+  #
+
+
+  
+      
+          Framework
+          Description
+      
+  
+  
+      
+          Express.js
+          Minimal and flexible framework for building REST APIs. Fast and widely used.
+      
+  
+
+
+  ☕ Java
+  #
+
+
+  
+      
+          Framework
+          Description
+      
+  
+  
+      
+          Spring Boot
+          Production-grade microservice framework with robust dependency injection and JPA support.
+      
+  
+
+
+  🧱 C#
+  #
+
+
+  
+      
+          Framework
+          Description
+      
+  
+  
+      
+          .NET Core / ASP.NET Core
+          Cross-platform microservice-ready framework by Microsoft. Supports REST APIs out-of-the-box.
+      
+  
+
+
+
+  🌐 API Testing Tools
+  #
+
+
+  
+      
+          Tool
+          Purpose
+      
+  
+  
+      
+          Postman
+          Powerful GUI for testing REST APIs.
+      
+      
+          Bruno
+          Open-source and developer-friendly API testing alternative to Postman.
+      
+  
+
+
+
+  🐧 Preferred Operating System
+  #
+
+
+  
+      
+          OS Version
+          Description
+      
+  
+  
+      
+          Ubuntu 22.04 LTS
+          Long-Term Support, stable and widely used in cloud environments.
+      
+      
+          Ubuntu 24.04 LTS
+          (Upcoming/Recent) Updated LTS version with latest packages.
+      
+  
+
+
+
+  🗃️ Preferred Databases
+  #
+
+Choose your preferred RDBMS per service — all options are supported:">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/tools/">
+  <meta property="og:site_name" content="Distributed Systems Lab">
+  <meta property="og:title" content="Tools">
+  <meta property="og:description" content="🛠️ Tools &amp; Technology Stack # This section outlines the recommended tools, frameworks, and platforms used in building and testing the Smart Library System (Microservices Architecture).
+🚀 Language &amp; Framework Preferences # Choose any language or framework from below, depending on your expertise or lab instruction:
+🐍 Python # Framework Description FastAPI High-performance, modern API framework using ASGI. Ideal for microservices. Flask Lightweight WSGI framework. Easy to use, good for learning microservice patterns. Django Full-featured web framework. Use with Django REST Framework for API-based microservices. 🌐 Node.js # Framework Description Express.js Minimal and flexible framework for building REST APIs. Fast and widely used. ☕ Java # Framework Description Spring Boot Production-grade microservice framework with robust dependency injection and JPA support. 🧱 C# # Framework Description .NET Core / ASP.NET Core Cross-platform microservice-ready framework by Microsoft. Supports REST APIs out-of-the-box. 🌐 API Testing Tools # Tool Purpose Postman Powerful GUI for testing REST APIs. Bruno Open-source and developer-friendly API testing alternative to Postman. 🐧 Preferred Operating System # OS Version Description Ubuntu 22.04 LTS Long-Term Support, stable and widely used in cloud environments. Ubuntu 24.04 LTS (Upcoming/Recent) Updated LTS version with latest packages. 🗃️ Preferred Databases # Choose your preferred RDBMS per service — all options are supported:">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>Tools | Distributed Systems Lab</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/tools/">
+<link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.8a06d38d8e9f207d79d47d41af6630333f0484749f0ca11553c4794467b6f824.js" integrity="sha256-igbTjY6fIH151H1Br2YwMz8EhHSfDKEVU8R5RGe2&#43;CQ=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Distributed Systems Lab</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/details/" class="">Details</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/prerequisites/" class="">Prerequisites</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/tools/" class="active">Tools</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-1/" class="">Phase 1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-2/" class="">Phase 2</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Tools</h3>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#-language--framework-preferences">🚀 Language &amp; Framework Preferences</a>
+      <ul>
+        <li><a href="#-python">🐍 Python</a></li>
+        <li><a href="#-nodejs">🌐 Node.js</a></li>
+        <li><a href="#-java">☕ Java</a></li>
+        <li><a href="#-c">🧱 C#</a></li>
+      </ul>
+    </li>
+    <li><a href="#-api-testing-tools">🌐 API Testing Tools</a></li>
+    <li><a href="#-preferred-operating-system">🐧 Preferred Operating System</a></li>
+    <li><a href="#-preferred-databases">🗃️ Preferred Databases</a></li>
+    <li><a href="#-database-browsing--inspection-tools">🔍 Database Browsing &amp; Inspection Tools</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="-tools--technology-stack">
+  🛠️ Tools &amp; Technology Stack
+  <a class="anchor" href="#-tools--technology-stack">#</a>
+</h1>
+<p>This section outlines the recommended tools, frameworks, and platforms used in building and testing the <strong>Smart Library System (Microservices Architecture)</strong>.</p>
+<hr>
+<h2 id="-language--framework-preferences">
+  🚀 Language &amp; Framework Preferences
+  <a class="anchor" href="#-language--framework-preferences">#</a>
+</h2>
+<p>Choose any language or framework from below, depending on your expertise or lab instruction:</p>
+<h3 id="-python">
+  🐍 Python
+  <a class="anchor" href="#-python">#</a>
+</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Framework</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>FastAPI</strong></td>
+          <td>High-performance, modern API framework using ASGI. Ideal for microservices.</td>
+      </tr>
+      <tr>
+          <td><strong>Flask</strong></td>
+          <td>Lightweight WSGI framework. Easy to use, good for learning microservice patterns.</td>
+      </tr>
+      <tr>
+          <td><strong>Django</strong></td>
+          <td>Full-featured web framework. Use with Django REST Framework for API-based microservices.</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="-nodejs">
+  🌐 Node.js
+  <a class="anchor" href="#-nodejs">#</a>
+</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Framework</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Express.js</strong></td>
+          <td>Minimal and flexible framework for building REST APIs. Fast and widely used.</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="-java">
+  ☕ Java
+  <a class="anchor" href="#-java">#</a>
+</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Framework</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Spring Boot</strong></td>
+          <td>Production-grade microservice framework with robust dependency injection and JPA support.</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="-c">
+  🧱 C#
+  <a class="anchor" href="#-c">#</a>
+</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Framework</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>.NET Core / ASP.NET Core</strong></td>
+          <td>Cross-platform microservice-ready framework by Microsoft. Supports REST APIs out-of-the-box.</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="-api-testing-tools">
+  🌐 API Testing Tools
+  <a class="anchor" href="#-api-testing-tools">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Postman</strong></td>
+          <td>Powerful GUI for testing REST APIs.</td>
+      </tr>
+      <tr>
+          <td><strong>Bruno</strong></td>
+          <td>Open-source and developer-friendly API testing alternative to Postman.</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="-preferred-operating-system">
+  🐧 Preferred Operating System
+  <a class="anchor" href="#-preferred-operating-system">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>OS Version</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Ubuntu 22.04 LTS</strong></td>
+          <td>Long-Term Support, stable and widely used in cloud environments.</td>
+      </tr>
+      <tr>
+          <td><strong>Ubuntu 24.04 LTS</strong></td>
+          <td>(Upcoming/Recent) Updated LTS version with latest packages.</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="-preferred-databases">
+  🗃️ Preferred Databases
+  <a class="anchor" href="#-preferred-databases">#</a>
+</h2>
+<p>Choose your preferred RDBMS per service — all options are supported:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Database</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>PostgreSQL</strong></td>
+          <td>Open-source, feature-rich, and widely used in production.</td>
+      </tr>
+      <tr>
+          <td><strong>MySQL</strong></td>
+          <td>Lightweight, easy to use, and fast.</td>
+      </tr>
+      <tr>
+          <td><strong>MSSQL</strong></td>
+          <td>Great for enterprise-grade applications using .NET Core.</td>
+      </tr>
+  </tbody>
+</table>
+<p>Each microservice will own its <strong>own dedicated database instance</strong>.</p>
+<hr>
+<h2 id="-database-browsing--inspection-tools">
+  🔍 Database Browsing &amp; Inspection Tools
+  <a class="anchor" href="#-database-browsing--inspection-tools">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Tool</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>DataGrip</strong></td>
+          <td>Universal database IDE by JetBrains (supports all major RDBMS).</td>
+      </tr>
+      <tr>
+          <td><strong>pgAdmin</strong></td>
+          <td>PostgreSQL’s official web-based admin interface.</td>
+      </tr>
+  </tbody>
+</table>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#-language--framework-preferences">🚀 Language &amp; Framework Preferences</a>
+      <ul>
+        <li><a href="#-python">🐍 Python</a></li>
+        <li><a href="#-nodejs">🌐 Node.js</a></li>
+        <li><a href="#-java">☕ Java</a></li>
+        <li><a href="#-c">🧱 C#</a></li>
+      </ul>
+    </li>
+    <li><a href="#-api-testing-tools">🌐 API Testing Tools</a></li>
+    <li><a href="#-preferred-operating-system">🐧 Preferred Operating System</a></li>
+    <li><a href="#-preferred-databases">🗃️ Preferred Databases</a></li>
+    <li><a href="#-database-browsing--inspection-tools">🔍 Database Browsing &amp; Inspection Tools</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

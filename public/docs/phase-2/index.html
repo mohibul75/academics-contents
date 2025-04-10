@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  🧩 Smart Library System – Microservices Architecture
+  #
+
+
+  Overview
+  #
+
+In the microservices version of the Smart Library System, the application is divided into three independent services — each responsible for a specific domain: User, Book, and Loan. Every service has its own database and communicates with others via HTTP APIs (no queues or Kafka involved in this version).
+
+
+  🧱 Services Overview
+  #
+
+
+  1. User Service
+  #
+
+Handles registration, profile management, and user-related queries.">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/phase-2/">
+  <meta property="og:site_name" content="Distributed Systems Lab">
+  <meta property="og:title" content="Phase 2">
+  <meta property="og:description" content="🧩 Smart Library System – Microservices Architecture # Overview # In the microservices version of the Smart Library System, the application is divided into three independent services — each responsible for a specific domain: User, Book, and Loan. Every service has its own database and communicates with others via HTTP APIs (no queues or Kafka involved in this version).
+🧱 Services Overview # 1. User Service # Handles registration, profile management, and user-related queries.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>Phase 2 | Distributed Systems Lab</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/phase-2/">
+<link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.8a06d38d8e9f207d79d47d41af6630333f0484749f0ca11553c4794467b6f824.js" integrity="sha256-igbTjY6fIH151H1Br2YwMz8EhHSfDKEVU8R5RGe2&#43;CQ=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Distributed Systems Lab</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/details/" class="">Details</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/prerequisites/" class="">Prerequisites</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/tools/" class="">Tools</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-1/" class="">Phase 1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-2/" class="active">Phase 2</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Phase 2</h3>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#-services-overview">🧱 Services Overview</a>
+      <ul>
+        <li><a href="#1-user-service">1. <strong>User Service</strong></a></li>
+        <li><a href="#2-book-service">2. <strong>Book Service</strong></a></li>
+        <li><a href="#3-loan-service">3. <strong>Loan Service</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#-inter-service-communication">🔗 Inter-Service Communication</a></li>
+    <li><a href="#-databases-one-per-service">🛢️ Databases (One per service)</a></li>
+    <li><a href="#-deployment-strategy">⚙️ Deployment Strategy</a></li>
+    <li><a href="#-advantages-of-microservices">✅ Advantages of Microservices</a></li>
+    <li><a href="#-trade-offs">⚠️ Trade-offs</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="-smart-library-system--microservices-architecture">
+  🧩 Smart Library System – Microservices Architecture
+  <a class="anchor" href="#-smart-library-system--microservices-architecture">#</a>
+</h1>
+<h2 id="overview">
+  Overview
+  <a class="anchor" href="#overview">#</a>
+</h2>
+<p>In the <strong>microservices version</strong> of the Smart Library System, the application is divided into three independent services — each responsible for a specific domain: <strong>User</strong>, <strong>Book</strong>, and <strong>Loan</strong>. Every service has its <strong>own database</strong> and communicates with others via <strong>HTTP APIs</strong> (no queues or Kafka involved in this version).</p>
+<hr>
+<h2 id="-services-overview">
+  🧱 Services Overview
+  <a class="anchor" href="#-services-overview">#</a>
+</h2>
+<h3 id="1-user-service">
+  1. <strong>User Service</strong>
+  <a class="anchor" href="#1-user-service">#</a>
+</h3>
+<p>Handles registration, profile management, and user-related queries.</p>
+<ul>
+<li>🚪 REST Base Path: <code>/api/users</code></li>
+<li>📦 Owns a <strong>user database</strong>.</li>
+</ul>
+<h4 id="-api-endpoints">
+  🔹 API Endpoints
+  <a class="anchor" href="#-api-endpoints">#</a>
+</h4>
+<h5 id="post-apiusers">
+  <code>POST /api/users</code>
+  <a class="anchor" href="#post-apiusers">#</a>
+</h5>
+<p>Register a new user.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Alice&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;email&#34;</span>: <span style="color:#e6db74">&#34;alice@example.com&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;student&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h5 id="get-apiusersid">
+  <code>GET /api/users/{id}</code>
+  <a class="anchor" href="#get-apiusersid">#</a>
+</h5>
+<p>Fetch user details by ID.</p>
+<hr>
+<h3 id="2-book-service">
+  2. <strong>Book Service</strong>
+  <a class="anchor" href="#2-book-service">#</a>
+</h3>
+<p>Manages book inventory, search, and updates to availability.</p>
+<ul>
+<li>🚪 REST Base Path: <code>/api/books</code></li>
+<li>📦 Owns a <strong>book database</strong>.</li>
+</ul>
+<h4 id="-api-endpoints-1">
+  🔹 API Endpoints
+  <a class="anchor" href="#-api-endpoints-1">#</a>
+</h4>
+<h5 id="post-apibooks">
+  <code>POST /api/books</code>
+  <a class="anchor" href="#post-apibooks">#</a>
+</h5>
+<p>Add a new book.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;Clean Code&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;author&#34;</span>: <span style="color:#e6db74">&#34;Robert C. Martin&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;isbn&#34;</span>: <span style="color:#e6db74">&#34;9780132350884&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;copies&#34;</span>: <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h5 id="get-apibookssearchcode">
+  <code>GET /api/books?search=code</code>
+  <a class="anchor" href="#get-apibookssearchcode">#</a>
+</h5>
+<p>Search books by title, author, or keyword.</p>
+<h5 id="patch-apibooksid">
+  <code>PATCH /api/books/{id}</code>
+  <a class="anchor" href="#patch-apibooksid">#</a>
+</h5>
+<p>Update a book&rsquo;s available copies (used by Loan Service during issue/return).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;copies&#34;</span>: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<h3 id="3-loan-service">
+  3. <strong>Loan Service</strong>
+  <a class="anchor" href="#3-loan-service">#</a>
+</h3>
+<p>Issues and returns books by communicating with both <strong>User Service</strong> and <strong>Book Service</strong>.</p>
+<ul>
+<li>🚪 REST Base Path: <code>/api/loans</code></li>
+<li>📦 Owns a <strong>loan database</strong>.</li>
+</ul>
+<h4 id="-api-endpoints-2">
+  🔹 API Endpoints
+  <a class="anchor" href="#-api-endpoints-2">#</a>
+</h4>
+<h5 id="post-apiloans">
+  <code>POST /api/loans</code>
+  <a class="anchor" href="#post-apiloans">#</a>
+</h5>
+<p>Create a loan.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;user_id&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;book_id&#34;</span>: <span style="color:#ae81ff">42</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Process:</strong></p>
+<ul>
+<li>Validate <code>user_id</code> via <code>User Service</code>.</li>
+<li>Validate <code>book_id</code> and availability via <code>Book Service</code>.</li>
+<li>If all checks pass, reduce the book&rsquo;s available copy count.</li>
+</ul>
+<hr>
+<h5 id="post-apireturns">
+  <code>POST /api/returns</code>
+  <a class="anchor" href="#post-apireturns">#</a>
+</h5>
+<p>Return a borrowed book.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;loan_id&#34;</span>: <span style="color:#ae81ff">1001</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Process:</strong></p>
+<ul>
+<li>Update loan status.</li>
+<li>Increment book availability in <strong>Book Service</strong>.</li>
+</ul>
+<hr>
+<h5 id="get-apiloansuseruser_id">
+  <code>GET /api/loans/user/{user_id}</code>
+  <a class="anchor" href="#get-apiloansuseruser_id">#</a>
+</h5>
+<p>Get a user&rsquo;s loan history (active and returned books).</p>
+<hr>
+<h2 id="-inter-service-communication">
+  🔗 Inter-Service Communication
+  <a class="anchor" href="#-inter-service-communication">#</a>
+</h2>
+<ul>
+<li><strong>Loan Service</strong> makes HTTP calls to:
+<ul>
+<li><code>User Service</code>: to validate user identity.</li>
+<li><code>Book Service</code>: to check and update book inventory.</li>
+</ul>
+</li>
+</ul>
+<p>No shared database. Each service is <strong>data-isolated</strong> for decoupling and autonomy.</p>
+<hr>
+<h2 id="-databases-one-per-service">
+  🛢️ Databases (One per service)
+  <a class="anchor" href="#-databases-one-per-service">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Service</th>
+          <th>Database</th>
+          <th>Tables</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>User Service</td>
+          <td><code>user_db</code></td>
+          <td><code>users</code></td>
+      </tr>
+      <tr>
+          <td>Book Service</td>
+          <td><code>book_db</code></td>
+          <td><code>books</code></td>
+      </tr>
+      <tr>
+          <td>Loan Service</td>
+          <td><code>loan_db</code></td>
+          <td><code>loans</code></td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="-deployment-strategy">
+  ⚙️ Deployment Strategy
+  <a class="anchor" href="#-deployment-strategy">#</a>
+</h2>
+<p>Each microservice:</p>
+<ul>
+<li>Runs in its <strong>own container or VM</strong>.</li>
+<li>Has its <strong>own codebase</strong>, tests, deployment pipeline.</li>
+<li>Can be updated, scaled, or restarted <strong>independently</strong>.</li>
+</ul>
+<hr>
+<h2 id="-advantages-of-microservices">
+  ✅ Advantages of Microservices
+  <a class="anchor" href="#-advantages-of-microservices">#</a>
+</h2>
+<ul>
+<li>Independent development and deployment.</li>
+<li>Fault isolation: one service failing doesn’t crash the whole app.</li>
+<li>Easier scaling: Book Service can be scaled independently if traffic spikes.</li>
+</ul>
+<hr>
+<h2 id="-trade-offs">
+  ⚠️ Trade-offs
+  <a class="anchor" href="#-trade-offs">#</a>
+</h2>
+<ul>
+<li>Increased operational complexity.</li>
+<li>Requires robust <strong>service discovery</strong>, <strong>monitoring</strong>, and <strong>API versioning</strong>.</li>
+<li>Debugging across services can be harder without centralized logs.</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#-services-overview">🧱 Services Overview</a>
+      <ul>
+        <li><a href="#1-user-service">1. <strong>User Service</strong></a></li>
+        <li><a href="#2-book-service">2. <strong>Book Service</strong></a></li>
+        <li><a href="#3-loan-service">3. <strong>Loan Service</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#-inter-service-communication">🔗 Inter-Service Communication</a></li>
+    <li><a href="#-databases-one-per-service">🛢️ Databases (One per service)</a></li>
+    <li><a href="#-deployment-strategy">⚙️ Deployment Strategy</a></li>
+    <li><a href="#-advantages-of-microservices">✅ Advantages of Microservices</a></li>
+    <li><a href="#-trade-offs">⚠️ Trade-offs</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

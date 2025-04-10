@@ -1,0 +1,9 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'Distributed Systems Lab'
+theme = "hugo-book"
+
+[params]
+  author = "Mohibul Alam"
+  description = "Sharing dev notes and academic thoughts"
+  keywords = ["Distributed Systems", "Microservices", "Docker", "Nginx", "System Design"]

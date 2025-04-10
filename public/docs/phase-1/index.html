@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  📘 Smart Library System – Monolithic Architecture
+  #
+
+
+  Overview
+  #
+
+The Smart Library System (Monolithic Version) is a single, unified application that handles all core functionalities: managing users, books, and book loans. This system is ideal for simple deployments where all components are tightly coupled, sharing the same runtime and database.
+
+
+  🧩 Functional Modules
+  #
+
+
+  1. User Management Module
+  #
+
+
+Register a user (students/faculty).
+Update user profile.
+Retrieve user info.
+
+
+  2. Book Management Module
+  #
+
+
+Add/update/remove books.
+View book availability.
+Search books by title, author, or genre.
+
+
+  3. Loan Management Module
+  #
+
+
+Issue books to users.
+Return books.
+View active/past loans.
+
+
+
+  🛢️ Unified Database Schema
+  #
+
+
+  
+      
+          Table
+          Description
+      
+  
+  
+      
+          users
+          Stores user information.
+      
+      
+          books
+          Stores book catalog details.
+      
+      
+          loans
+          Tracks issued/returned books.
+      
+  
+
+All modules interact with this shared relational database, typically PostgreSQL or MySQL.">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/phase-1/">
+  <meta property="og:site_name" content="Distributed Systems Lab">
+  <meta property="og:title" content="Phase 1">
+  <meta property="og:description" content="📘 Smart Library System – Monolithic Architecture # Overview # The Smart Library System (Monolithic Version) is a single, unified application that handles all core functionalities: managing users, books, and book loans. This system is ideal for simple deployments where all components are tightly coupled, sharing the same runtime and database.
+🧩 Functional Modules # 1. User Management Module # Register a user (students/faculty). Update user profile. Retrieve user info. 2. Book Management Module # Add/update/remove books. View book availability. Search books by title, author, or genre. 3. Loan Management Module # Issue books to users. Return books. View active/past loans. 🛢️ Unified Database Schema # Table Description users Stores user information. books Stores book catalog details. loans Tracks issued/returned books. All modules interact with this shared relational database, typically PostgreSQL or MySQL.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>Phase 1 | Distributed Systems Lab</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/phase-1/">
+<link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.8a06d38d8e9f207d79d47d41af6630333f0484749f0ca11553c4794467b6f824.js" integrity="sha256-igbTjY6fIH151H1Br2YwMz8EhHSfDKEVU8R5RGe2&#43;CQ=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Distributed Systems Lab</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/details/" class="">Details</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/prerequisites/" class="">Prerequisites</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/tools/" class="">Tools</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-1/" class="active">Phase 1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-2/" class="">Phase 2</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Phase 1</h3>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#-functional-modules">🧩 Functional Modules</a>
+      <ul>
+        <li><a href="#1-user-management-module">1. <strong>User Management Module</strong></a></li>
+        <li><a href="#2-book-management-module">2. <strong>Book Management Module</strong></a></li>
+        <li><a href="#3-loan-management-module">3. <strong>Loan Management Module</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#-unified-database-schema">🛢️ Unified Database Schema</a></li>
+    <li><a href="#-internal-communication">🔄 Internal Communication</a></li>
+    <li><a href="#-example-api-documentation-rest-endpoints">🧪 Example API Documentation (REST Endpoints)</a>
+      <ul>
+        <li><a href="#-user-endpoints">🔹 User Endpoints</a></li>
+        <li><a href="#-book-endpoints">🔹 Book Endpoints</a></li>
+        <li><a href="#-loan-endpoints">🔹 Loan Endpoints</a></li>
+      </ul>
+    </li>
+    <li><a href="#-limitations-of-monolithic-design">⚠️ Limitations of Monolithic Design</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="-smart-library-system--monolithic-architecture">
+  📘 Smart Library System – Monolithic Architecture
+  <a class="anchor" href="#-smart-library-system--monolithic-architecture">#</a>
+</h1>
+<h2 id="overview">
+  Overview
+  <a class="anchor" href="#overview">#</a>
+</h2>
+<p>The <strong>Smart Library System (Monolithic Version)</strong> is a single, unified application that handles all core functionalities: managing users, books, and book loans. This system is ideal for simple deployments where all components are tightly coupled, sharing the same runtime and database.</p>
+<hr>
+<h2 id="-functional-modules">
+  🧩 Functional Modules
+  <a class="anchor" href="#-functional-modules">#</a>
+</h2>
+<h3 id="1-user-management-module">
+  1. <strong>User Management Module</strong>
+  <a class="anchor" href="#1-user-management-module">#</a>
+</h3>
+<ul>
+<li>Register a user (students/faculty).</li>
+<li>Update user profile.</li>
+<li>Retrieve user info.</li>
+</ul>
+<h3 id="2-book-management-module">
+  2. <strong>Book Management Module</strong>
+  <a class="anchor" href="#2-book-management-module">#</a>
+</h3>
+<ul>
+<li>Add/update/remove books.</li>
+<li>View book availability.</li>
+<li>Search books by title, author, or genre.</li>
+</ul>
+<h3 id="3-loan-management-module">
+  3. <strong>Loan Management Module</strong>
+  <a class="anchor" href="#3-loan-management-module">#</a>
+</h3>
+<ul>
+<li>Issue books to users.</li>
+<li>Return books.</li>
+<li>View active/past loans.</li>
+</ul>
+<hr>
+<h2 id="-unified-database-schema">
+  🛢️ Unified Database Schema
+  <a class="anchor" href="#-unified-database-schema">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Table</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>users</code></td>
+          <td>Stores user information.</td>
+      </tr>
+      <tr>
+          <td><code>books</code></td>
+          <td>Stores book catalog details.</td>
+      </tr>
+      <tr>
+          <td><code>loans</code></td>
+          <td>Tracks issued/returned books.</td>
+      </tr>
+  </tbody>
+</table>
+<p>All modules interact with this <strong>shared relational database</strong>, typically PostgreSQL or MySQL.</p>
+<hr>
+<h2 id="-internal-communication">
+  🔄 Internal Communication
+  <a class="anchor" href="#-internal-communication">#</a>
+</h2>
+<ul>
+<li>All module calls happen via <strong>function calls or internal classes</strong>.</li>
+<li>Tight coupling between modules.</li>
+<li>No network-based interaction — all components reside in the same codebase and memory space.</li>
+</ul>
+<hr>
+<h2 id="-example-api-documentation-rest-endpoints">
+  🧪 Example API Documentation (REST Endpoints)
+  <a class="anchor" href="#-example-api-documentation-rest-endpoints">#</a>
+</h2>
+<p>Here’s how external clients (like CLI tools or a potential frontend) interact with the system.</p>
+<h3 id="-user-endpoints">
+  🔹 User Endpoints
+  <a class="anchor" href="#-user-endpoints">#</a>
+</h3>
+<h4 id="post-apiusers">
+  <code>POST /api/users</code>
+  <a class="anchor" href="#post-apiusers">#</a>
+</h4>
+<p>Create/register a new user.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Alice Smith&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;email&#34;</span>: <span style="color:#e6db74">&#34;alice@example.com&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;student&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="get-apiusersid">
+  <code>GET /api/users/{id}</code>
+  <a class="anchor" href="#get-apiusersid">#</a>
+</h4>
+<p>Fetch user profile by ID.</p>
+<hr>
+<h3 id="-book-endpoints">
+  🔹 Book Endpoints
+  <a class="anchor" href="#-book-endpoints">#</a>
+</h3>
+<h4 id="post-apibooks">
+  <code>POST /api/books</code>
+  <a class="anchor" href="#post-apibooks">#</a>
+</h4>
+<p>Add a new book.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;Clean Code&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;author&#34;</span>: <span style="color:#e6db74">&#34;Robert C. Martin&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;isbn&#34;</span>: <span style="color:#e6db74">&#34;9780132350884&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;copies&#34;</span>: <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="get-apibookssearchclean">
+  <code>GET /api/books?search=clean</code>
+  <a class="anchor" href="#get-apibookssearchclean">#</a>
+</h4>
+<p>Search for books by title, author, or keyword.</p>
+<hr>
+<h3 id="-loan-endpoints">
+  🔹 Loan Endpoints
+  <a class="anchor" href="#-loan-endpoints">#</a>
+</h3>
+<h4 id="post-apiloans">
+  <code>POST /api/loans</code>
+  <a class="anchor" href="#post-apiloans">#</a>
+</h4>
+<p>Issue a book to a user.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;user_id&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;book_id&#34;</span>: <span style="color:#ae81ff">42</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="post-apireturns">
+  <code>POST /api/returns</code>
+  <a class="anchor" href="#post-apireturns">#</a>
+</h4>
+<p>Return a borrowed book.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;loan_id&#34;</span>: <span style="color:#ae81ff">1001</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="get-apiloansuser_id">
+  <code>GET /api/loans/{user_id}</code>
+  <a class="anchor" href="#get-apiloansuser_id">#</a>
+</h4>
+<p>View loan history for a user.</p>
+<hr>
+<h2 id="-limitations-of-monolithic-design">
+  ⚠️ Limitations of Monolithic Design
+  <a class="anchor" href="#-limitations-of-monolithic-design">#</a>
+</h2>
+<ul>
+<li>Hard to scale individual components independently.</li>
+<li>Tight coupling makes it difficult to change or test modules in isolation.</li>
+<li>Single point of failure: one bug can crash the entire app.</li>
+<li>Deployment of small changes requires redeploying the whole system.</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#-functional-modules">🧩 Functional Modules</a>
+      <ul>
+        <li><a href="#1-user-management-module">1. <strong>User Management Module</strong></a></li>
+        <li><a href="#2-book-management-module">2. <strong>Book Management Module</strong></a></li>
+        <li><a href="#3-loan-management-module">3. <strong>Loan Management Module</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#-unified-database-schema">🛢️ Unified Database Schema</a></li>
+    <li><a href="#-internal-communication">🔄 Internal Communication</a></li>
+    <li><a href="#-example-api-documentation-rest-endpoints">🧪 Example API Documentation (REST Endpoints)</a>
+      <ul>
+        <li><a href="#-user-endpoints">🔹 User Endpoints</a></li>
+        <li><a href="#-book-endpoints">🔹 Book Endpoints</a></li>
+        <li><a href="#-loan-endpoints">🔹 Loan Endpoints</a></li>
+      </ul>
+    </li>
+    <li><a href="#-limitations-of-monolithic-design">⚠️ Limitations of Monolithic Design</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
