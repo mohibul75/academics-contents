@@ -2,6 +2,8 @@ baseURL = 'https://example.org/'
 languageCode = 'en-us'
 title = 'Distributed Systems Lab'
 theme = "hugo-book"
+uglyURLs = false
+
 
 [params]
   author = "Mohibul Alam"
