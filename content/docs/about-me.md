@@ -34,7 +34,6 @@ I am deeply involved in teaching and mentoring around **cloud-native development
 
 **BSc in Software Engineering**  
 University of Dhaka, Bangladesh  
-*CGPA: 3.61 / 4.00*  
 *Graduated: 2022*
 
 ---
