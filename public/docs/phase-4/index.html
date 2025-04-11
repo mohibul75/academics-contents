@@ -1,32 +1,52 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-<head>
-	<meta name="generator" content="Hugo 0.145.0"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="
-  🔧 Distributed Systems Lab: A Hands-On Journey into Microservices
+
+  🐳 Phase 4: Containerization with Docker
   #
 
-Welcome to the Distributed Systems Lab — the practical segment of the Distributed Systems course. This lab is designed not just to explore the theory behind distributed systems, but to dive deep into how they work in practice.
-Distributed systems exist in many forms — from peer-to-peer networks to large-scale cloud platforms. In this lab, we’ll focus on microservices, a popular architectural pattern that supports modularity, scalability, and independent deployment.">
+We encapsulate each microservice into its own Docker container to achieve environment consistency and portability.
+
+  🎯 You’ll Learn:
+  #
+
+
+Why containerization is essential in microservice ecosystems
+How to write Dockerfiles for Python, Node.js, Java, and .NET Core apps
+How to build and run containers
+Container networking and volume mounting
+
+
+  🛠 Topics Covered:
+  #
+
+
+Writing Dockerfiles for each service
+Installing dependencies inside containers
+Exposing ports and configuring environment variables
+Docker CLI basics: build, run, exec, logs
+Creating named networks for communication between services
+">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
-<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/phase-4/">
   <meta property="og:site_name" content="Distributed Systems Lab">
-  <meta property="og:title" content="Introduction">
-  <meta property="og:description" content="🔧 Distributed Systems Lab: A Hands-On Journey into Microservices # Welcome to the Distributed Systems Lab — the practical segment of the Distributed Systems course. This lab is designed not just to explore the theory behind distributed systems, but to dive deep into how they work in practice.
-Distributed systems exist in many forms — from peer-to-peer networks to large-scale cloud platforms. In this lab, we’ll focus on microservices, a popular architectural pattern that supports modularity, scalability, and independent deployment.">
+  <meta property="og:title" content="Phase 4">
+  <meta property="og:description" content="🐳 Phase 4: Containerization with Docker # We encapsulate each microservice into its own Docker container to achieve environment consistency and portability.
+🎯 You’ll Learn: # Why containerization is essential in microservice ecosystems How to write Dockerfiles for Python, Node.js, Java, and .NET Core apps How to build and run containers Container networking and volume mounting 🛠 Topics Covered: # Writing Dockerfiles for each service Installing dependencies inside containers Exposing ports and configuring environment variables Docker CLI basics: build, run, exec, logs Creating named networks for communication between services">
   <meta property="og:locale" content="en_us">
-  <meta property="og:type" content="website">
-<title>Introduction | Distributed Systems Lab</title>
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>Phase 4 | Distributed Systems Lab</title>
 <link rel="icon" href="/favicon.png" >
 <link rel="manifest" href="/manifest.json">
-<link rel="canonical" href="http://localhost:1313/">
+<link rel="canonical" href="http://localhost:1313/docs/phase-4/">
 <link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
   <script defer src="/fuse.min.js"></script>
   <script defer src="/en.search.min.9bb41bee8888b2a579d2c6299f403bdedc95e90ccc132c23eb6ebd1cbe9b7ee7.js" integrity="sha256-m7Qb7oiIsqV50sYpn0A73tyV6QzMEywj6269HL6bfuc=" crossorigin="anonymous"></script>
-<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/index.xml" title="Distributed Systems Lab" />
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -156,7 +176,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/docs/phase-4/" class="">Phase 4</a>
+    <a href="/docs/phase-4/" class="active">Phase 4</a>
   
 
         </li>
@@ -249,7 +269,7 @@ https://github.com/alex-shpak/hugo-book
     <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
-  <h3>Introduction</h3>
+  <h3>Phase 4</h3>
 
   <label for="toc-control">
     
@@ -265,7 +285,12 @@ https://github.com/alex-shpak/hugo-book
   
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#-who-is-this-lab-for">🎯 Who Is This Lab For?</a></li>
+    <li><a href="#-phase-4-containerization-with-docker">🐳 Phase 4: Containerization with Docker</a>
+      <ul>
+        <li><a href="#-youll-learn">🎯 You’ll Learn:</a></li>
+        <li><a href="#-topics-covered">🛠 Topics Covered:</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
@@ -278,34 +303,33 @@ https://github.com/alex-shpak/hugo-book
 
       
       
-  <article class="markdown book-article"><h1 id="-distributed-systems-lab-a-hands-on-journey-into-microservices">
-  🔧 Distributed Systems Lab: A Hands-On Journey into Microservices
-  <a class="anchor" href="#-distributed-systems-lab-a-hands-on-journey-into-microservices">#</a>
-</h1>
-<p>Welcome to the <strong>Distributed Systems Lab</strong> — the practical segment of the <em>Distributed Systems</em> course. This lab is designed not just to explore the theory behind distributed systems, but to dive deep into how they work in practice.</p>
-<p>Distributed systems exist in many forms — from peer-to-peer networks to large-scale cloud platforms. In this lab, we’ll focus on <strong>microservices</strong>, a popular architectural pattern that supports modularity, scalability, and independent deployment.</p>
-<p>We’ll build and evolve a system from the ground up through a real-world inspired project: <strong>The Smart Library</strong>. Our journey will simulate how modern systems are developed and scaled in stages:</p>
-<ul>
-<li>Start with a <strong>monolithic application</strong> to understand the foundational structure.</li>
-<li>Refactor into <strong>microservices</strong> to improve scalability and flexibility.</li>
-<li>Use tools like <strong>Nginx</strong>, <strong>Docker</strong>, and <strong>Docker Swarm</strong> to manage, deploy, and scale the system.</li>
-<li>Learn essential <strong>system design</strong> concepts along the way.</li>
-</ul>
-<blockquote>
-<p>By the end of this lab, you’ll not only understand how distributed systems are built, but you’ll have hands-on experience architecting one.</p></blockquote>
-<h2 id="-who-is-this-lab-for">
-  🎯 Who Is This Lab For?
-  <a class="anchor" href="#-who-is-this-lab-for">#</a>
+  <article class="markdown book-article"><hr>
+<h2 id="-phase-4-containerization-with-docker">
+  🐳 Phase 4: Containerization with Docker
+  <a class="anchor" href="#-phase-4-containerization-with-docker">#</a>
 </h2>
-<p>This lab is ideal for students, early-stage developers, or enthusiasts who want to <strong>learn by building</strong>. If you’re looking to understand the internals of modern backend systems, deployment practices, and scalable design patterns — this is the place to start.</p>
-<p>By the end of this lab, you’ll have:</p>
+<p>We encapsulate each microservice into its own <strong>Docker container</strong> to achieve environment consistency and portability.</p>
+<h3 id="-youll-learn">
+  🎯 You’ll Learn:
+  <a class="anchor" href="#-youll-learn">#</a>
+</h3>
 <ul>
-<li>Built and deployed a real microservice project</li>
-<li>Understood how containers and proxies tie into distributed systems</li>
-<li>Practiced core DevOps concepts with tools like Docker and Nginx</li>
-<li>Learned how to design for scale, performance, and reliability</li>
+<li>Why containerization is essential in microservice ecosystems</li>
+<li>How to write Dockerfiles for Python, Node.js, Java, and .NET Core apps</li>
+<li>How to build and run containers</li>
+<li>Container networking and volume mounting</li>
 </ul>
-<p>Let’s get building! 🚀</p>
+<h3 id="-topics-covered">
+  🛠 Topics Covered:
+  <a class="anchor" href="#-topics-covered">#</a>
+</h3>
+<ul>
+<li>Writing Dockerfiles for each service</li>
+<li>Installing dependencies inside containers</li>
+<li>Exposing ports and configuring environment variables</li>
+<li>Docker CLI basics: <code>build</code>, <code>run</code>, <code>exec</code>, <code>logs</code></li>
+<li>Creating named networks for communication between services</li>
+</ul>
 </article>
  
       
@@ -331,10 +355,6 @@ https://github.com/alex-shpak/hugo-book
 
       
   
-  <div class="book-comments">
-
-</div>
-  
  
 
       <label for="menu-control" class="hidden book-menu-overlay"></label>
@@ -347,7 +367,12 @@ https://github.com/alex-shpak/hugo-book
   
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#-who-is-this-lab-for">🎯 Who Is This Lab For?</a></li>
+    <li><a href="#-phase-4-containerization-with-docker">🐳 Phase 4: Containerization with Docker</a>
+      <ul>
+        <li><a href="#-youll-learn">🎯 You’ll Learn:</a></li>
+        <li><a href="#-topics-covered">🛠 Topics Covered:</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 

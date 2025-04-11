@@ -1,32 +1,51 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-<head>
-	<meta name="generator" content="Hugo 0.145.0"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="
-  🔧 Distributed Systems Lab: A Hands-On Journey into Microservices
+  ⚙️ Phase 5: Managing with Docker Compose
   #
 
-Welcome to the Distributed Systems Lab — the practical segment of the Distributed Systems course. This lab is designed not just to explore the theory behind distributed systems, but to dive deep into how they work in practice.
-Distributed systems exist in many forms — from peer-to-peer networks to large-scale cloud platforms. In this lab, we’ll focus on microservices, a popular architectural pattern that supports modularity, scalability, and independent deployment.">
+With multiple services running, we now use Docker Compose to manage them together through a unified configuration.
+
+  🎯 You’ll Learn:
+  #
+
+
+Structuring a docker-compose.yml file
+Defining services, networks, and volumes
+Scaling services for development/testing
+Making services talk to each other by name
+
+
+  🛠 Topics Covered:
+  #
+
+
+Docker Compose syntax and service definitions
+Declaring DB containers (e.g., Postgres, MySQL)
+Health checks and restart policies
+Local development workflows with Compose
+Mounting source code with volumes: for live reloading
+">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
-<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/phase-5/">
   <meta property="og:site_name" content="Distributed Systems Lab">
-  <meta property="og:title" content="Introduction">
-  <meta property="og:description" content="🔧 Distributed Systems Lab: A Hands-On Journey into Microservices # Welcome to the Distributed Systems Lab — the practical segment of the Distributed Systems course. This lab is designed not just to explore the theory behind distributed systems, but to dive deep into how they work in practice.
-Distributed systems exist in many forms — from peer-to-peer networks to large-scale cloud platforms. In this lab, we’ll focus on microservices, a popular architectural pattern that supports modularity, scalability, and independent deployment.">
+  <meta property="og:title" content="Phase 5">
+  <meta property="og:description" content="⚙️ Phase 5: Managing with Docker Compose # With multiple services running, we now use Docker Compose to manage them together through a unified configuration.
+🎯 You’ll Learn: # Structuring a docker-compose.yml file Defining services, networks, and volumes Scaling services for development/testing Making services talk to each other by name 🛠 Topics Covered: # Docker Compose syntax and service definitions Declaring DB containers (e.g., Postgres, MySQL) Health checks and restart policies Local development workflows with Compose Mounting source code with volumes: for live reloading">
   <meta property="og:locale" content="en_us">
-  <meta property="og:type" content="website">
-<title>Introduction | Distributed Systems Lab</title>
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>Phase 5 | Distributed Systems Lab</title>
 <link rel="icon" href="/favicon.png" >
 <link rel="manifest" href="/manifest.json">
-<link rel="canonical" href="http://localhost:1313/">
+<link rel="canonical" href="http://localhost:1313/docs/phase-5/">
 <link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
   <script defer src="/fuse.min.js"></script>
   <script defer src="/en.search.min.9bb41bee8888b2a579d2c6299f403bdedc95e90ccc132c23eb6ebd1cbe9b7ee7.js" integrity="sha256-m7Qb7oiIsqV50sYpn0A73tyV6QzMEywj6269HL6bfuc=" crossorigin="anonymous"></script>
-<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/index.xml" title="Distributed Systems Lab" />
 <!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
@@ -169,7 +188,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/docs/phase-5/" class="">Phase 5</a>
+    <a href="/docs/phase-5/" class="active">Phase 5</a>
   
 
         </li>
@@ -249,7 +268,7 @@ https://github.com/alex-shpak/hugo-book
     <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
-  <h3>Introduction</h3>
+  <h3>Phase 5</h3>
 
   <label for="toc-control">
     
@@ -265,7 +284,12 @@ https://github.com/alex-shpak/hugo-book
   
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#-who-is-this-lab-for">🎯 Who Is This Lab For?</a></li>
+    <li><a href="#-phase-5-managing-with-docker-compose">⚙️ Phase 5: Managing with Docker Compose</a>
+      <ul>
+        <li><a href="#-youll-learn">🎯 You’ll Learn:</a></li>
+        <li><a href="#-topics-covered">🛠 Topics Covered:</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
@@ -278,34 +302,32 @@ https://github.com/alex-shpak/hugo-book
 
       
       
-  <article class="markdown book-article"><h1 id="-distributed-systems-lab-a-hands-on-journey-into-microservices">
-  🔧 Distributed Systems Lab: A Hands-On Journey into Microservices
-  <a class="anchor" href="#-distributed-systems-lab-a-hands-on-journey-into-microservices">#</a>
-</h1>
-<p>Welcome to the <strong>Distributed Systems Lab</strong> — the practical segment of the <em>Distributed Systems</em> course. This lab is designed not just to explore the theory behind distributed systems, but to dive deep into how they work in practice.</p>
-<p>Distributed systems exist in many forms — from peer-to-peer networks to large-scale cloud platforms. In this lab, we’ll focus on <strong>microservices</strong>, a popular architectural pattern that supports modularity, scalability, and independent deployment.</p>
-<p>We’ll build and evolve a system from the ground up through a real-world inspired project: <strong>The Smart Library</strong>. Our journey will simulate how modern systems are developed and scaled in stages:</p>
-<ul>
-<li>Start with a <strong>monolithic application</strong> to understand the foundational structure.</li>
-<li>Refactor into <strong>microservices</strong> to improve scalability and flexibility.</li>
-<li>Use tools like <strong>Nginx</strong>, <strong>Docker</strong>, and <strong>Docker Swarm</strong> to manage, deploy, and scale the system.</li>
-<li>Learn essential <strong>system design</strong> concepts along the way.</li>
-</ul>
-<blockquote>
-<p>By the end of this lab, you’ll not only understand how distributed systems are built, but you’ll have hands-on experience architecting one.</p></blockquote>
-<h2 id="-who-is-this-lab-for">
-  🎯 Who Is This Lab For?
-  <a class="anchor" href="#-who-is-this-lab-for">#</a>
+  <article class="markdown book-article"><h2 id="-phase-5-managing-with-docker-compose">
+  ⚙️ Phase 5: Managing with Docker Compose
+  <a class="anchor" href="#-phase-5-managing-with-docker-compose">#</a>
 </h2>
-<p>This lab is ideal for students, early-stage developers, or enthusiasts who want to <strong>learn by building</strong>. If you’re looking to understand the internals of modern backend systems, deployment practices, and scalable design patterns — this is the place to start.</p>
-<p>By the end of this lab, you’ll have:</p>
+<p>With multiple services running, we now use <strong>Docker Compose</strong> to manage them together through a unified configuration.</p>
+<h3 id="-youll-learn">
+  🎯 You’ll Learn:
+  <a class="anchor" href="#-youll-learn">#</a>
+</h3>
 <ul>
-<li>Built and deployed a real microservice project</li>
-<li>Understood how containers and proxies tie into distributed systems</li>
-<li>Practiced core DevOps concepts with tools like Docker and Nginx</li>
-<li>Learned how to design for scale, performance, and reliability</li>
+<li>Structuring a <code>docker-compose.yml</code> file</li>
+<li>Defining services, networks, and volumes</li>
+<li>Scaling services for development/testing</li>
+<li>Making services talk to each other by name</li>
 </ul>
-<p>Let’s get building! 🚀</p>
+<h3 id="-topics-covered">
+  🛠 Topics Covered:
+  <a class="anchor" href="#-topics-covered">#</a>
+</h3>
+<ul>
+<li>Docker Compose syntax and service definitions</li>
+<li>Declaring DB containers (e.g., Postgres, MySQL)</li>
+<li>Health checks and restart policies</li>
+<li>Local development workflows with Compose</li>
+<li>Mounting source code with <code>volumes:</code> for live reloading</li>
+</ul>
 </article>
  
       
@@ -331,10 +353,6 @@ https://github.com/alex-shpak/hugo-book
 
       
   
-  <div class="book-comments">
-
-</div>
-  
  
 
       <label for="menu-control" class="hidden book-menu-overlay"></label>
@@ -347,7 +365,12 @@ https://github.com/alex-shpak/hugo-book
   
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#-who-is-this-lab-for">🎯 Who Is This Lab For?</a></li>
+    <li><a href="#-phase-5-managing-with-docker-compose">⚙️ Phase 5: Managing with Docker Compose</a>
+      <ul>
+        <li><a href="#-youll-learn">🎯 You’ll Learn:</a></li>
+        <li><a href="#-topics-covered">🛠 Topics Covered:</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 
