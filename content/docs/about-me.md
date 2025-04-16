@@ -11,7 +11,7 @@ bookSearchExclude: false
 
 ## 👨‍💻 About Me
 
-Hello! I’m **Mohibul Alam**, a passionate and hands-on **Senior DevOps Engineer** with a strong background in cloud infrastructure, automation, and modern backend systems. I bring over 3 years of experience designing and deploying **scalable, secure, and high-performance solutions** across AWS, Azure, and on-premises environments.
+Hello! I’m **Mohibul Alam**, a passionate and hands-on **Senior DevOps Engineer** with a strong background in cloud infrastructure, automation, and modern backend systems. I bring almost 4 years of experience designing and deploying **scalable, secure, and high-performance solutions** across AWS, Azure, and on-premises environments.
 
 My expertise lies in **DevOps automation, container orchestration, observability, and backend development**, with a growing interest in building intelligent systems powered by **LLMs and AI agents**.
 

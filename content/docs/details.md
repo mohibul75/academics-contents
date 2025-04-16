@@ -61,7 +61,7 @@ Now we **containerize** each service to ensure consistency across environments.
 
 ---
 
-## ⚙️ Phase 5: Managing with Docker Compose
+## ⚙️ Phase 5: Managing with Docker Compose (Optional)
 
 With more services, orchestration becomes important. Enter **Docker Compose**.
 
