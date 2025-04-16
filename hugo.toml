@@ -4,6 +4,7 @@ title = 'Distributed Systems Lab'
 theme = "hugo-book"
 uglyURLs = false
 
+disableAdsense = false
 
 [params]
   author = "Mohibul Alam"

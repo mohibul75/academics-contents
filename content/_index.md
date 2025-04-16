@@ -1,5 +1,5 @@
 ---
-title: Introduction
+title: Distributed Systems Lab
 type: docs
 ---
 
