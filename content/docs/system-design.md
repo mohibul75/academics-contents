@@ -46,17 +46,17 @@ Each project presents unique scaling challenges that will test your understandin
 
 | Project | Key Challenges |
 |---------|----------------|
-| **1. Twitter Timeline & Search** | Real-time updates, high read throughput, efficient search indexing |
-| **2. URL Shortener (like Bit.ly)** | High availability, redirect performance, analytics tracking |
-| **3. Personal Finance App (like Mint.com)** | Data security, third-party integrations, background processing |
-| **4. Social Network Data Structure** | Complex relationships, feed generation, privacy controls |
-| **5. Search Engine Key-Value Store** | Distributed indexing, query optimization, fault tolerance |
-| **6. E-commerce Category Rankings** | Real-time analytics, caching strategies, consistency requirements |
-| **7. Web Crawler** | Distributed work coordination, politeness policies, data processing pipeline |
+| **1. [Twitter Timeline & Search](https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/twitter/README.md)** | Real-time updates, high read throughput, efficient search indexing |
+| **2. [URL Shortener (like Bit.ly)](https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/pastebin/README.md)** | High availability, redirect performance, analytics tracking |
+| **3. [Personal Finance App (like Mint.com)](https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/mint/README.md)** | Data security, third-party integrations, background processing |
+| **4. [Social Network Data Structure](https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/social_graph/README.md)** | Complex relationships, feed generation, privacy controls |
+| **5. [Search Engine Key-Value Store](https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/query_cache/README.md)** | Distributed indexing, query optimization, fault tolerance |
+| **6. [E-commerce Category Rankings](https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/sales_rank/README.md)** | Real-time analytics, caching strategies, consistency requirements |
+| **7. [Web Crawler](https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/web_crawler/README.md)** | Distributed work coordination, politeness policies, data processing pipeline |
 
 ## 📚 Resources
 
 - [System Design Primer](https://github.com/donnemartin/system-design-primer) - Comprehensive resource for system design concepts
 - [AWS Scaling Example](https://github.com/donnemartin/system-design-primer/blob/master/solutions/system_design/scaling_aws/README.md) - Reference implementation for scaling on AWS
-- [Designing Data-Intensive Applications](https://dataintensive.net/) - Recommended reading for database and distributed systems concepts
-- [Architecture Patterns with Python](https://www.cosmicpython.com/) - Patterns for designing complex systems
+- [System Design](https://www.amazon.com/System-Design-Interview-insiders-Second/dp/B08CMF2CQF) - Recommended reading for System Design 
+- [Advanced System Design](https://www.amazon.com/dp/1736049119/ref=sspa_dk_hqp_detail_aax_0?psc=1&sp_csd=d2lkZ2V0TmFtZT1zcF9ocXBfc2hhcmVk) - Recommended reading for Advance System Design 

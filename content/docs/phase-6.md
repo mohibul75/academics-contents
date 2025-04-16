@@ -8,7 +8,7 @@ bookCollapseSection: false
 bookComments: false
 bookSearchExclude: false
 ---
----
+--- 
 
 ## 🚢 Phase 6: Orchestration with Docker Swarm (Optional)
 
