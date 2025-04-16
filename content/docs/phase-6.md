@@ -10,7 +10,7 @@ bookSearchExclude: false
 ---
 ---
 
-## 🚢 Phase 6: Orchestration with Docker Swarm
+## 🚢 Phase 6: Orchestration with Docker Swarm (Optional)
 
 Once you’ve mastered local development, we introduce **Docker Swarm** for distributed service orchestration.
 

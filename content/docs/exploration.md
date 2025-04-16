@@ -8,14 +8,31 @@ bookCollapseSection: false
 bookComments: false
 bookSearchExclude: false
 ---
-
-## 🌍 Phase 7: Distributed Systems Exploration
+# 🌍 Phase 7: Distributed Systems Exploration
 
 Distributed systems are the backbone of scalable and fault-tolerant applications. In this phase, we explore **6+ distributed technologies**, understanding **how they work**, **what problems they solve**, and **where they fit in microservices**.
 
----
+## 🔍 Exploration Methodology
 
-### 📦 1. **Apache Cassandra** – Decentralized NoSQL DB
+For this phase, students will work in collaborative teams to deeply investigate distributed systems technologies. Each team will:
+
+1. **Research & Analyze**: Thoroughly explore an assigned distributed system technology
+2. **Document Findings**: Create comprehensive technical documentation
+3. **Present Solutions**: Deliver an engaging presentation to peers and faculty
+
+Your exploration should focus on these key aspects:
+
+| Focus Area | Key Questions to Address |
+|------------|--------------------------|
+| 🏗️ **Architecture** | How is the system structured? What are its core components? |
+| ⚙️ **Working Principles** | What algorithms and techniques make it function? How does data flow? |
+| 🛡️ **High Availability** | How does it handle failures? What redundancy mechanisms exist? |
+| 💼 **Use Cases** | Where is it most effectively applied? What problems does it solve best? |
+| 🔄 **Integration** | How does it fit within a microservices ecosystem? |
+
+Teams will be evaluated on technical depth, presentation quality, and practical insights provided.
+
+## 📦 1. **Apache Cassandra** – Decentralized NoSQL DB
 
 **Architecture Highlights**:
 - Peer-to-peer ring-based system using consistent hashing
