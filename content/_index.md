@@ -19,15 +19,26 @@ We’ll build and evolve a system from the ground up through a real-world inspir
 > By the end of this lab, you’ll not only understand how distributed systems are built, but you’ll have hands-on experience architecting one.
 
 
-## 🎯 Who Is This Lab For?
+## 🎓 Who Is This Lab For?
 
-This lab is ideal for students, early-stage developers, or enthusiasts who want to **learn by building**. If you’re looking to understand the internals of modern backend systems, deployment practices, and scalable design patterns — this is the place to start.
+This Lab is designed for Software Engineering students at [IIT, University of Dhaka](http://www.iit.du.ac.bd/) as part of their academic curriculum. Specifically, it serves as the practical component for the **CSE601: Distributed Systems** course offered in the 3rd year, 6th semester (April-July 2025).
 
-By the end of this lab, you’ll have:
-- Built and deployed a real microservice project
-- Understood how containers and proxies tie into distributed systems
-- Practiced core DevOps concepts with tools like Docker and Nginx
-- Learned how to design for scale, performance, and reliability
+🌱 Beyond academics, this lab is perfect for:
+- Students eager to apply theoretical concepts in real-world scenarios
+- Early-career developers looking to strengthen their backend skills
+- Tech enthusiasts passionate about modern system architecture
+- Anyone who believes in **learning by building** practical projects
 
-Let’s get building! 🚀
+If you're curious about how modern tech giants architect their systems, how cloud-native applications function, or how to design resilient distributed services—this lab will provide hands-on experience with industry-relevant tools and practices.
 
+### 🚀 What You'll Accomplish
+
+By completing this lab journey, you'll:
+- Design and deploy a complete microservice-based project
+- Master container orchestration with Docker and related technologies
+- Implement service discovery and load balancing with Nginx
+- Apply fault tolerance and resilience patterns in distributed environments
+- Gain practical DevOps experience through CI/CD implementation
+- Develop a portfolio-worthy project demonstrating real-world skills
+
+Let's transform theoretical knowledge into practical expertise! 💻✨
