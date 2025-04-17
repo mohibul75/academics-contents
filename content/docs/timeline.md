@@ -22,9 +22,9 @@ This timeline provides a week-by-week breakdown of the course, showing lecture t
 | **4-5** | **API Gateway & Reverse Proxy** <br>• Nginx configuration & deployment<br>• Load balancing strategies<br>• Phase 2 evaluation & feedback | **Phase 3:** <br>Nginx Integration | Centralized access point with proper routing |
 | **6-7** | **Containerization** <br>• Docker fundamentals<br>• Container networking<br>• Phase 3 evaluation & feedback | **Phase 4:** <br>Docker Implementation | Containerized services with proper isolation |
 | **8-9** | **Container Orchestration Basics** <br>• Docker Compose workflows<br>• Multi-container applications<br>• Phase 4 evaluation & feedback | **Phase 5:** <br>Docker Compose Setup | Multi-container application with defined dependencies |
-| **10** | **Advanced Orchestration** <br>• Docker Swarm architecture<br>• Service scaling & management<br>• Phase 5 evaluation & feedback | **Group Project:** <br>Begin research & planning | Project proposal & architecture diagram |
-| **11** | **System Design Principles** <br>• Scalability patterns<br>• High availability strategies | **Group Project:** <br>Implementation & documentation | Progress report & technical documentation |
-| **12-13** | **Group Presentations** <br>• System design presentations<br>• Industry trendy distributed systems showcase | **Group Project:** <br>Finalization & presentation prep | Final presentation slides & demo |
+| **10** | **Advanced Orchestration** <br>• Docker Swarm architecture<br>• Service scaling & management<br>• Phase 5 evaluation & feedback | **Group Presentations:** <br>Design & Documentation | Project proposal & architecture diagram |
+| **11** | **System Design Principles** <br>• Scalability patterns<br>• High availability strategies | **Group Presentations:** <br>Implementation & documentation | Progress report & technical documentation |
+| **12-13** | **Group Presentations** <br>• System design presentations<br>• Industry trendy distributed systems showcase | **Group Presentations:** <br>Finalization & presentation prep | Final presentation slides & demo |
 | **14** | **Course Review & Final Evaluation** <br>• Best practices review<br>• Industry application discussion | **Final Assessment** | Course completion & project evaluation |
 
 ## 📊 Grading Distribution
