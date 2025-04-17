@@ -29,9 +29,9 @@ This timeline provides a week-by-week breakdown of the course, showing lecture t
 
 ## 📊 Grading Distribution
 
-- **Individual Lab Phases (1-5)**: 50% (10% each)
-- **Group Project & Presentation**: 40%
-- **Participation & Progress**: 10%
+- **Individual Lab Phases (1-5)**: Each phase will be evaluated based on functionality, code quality, and documentation. Detailed rubric will be published soon.
+- **Group Project & Presentation**: Assessment will focus on system design principles, technical implementation, and presentation quality. Detailed evaluation criteria will be shared before Week 10.
+
 
 ## 🔍 Important Notes
 
