@@ -1,6 +1,6 @@
 ---
 title: "About Me"
-weight: 14
+weight: 15
 bookFlatSection: false
 bookToc: true
 bookHidden: false

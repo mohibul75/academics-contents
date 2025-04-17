@@ -1,6 +1,6 @@
 ---
 title: "Some Distributed Systems Exploration"
-weight: 12
+weight: 13
 bookFlatSection: false
 bookToc: true
 bookHidden: false
@@ -8,7 +8,7 @@ bookCollapseSection: false
 bookComments: false
 bookSearchExclude: false
 ---
-# 🌍 Phase 7: Distributed Systems Exploration
+# 🌍 Distributed Systems Exploration
 
 Distributed systems are the backbone of scalable and fault-tolerant applications. In this phase, we explore **6+ distributed technologies**, understanding **how they work**, **what problems they solve**, and **where they fit in microservices**.
 

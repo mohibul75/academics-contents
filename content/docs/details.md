@@ -61,7 +61,7 @@ Now we **containerize** each service to ensure consistency across environments.
 
 ---
 
-## ⚙️ Phase 5: Managing with Docker Compose (Optional)
+## ⚙️ Phase 5: Managing with Docker Compose 
 
 With more services, orchestration becomes important. Enter **Docker Compose**.
 
@@ -72,7 +72,7 @@ With more services, orchestration becomes important. Enter **Docker Compose**.
 
 ---
 
-## 🚢 Phase 6: Orchestration with Docker Swarm
+## 🚢 Phase 6: Orchestration with Docker Swarm (Optional)
 
 For real-world scalability, we use **Docker Swarm** to orchestrate services across a cluster.
 
@@ -83,15 +83,31 @@ For real-world scalability, we use **Docker Swarm** to orchestrate services acro
 
 ---
 
-## 🧠 Bonus Topics: System Design
+## 🧠 Group Presentation on System Design
 
-Distributed systems are more than code — they’re about design. We’ll embed the following concepts throughout the lab:
+In this collaborative exercise, teams will tackle real-world system design challenges that scale from hundreds to millions of users. Each team will:
 
-- CAP Theorem and trade-offs
-- Designing for fault tolerance
-- Scaling strategies (horizontal vs vertical)
-- Caching and database patterns
-- Observability and metrics
+1. **Select a Scalable Project**: Choose from industry-relevant scenarios like social media timelines, URL shorteners, or distributed search engines
+2. **Create a Multi-Stage Scaling Plan**: Design architecture that evolves through three growth stages (1K → 100K → 1M+ users)
+3. **Specify Technical Components**: Detail infrastructure, databases, caching strategies, API design, and monitoring solutions
+4. **Present with Diagrams**: Deliver a comprehensive presentation with architecture diagrams, justifications for design choices, and analysis of potential failure points
+
+Teams will be evaluated on their application of distributed systems principles, scalability considerations, and technical communication skills.
+
+## 📚 Group Presentation on Industry Trendy Distributed Systems
+
+Teams will deeply explore modern distributed technologies that power today's scalable applications. For this presentation:
+
+1. **Research & Analyze**: Thoroughly investigate an assigned distributed system technology (e.g., Cassandra, Kafka, Redis Cluster, Etcd, Consul, CockroachDB, or MinIO)
+2. **Document Key Aspects**:
+   - **Architecture**: Core components and structural design
+   - **Working Principles**: Algorithms and data flow mechanisms
+   - **High Availability**: Failure handling and redundancy approaches
+   - **Use Cases**: Optimal application scenarios and problem domains
+   - **Integration**: How it fits within microservices ecosystems
+3. **Deliver Engaging Presentation**: Share insights with peers and faculty, emphasizing practical applications
+
+Presentations should reinforce understanding of consistency models, consensus protocols, data partitioning, and state management in distributed systems.
 
 ---
 

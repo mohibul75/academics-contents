@@ -1,4 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://academics.mohibulalam.xyz'
 languageCode = 'en-us'
 title = 'Distributed Systems Lab'
 theme = "hugo-book"
