@@ -4,6 +4,8 @@
   <url>
     <loc>http://localhost:1313/docs/details/</loc>
   </url><url>
+    <loc>http://localhost:1313/docs/timeline/</loc>
+  </url><url>
     <loc>http://localhost:1313/docs/prerequisites/</loc>
   </url><url>
     <loc>http://localhost:1313/docs/tools/</loc>
@@ -16,19 +18,35 @@
   </url><url>
     <loc>http://localhost:1313/docs/phase-4/</loc>
   </url><url>
+    <loc>http://localhost:1313/docs/lecture-resources/</loc>
+  </url><url>
     <loc>http://localhost:1313/docs/phase-5/</loc>
   </url><url>
     <loc>http://localhost:1313/docs/phase-6/</loc>
   </url><url>
     <loc>http://localhost:1313/docs/system-design/</loc>
   </url><url>
+    <loc>http://localhost:1313/docs/exploration/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/career-path/</loc>
+  </url><url>
     <loc>http://localhost:1313/docs/about-me/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/lecture-resources/lecture-1/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/lecture-resources/lecture-1/cs/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/lecture-resources/lecture-1/ds/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/lecture-resources/lecture-1/types-ds/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/lecture-resources/lecture-1/ms/</loc>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/docs/</loc>
-  </url><url>
     <loc>http://localhost:1313/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/</loc>
   </url><url>
     <loc>http://localhost:1313/tags/</loc>
   </url>

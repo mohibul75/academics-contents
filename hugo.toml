@@ -12,4 +12,5 @@ disableAdsense = false
   description = "Sharing dev notes and academic thoughts"
   keywords = ["Distributed Systems", "Microservices", "Docker", "Nginx", "System Design"]
   siteName = "Distributed Systems Lab"
+  bookCollapseSection = true
   

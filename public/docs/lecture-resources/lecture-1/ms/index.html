@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  Microservices Architecture
+  #
+
+
+  Definition and Core Concepts
+  #
+
+Microservices is an architectural approach where an application is structured as a collection of small, loosely coupled services, each:
+
+Focused on a specific business capability
+Independently deployable
+Communicating through well-defined APIs
+Owned by small teams
+
+This architecture stands in contrast to the traditional monolithic approach where all functionality exists in a single, tightly integrated application.
+
+  Architecture
+  #
+
+┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│                        API GATEWAY                              │
+│                                                                 │
+└───────┬─────────────┬────────────────┬───────────────┬──────────┘
+        │             │                │               │
+        ▼             ▼                ▼               ▼
+┌───────────┐  ┌─────────────┐  ┌────────────┐  ┌────────────┐
+│           │  │             │  │            │  │            │
+│    USER   │  │  PRODUCT    │  │   ORDER    │  │  PAYMENT   │
+│  SERVICE  │  │  SERVICE    │  │  SERVICE   │  │  SERVICE   │
+│           │  │             │  │            │  │            │
+└─────┬─────┘  └──────┬──────┘  └─────┬──────┘  └─────┬──────┘
+      │               │               │               │
+      ▼               ▼               ▼               ▼
+┌─────────┐    ┌─────────┐     ┌─────────┐     ┌─────────┐
+│  USER   │    │ PRODUCT │     │  ORDER  │     │ PAYMENT │
+│   DB    │    │   DB    │     │   DB    │     │   DB    │
+└─────────┘    └─────────┘     └─────────┘     └─────────┘
+
+  � Real-World Example: Food Delivery Platform
+  #
+
+Imagine a food delivery platform like Uber Eats or Foodpanda. In a microservices architecture, this system would be decomposed into specialized services:">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/lecture-resources/lecture-1/ms/">
+  <meta property="og:site_name" content="Distributed Systems Lab">
+  <meta property="og:title" content="Microservices">
+  <meta property="og:description" content="Microservices Architecture # Definition and Core Concepts # Microservices is an architectural approach where an application is structured as a collection of small, loosely coupled services, each:
+Focused on a specific business capability Independently deployable Communicating through well-defined APIs Owned by small teams This architecture stands in contrast to the traditional monolithic approach where all functionality exists in a single, tightly integrated application.
+Architecture # ┌─────────────────────────────────────────────────────────────────┐ │ │ │ API GATEWAY │ │ │ └───────┬─────────────┬────────────────┬───────────────┬──────────┘ │ │ │ │ ▼ ▼ ▼ ▼ ┌───────────┐ ┌─────────────┐ ┌────────────┐ ┌────────────┐ │ │ │ │ │ │ │ │ │ USER │ │ PRODUCT │ │ ORDER │ │ PAYMENT │ │ SERVICE │ │ SERVICE │ │ SERVICE │ │ SERVICE │ │ │ │ │ │ │ │ │ └─────┬─────┘ └──────┬──────┘ └─────┬──────┘ └─────┬──────┘ │ │ │ │ ▼ ▼ ▼ ▼ ┌─────────┐ ┌─────────┐ ┌─────────┐ ┌─────────┐ │ USER │ │ PRODUCT │ │ ORDER │ │ PAYMENT │ │ DB │ │ DB │ │ DB │ │ DB │ └─────────┘ └─────────┘ └─────────┘ └─────────┘ � Real-World Example: Food Delivery Platform # Imagine a food delivery platform like Uber Eats or Foodpanda. In a microservices architecture, this system would be decomposed into specialized services:">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>Microservices | Distributed Systems Lab</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/lecture-resources/lecture-1/ms/">
+<link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.d8765ae1c20771b33cb18730cb587c8b6888f3707b7d8d51bc033d7e21cec69a.js" integrity="sha256-2HZa4cIHcbM8sYcwy1h8i2iI83B7fY1RvAM9fiHOxpo=" crossorigin="anonymous"></script>
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1GNGFG1C4"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-T1GNGFG1C4');
+        }
+      </script><!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Distributed Systems Lab</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/details/" class="">Details</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/timeline/" class="">Course Timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/prerequisites/" class="">Prerequisites</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/tools/" class="">Tools</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-546b9044c321d8afbf101ab5c84d42f6" class="toggle" checked />
+    <label for="section-546b9044c321d8afbf101ab5c84d42f6" class="flex justify-between">
+      <a role="button" class="">Lecture Resources</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="toggle" checked />
+    <label for="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="flex justify-between">
+      <a role="button" class="">Lecture 1: Introduction</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/cs/" class="">Centralized Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ds/" class="">Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/types-ds/" class="">Types of Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ms/" class="active">Microservices</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-1/" class="">Phase 1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-2/" class="">Phase 2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-3/" class="">Phase 3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-4/" class="">Phase 4</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-5/" class="">Phase 5</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-6/" class="">Phase 6</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/system-design/" class="">Systems Design Problems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/exploration/" class="">Some Distributed Systems Exploration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/career-path/" class="">Career Path</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/about-me/" class="">About Me</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Microservices</h3>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#definition-and-core-concepts">Definition and Core Concepts</a>
+      <ul>
+        <li><a href="#architecture">Architecture</a></li>
+      </ul>
+    </li>
+    <li><a href="#-real-world-example-food-delivery-platform">� Real-World Example: Food Delivery Platform</a></li>
+    <li><a href="#-architectural-characteristics">🏗️ Architectural Characteristics</a>
+      <ul>
+        <li><a href="#independence-and-autonomy">Independence and Autonomy</a></li>
+        <li><a href="#communication-patterns">Communication Patterns</a></li>
+      </ul>
+    </li>
+    <li><a href="#-microservices-as-distributed-systems">🌐 Microservices as Distributed Systems</a></li>
+    <li><a href="#-key-benefits-and-challenges">💡 Key Benefits and Challenges</a>
+      <ul>
+        <li><a href="#benefits">Benefits</a></li>
+        <li><a href="#challenges">Challenges</a></li>
+      </ul>
+    </li>
+    <li><a href="#-when-to-use-microservices">🔍 When to Use Microservices</a></li>
+    <li><a href="#-related-concepts">📚 Related Concepts</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="microservices-architecture">
+  Microservices Architecture
+  <a class="anchor" href="#microservices-architecture">#</a>
+</h1>
+<h2 id="definition-and-core-concepts">
+  Definition and Core Concepts
+  <a class="anchor" href="#definition-and-core-concepts">#</a>
+</h2>
+<p>Microservices is an architectural approach where an application is structured as a <strong>collection of small, loosely coupled services</strong>, each:</p>
+<ul>
+<li>Focused on a specific business capability</li>
+<li>Independently deployable</li>
+<li>Communicating through well-defined APIs</li>
+<li>Owned by small teams</li>
+</ul>
+<p>This architecture stands in contrast to the traditional monolithic approach where all functionality exists in a single, tightly integrated application.</p>
+<h3 id="architecture">
+  Architecture
+  <a class="anchor" href="#architecture">#</a>
+</h3>
+<pre tabindex="0"><code>┌─────────────────────────────────────────────────────────────────┐
+│                                                                 │
+│                        API GATEWAY                              │
+│                                                                 │
+└───────┬─────────────┬────────────────┬───────────────┬──────────┘
+        │             │                │               │
+        ▼             ▼                ▼               ▼
+┌───────────┐  ┌─────────────┐  ┌────────────┐  ┌────────────┐
+│           │  │             │  │            │  │            │
+│    USER   │  │  PRODUCT    │  │   ORDER    │  │  PAYMENT   │
+│  SERVICE  │  │  SERVICE    │  │  SERVICE   │  │  SERVICE   │
+│           │  │             │  │            │  │            │
+└─────┬─────┘  └──────┬──────┘  └─────┬──────┘  └─────┬──────┘
+      │               │               │               │
+      ▼               ▼               ▼               ▼
+┌─────────┐    ┌─────────┐     ┌─────────┐     ┌─────────┐
+│  USER   │    │ PRODUCT │     │  ORDER  │     │ PAYMENT │
+│   DB    │    │   DB    │     │   DB    │     │   DB    │
+└─────────┘    └─────────┘     └─────────┘     └─────────┘
+</code></pre><h2 id="-real-world-example-food-delivery-platform">
+  � Real-World Example: Food Delivery Platform
+  <a class="anchor" href="#-real-world-example-food-delivery-platform">#</a>
+</h2>
+<p>Imagine a food delivery platform like Uber Eats or Foodpanda. In a microservices architecture, this system would be decomposed into specialized services:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Microservice</th>
+          <th>Responsibility</th>
+          <th>Key Functions</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>👤 User Service</td>
+          <td>Identity and profile management</td>
+          <td>Authentication, profiles, preferences</td>
+      </tr>
+      <tr>
+          <td>🍕 Restaurant Service</td>
+          <td>Restaurant data management</td>
+          <td>Menus, hours, locations, ratings</td>
+      </tr>
+      <tr>
+          <td>🛒 Order Service</td>
+          <td>Order processing</td>
+          <td>Creation, status tracking, history</td>
+      </tr>
+      <tr>
+          <td>💳 Payment Service</td>
+          <td>Transaction handling</td>
+          <td>Payment processing, refunds, invoicing</td>
+      </tr>
+      <tr>
+          <td>🚚 Delivery Service</td>
+          <td>Logistics management</td>
+          <td>Driver tracking, route optimization, ETA calculation</td>
+      </tr>
+      <tr>
+          <td>📱 Notification Service</td>
+          <td>Communication</td>
+          <td>Push notifications, emails, SMS alerts</td>
+      </tr>
+  </tbody>
+</table>
+<p>Each service:</p>
+<ul>
+<li>Has its own database optimized for its specific needs</li>
+<li>Can be developed, deployed, and scaled independently</li>
+<li>May use different programming languages or frameworks best suited to its purpose</li>
+<li>Communicates with other services via network protocols (REST, gRPC, message queues)</li>
+</ul>
+<h2 id="-architectural-characteristics">
+  🏗️ Architectural Characteristics
+  <a class="anchor" href="#-architectural-characteristics">#</a>
+</h2>
+<h3 id="independence-and-autonomy">
+  Independence and Autonomy
+  <a class="anchor" href="#independence-and-autonomy">#</a>
+</h3>
+<ul>
+<li><strong>Technology Heterogeneity</strong>: Services can use different tech stacks</li>
+<li><strong>Resilience Isolation</strong>: Failure in one service doesn&rsquo;t crash the entire system</li>
+<li><strong>Independent Deployment</strong>: Services can be updated without system-wide downtime</li>
+<li><strong>Decentralized Data Management</strong>: Each service manages its own data</li>
+</ul>
+<h3 id="communication-patterns">
+  Communication Patterns
+  <a class="anchor" href="#communication-patterns">#</a>
+</h3>
+<ul>
+<li><strong>Synchronous</strong>: Direct service-to-service calls (REST, gRPC)</li>
+<li><strong>Asynchronous</strong>: Event-driven communication via message brokers (Kafka, RabbitMQ)</li>
+<li><strong>API Gateway</strong>: Single entry point that routes requests to appropriate services</li>
+</ul>
+<pre tabindex="0"><code>┌──────────┐                                  ┌──────────┐
+│          │◄─── REST/gRPC (Synchronous) ────►│          │
+│ SERVICE  │                                  │ SERVICE  │
+│    A     │                                  │    B     │
+│          │                                  │          │
+└──────────┘                                  └──────────┘
+     │                                              │
+     │                                              │
+     │         ┌─────────────────────┐             │
+     │         │                     │             │
+     └────────►│   MESSAGE BROKER    │◄────────────┘
+               │   (Asynchronous)    │
+     ┌────────►│                     │◄────────────┐
+     │         └─────────────────────┘             │
+     │                                              │
+┌──────────┐                                  ┌──────────┐
+│          │                                  │          │
+│ SERVICE  │                                  │ SERVICE  │
+│    C     │                                  │    D     │
+│          │                                  │          │
+└──────────┘                                  └──────────┘
+</code></pre><h2 id="-microservices-as-distributed-systems">
+  🌐 Microservices as Distributed Systems
+  <a class="anchor" href="#-microservices-as-distributed-systems">#</a>
+</h2>
+<p>Microservices architectures are inherently distributed systems because:</p>
+<ol>
+<li><strong>Physical Distribution</strong>: Services typically run on different machines, containers, or cloud instances</li>
+<li><strong>Network Communication</strong>: Services interact over network boundaries</li>
+<li><strong>Independent Failure Domains</strong>: Each service can fail independently</li>
+<li><strong>Horizontal Scalability</strong>: Services can scale independently based on demand</li>
+<li><strong>Eventual Consistency</strong>: Data consistency challenges across service boundaries</li>
+</ol>
+<p>This distributed nature introduces challenges that must be addressed:</p>
+<ul>
+<li>Network latency and reliability</li>
+<li>Distributed transactions</li>
+<li>Service discovery and load balancing</li>
+<li>Monitoring and observability across services</li>
+</ul>
+<h2 id="-key-benefits-and-challenges">
+  💡 Key Benefits and Challenges
+  <a class="anchor" href="#-key-benefits-and-challenges">#</a>
+</h2>
+<h3 id="benefits">
+  Benefits
+  <a class="anchor" href="#benefits">#</a>
+</h3>
+<ul>
+<li><strong>Scalability</strong>: Independent scaling of components based on demand</li>
+<li><strong>Agility</strong>: Faster development cycles and time-to-market</li>
+<li><strong>Technological Freedom</strong>: Teams can choose optimal technologies</li>
+<li><strong>Resilience</strong>: Isolated failures prevent system-wide outages</li>
+<li><strong>Organizational Alignment</strong>: Services can align with business capabilities and team structures</li>
+</ul>
+<h3 id="challenges">
+  Challenges
+  <a class="anchor" href="#challenges">#</a>
+</h3>
+<ul>
+<li><strong>Distributed System Complexity</strong>: Network failures, latency, consistency issues</li>
+<li><strong>Operational Overhead</strong>: More moving parts to monitor and maintain</li>
+<li><strong>Service Coordination</strong>: Managing dependencies between services</li>
+<li><strong>Testing Complexity</strong>: Integration testing across service boundaries</li>
+<li><strong>Deployment Complexity</strong>: Orchestrating multiple services</li>
+</ul>
+<h2 id="-when-to-use-microservices">
+  🔍 When to Use Microservices
+  <a class="anchor" href="#-when-to-use-microservices">#</a>
+</h2>
+<p>Microservices are well-suited for:</p>
+<ul>
+<li>Large, complex applications with clear domain boundaries</li>
+<li>Systems requiring different scaling needs for different components</li>
+<li>Organizations with multiple development teams working in parallel</li>
+<li>Applications needing high availability and resilience</li>
+</ul>
+<p>They may not be appropriate for:</p>
+<ul>
+<li>Simple applications where the overhead outweighs the benefits</li>
+<li>Early-stage startups prioritizing speed over scalability</li>
+<li>Teams without experience in distributed systems</li>
+</ul>
+<h2 id="-related-concepts">
+  📚 Related Concepts
+  <a class="anchor" href="#-related-concepts">#</a>
+</h2>
+<ul>
+<li><strong>Domain-Driven Design (DDD)</strong>: Approach to software development focusing on the core domain</li>
+<li><strong>Containerization</strong>: Technologies like Docker that package services with dependencies</li>
+<li><strong>Orchestration</strong>: Systems like Kubernetes that manage deployment and scaling</li>
+<li><strong>Service Mesh</strong>: Infrastructure layer for service-to-service communication</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#definition-and-core-concepts">Definition and Core Concepts</a>
+      <ul>
+        <li><a href="#architecture">Architecture</a></li>
+      </ul>
+    </li>
+    <li><a href="#-real-world-example-food-delivery-platform">� Real-World Example: Food Delivery Platform</a></li>
+    <li><a href="#-architectural-characteristics">🏗️ Architectural Characteristics</a>
+      <ul>
+        <li><a href="#independence-and-autonomy">Independence and Autonomy</a></li>
+        <li><a href="#communication-patterns">Communication Patterns</a></li>
+      </ul>
+    </li>
+    <li><a href="#-microservices-as-distributed-systems">🌐 Microservices as Distributed Systems</a></li>
+    <li><a href="#-key-benefits-and-challenges">💡 Key Benefits and Challenges</a>
+      <ul>
+        <li><a href="#benefits">Benefits</a></li>
+        <li><a href="#challenges">Challenges</a></li>
+      </ul>
+    </li>
+    <li><a href="#-when-to-use-microservices">🔍 When to Use Microservices</a></li>
+    <li><a href="#-related-concepts">📚 Related Concepts</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

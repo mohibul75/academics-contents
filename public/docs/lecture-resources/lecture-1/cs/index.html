@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  Centralized Systems
+  #
+
+
+  🔍 What is a Centralized System?
+  #
+
+A centralized system is an architecture where all processing, data storage, and control functions are concentrated in a single computational entity. This central node handles all requests, manages all resources, and serves as the sole decision-making authority.
+👉 All components, users, and services connect directly to this central entity without intermediate processing or control distribution.
+
+  🏫 Real-World Analogy
+  #
+
+Imagine a traditional classroom setup:">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/lecture-resources/lecture-1/cs/">
+  <meta property="og:site_name" content="Distributed Systems Lab">
+  <meta property="og:title" content="Centralized Systems">
+  <meta property="og:description" content="Centralized Systems # 🔍 What is a Centralized System? # A centralized system is an architecture where all processing, data storage, and control functions are concentrated in a single computational entity. This central node handles all requests, manages all resources, and serves as the sole decision-making authority.
+👉 All components, users, and services connect directly to this central entity without intermediate processing or control distribution.
+🏫 Real-World Analogy # Imagine a traditional classroom setup:">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>Centralized Systems | Distributed Systems Lab</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/lecture-resources/lecture-1/cs/">
+<link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.d8765ae1c20771b33cb18730cb587c8b6888f3707b7d8d51bc033d7e21cec69a.js" integrity="sha256-2HZa4cIHcbM8sYcwy1h8i2iI83B7fY1RvAM9fiHOxpo=" crossorigin="anonymous"></script>
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1GNGFG1C4"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-T1GNGFG1C4');
+        }
+      </script><!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Distributed Systems Lab</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/details/" class="">Details</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/timeline/" class="">Course Timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/prerequisites/" class="">Prerequisites</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/tools/" class="">Tools</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-546b9044c321d8afbf101ab5c84d42f6" class="toggle" checked />
+    <label for="section-546b9044c321d8afbf101ab5c84d42f6" class="flex justify-between">
+      <a role="button" class="">Lecture Resources</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="toggle" checked />
+    <label for="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="flex justify-between">
+      <a role="button" class="">Lecture 1: Introduction</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/cs/" class="active">Centralized Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ds/" class="">Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/types-ds/" class="">Types of Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ms/" class="">Microservices</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-1/" class="">Phase 1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-2/" class="">Phase 2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-3/" class="">Phase 3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-4/" class="">Phase 4</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-5/" class="">Phase 5</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-6/" class="">Phase 6</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/system-design/" class="">Systems Design Problems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/exploration/" class="">Some Distributed Systems Exploration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/career-path/" class="">Career Path</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/about-me/" class="">About Me</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Centralized Systems</h3>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#-what-is-a-centralized-system">🔍 What is a Centralized System?</a>
+      <ul>
+        <li><a href="#-real-world-analogy">🏫 Real-World Analogy</a></li>
+        <li><a href="#-technical-architecture">�️ Technical Architecture</a></li>
+        <li><a href="#-technical-characteristics">💻 Technical Characteristics</a></li>
+        <li><a href="#-real-world-examples">🏢 Real-World Examples</a></li>
+        <li><a href="#-evolution-to-distributed-systems">🔄 Evolution to Distributed Systems</a></li>
+        <li><a href="#-comprehensive-comparison">🆚 Comprehensive Comparison</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="centralized-systems">
+  Centralized Systems
+  <a class="anchor" href="#centralized-systems">#</a>
+</h1>
+<h2 id="-what-is-a-centralized-system">
+  🔍 What is a Centralized System?
+  <a class="anchor" href="#-what-is-a-centralized-system">#</a>
+</h2>
+<p>A centralized system is an architecture where all processing, data storage, and control functions are concentrated in a single computational entity. This central node handles all requests, manages all resources, and serves as the sole decision-making authority.</p>
+<p>👉 All components, users, and services connect directly to this central entity without intermediate processing or control distribution.</p>
+<h3 id="-real-world-analogy">
+  🏫 Real-World Analogy
+  <a class="anchor" href="#-real-world-analogy">#</a>
+</h3>
+<p>Imagine a traditional classroom setup:</p>
+<ul>
+<li>One teacher (the central server) stands at the front</li>
+<li>30 students (clients) all direct their questions to this one teacher</li>
+<li>The teacher:
+<ul>
+<li>📚 Holds all the knowledge (data storage)</li>
+<li>🧠 Makes all decisions (processing)</li>
+<li>📝 Grades all assignments (computation)</li>
+<li>👮 Maintains classroom discipline (system control)</li>
+</ul>
+</li>
+</ul>
+<p>If the teacher is absent, the entire learning process halts - there&rsquo;s no backup system.
+If too many students ask questions simultaneously, the teacher becomes overwhelmed (system overload).</p>
+<h3 id="-technical-architecture">
+  �️ Technical Architecture
+  <a class="anchor" href="#-technical-architecture">#</a>
+</h3>
+<pre tabindex="0"><code>     ┌─────────┐     
+     │         │     
+     │ CENTRAL │     
+     │ SERVER  │     
+     │         │     
+     └─────────┘     
+         ▲ ▲ ▲      
+         │ │ │      
+┌────────┴─┼─┴────────┐
+│          │          │
+▼          ▼          ▼
+┌─────┐  ┌─────┐  ┌─────┐
+│     │  │     │  │     │
+│ C1  │  │ C2  │  │ C3  │
+│     │  │     │  │     │
+└─────┘  └─────┘  └─────┘
+ Client   Client   Client
+</code></pre><h3 id="-technical-characteristics">
+  💻 Technical Characteristics
+  <a class="anchor" href="#-technical-characteristics">#</a>
+</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Characteristic</th>
+          <th>Description</th>
+          <th>Technical Implication</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Single Control Point</strong></td>
+          <td>One entity manages all operations</td>
+          <td>Simplified system management but creates a bottleneck</td>
+      </tr>
+      <tr>
+          <td><strong>Direct Communication</strong></td>
+          <td>Clients connect directly to the central server</td>
+          <td>Star topology network architecture</td>
+      </tr>
+      <tr>
+          <td><strong>Resource Concentration</strong></td>
+          <td>All computing resources in one location</td>
+          <td>Requires high-specification hardware at the center</td>
+      </tr>
+      <tr>
+          <td><strong>Sequential Processing</strong></td>
+          <td>Tasks often processed one after another</td>
+          <td>Limited parallelism capabilities</td>
+      </tr>
+      <tr>
+          <td><strong>Consistency</strong></td>
+          <td>Single source of truth for all data</td>
+          <td>Strong data consistency without synchronization issues</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="-real-world-examples">
+  🏢 Real-World Examples
+  <a class="anchor" href="#-real-world-examples">#</a>
+</h3>
+<p><strong>Traditional Database Systems:</strong></p>
+<ul>
+<li>Oracle&rsquo;s single-instance database deployment</li>
+<li>All queries, transactions, and data modifications go through one database server</li>
+<li>Uses techniques like connection pooling and query optimization to handle multiple clients</li>
+<li>Technical limitation: Vertical scaling only (must upgrade the central server for more capacity)</li>
+</ul>
+<p><strong>Mainframe Computing:</strong></p>
+<ul>
+<li>IBM z/OS systems serving hundreds of terminals</li>
+<li>Centralized processing unit handles all computation</li>
+<li>Terminal devices act as input/output only with no local processing</li>
+<li>Technical components: CICS for transaction processing, VSAM for data storage</li>
+</ul>
+<p><strong>Single-Server Web Applications:</strong></p>
+<ul>
+<li>LAMP stack (Linux, Apache, MySQL, PHP) on a single server</li>
+<li>All web requests, database queries, and business logic on one machine</li>
+<li>Technical challenge: Becomes a performance bottleneck under high traffic</li>
+</ul>
+<h3 id="-evolution-to-distributed-systems">
+  🔄 Evolution to Distributed Systems
+  <a class="anchor" href="#-evolution-to-distributed-systems">#</a>
+</h3>
+<p>Centralized systems evolved toward distributed architectures due to:</p>
+<ol>
+<li><strong>Scalability Ceiling</strong> - Physical limits to how powerful a single machine can be</li>
+<li><strong>Reliability Concerns</strong> - Unacceptable downtime when the central node fails</li>
+<li><strong>Geographic Constraints</strong> - Latency issues for users far from the central server</li>
+<li><strong>Resource Utilization</strong> - Inefficient use of computing resources (often idle or overloaded)</li>
+</ol>
+<h3 id="-comprehensive-comparison">
+  🆚 Comprehensive Comparison
+  <a class="anchor" href="#-comprehensive-comparison">#</a>
+</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Aspect</th>
+          <th>Centralized System</th>
+          <th>Distributed System</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Architecture</strong></td>
+          <td>Single processing entity</td>
+          <td>Multiple interconnected nodes</td>
+      </tr>
+      <tr>
+          <td><strong>Fault Tolerance</strong></td>
+          <td>Low (single point of failure)</td>
+          <td>High (can survive individual failures)</td>
+      </tr>
+      <tr>
+          <td><strong>Scalability</strong></td>
+          <td>Limited (vertical scaling only)</td>
+          <td>Extensive (horizontal scaling possible)</td>
+      </tr>
+      <tr>
+          <td><strong>Consistency</strong></td>
+          <td>Strong by default</td>
+          <td>Requires special protocols (CAP theorem)</td>
+      </tr>
+      <tr>
+          <td><strong>Complexity</strong></td>
+          <td>Lower implementation complexity</td>
+          <td>Higher coordination complexity</td>
+      </tr>
+      <tr>
+          <td><strong>Latency</strong></td>
+          <td>Higher for distant users</td>
+          <td>Can be optimized with geographic distribution</td>
+      </tr>
+      <tr>
+          <td><strong>Resource Utilization</strong></td>
+          <td>Often imbalanced</td>
+          <td>Can be optimized across the system</td>
+      </tr>
+      <tr>
+          <td><strong>Security</strong></td>
+          <td>Centralized control but single target</td>
+          <td>Distributed defense but larger attack surface</td>
+      </tr>
+      <tr>
+          <td><strong>Example</strong></td>
+          <td>Mainframe computer</td>
+          <td>Cloud computing platform</td>
+      </tr>
+  </tbody>
+</table>
+<p>Understanding centralized systems provides an essential foundation for appreciating the innovations and challenges in distributed architectures.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#-what-is-a-centralized-system">🔍 What is a Centralized System?</a>
+      <ul>
+        <li><a href="#-real-world-analogy">🏫 Real-World Analogy</a></li>
+        <li><a href="#-technical-architecture">�️ Technical Architecture</a></li>
+        <li><a href="#-technical-characteristics">💻 Technical Characteristics</a></li>
+        <li><a href="#-real-world-examples">🏢 Real-World Examples</a></li>
+        <li><a href="#-evolution-to-distributed-systems">🔄 Evolution to Distributed Systems</a></li>
+        <li><a href="#-comprehensive-comparison">🆚 Comprehensive Comparison</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

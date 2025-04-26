@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  Types of Distributed Systems
+  #
+
+Distributed systems can be categorized based on their architecture, purpose, and how components interact. Each type has distinct characteristics that make it suitable for specific use cases.
+
+  1. Client-Server Systems
+  #
+
+
+  Architecture
+  #
+
+┌─────────┐     ┌─────────┐     ┌─────────┐
+│         │     │         │     │         │
+│ CLIENT  │────►│ SERVER  │◄────│ CLIENT  │
+│    A    │     │         │     │    B    │
+└─────────┘     └─────────┘     └─────────┘
+                     ▲
+                     │
+                     ▼
+                ┌─────────┐
+                │         │
+                │ CLIENT  │
+                │    C    │
+                └─────────┘
+
+  Key Characteristics
+  #
+
+
+Role Separation: Clear division between service providers (servers) and consumers (clients)
+Centralized Control: Servers manage resources and enforce access policies
+Request-Response Pattern: Communication follows a request-response cycle
+Scalability Challenge: Servers can become bottlenecks under high load
+
+
+  Technical Implementation
+  #
+
+
+Communication Protocols: HTTP/HTTPS, WebSockets, gRPC
+Load Distribution: Often uses load balancers to distribute client requests
+State Management: Servers typically maintain session state
+
+
+  Real-World Examples
+  #
+
+
+Web Applications: Gmail, online banking portals
+API Services: Twitter API, payment gateways
+Database Clients: SQL clients connecting to database servers
+Enterprise Applications: SAP, Salesforce
+
+
+  2. Peer-to-Peer (P2P) Systems
+  #
+
+
+  Architecture
+  #
+
+┌─────────┐     ┌─────────┐     ┌─────────┐
+│         │◄───►│         │◄───►│         │
+│ PEER A  │     │ PEER B  │     │ PEER C  │
+│         │◄─┐  │         │  ┌─►│         │
+└─────────┘  │  └─────────┘  │  └─────────┘
+             │               │
+             │  ┌─────────┐  │
+             │  │         │  │
+             └─►│ PEER D  │◄─┘
+                │         │
+                └─────────┘
+
+  Key Characteristics
+  #
+
+
+Equality: All nodes can function as both clients and servers
+Decentralization: No central coordination point
+Resilience: System continues functioning when nodes join or leave
+Resource Sharing: Computing power, storage, and bandwidth are collectively shared
+
+
+  Technical Implementation
+  #
+
+
+Discovery Mechanisms: DHT (Distributed Hash Tables), gossip protocols
+Routing Algorithms: Chord, Kademlia, Pastry
+Data Replication: Content is often replicated across multiple peers
+Security Challenges: Trust establishment without central authority
+
+
+  Real-World Examples
+  #
+
+
+File Sharing: BitTorrent, IPFS (InterPlanetary File System)
+Cryptocurrency Networks: Bitcoin, Ethereum blockchain
+Communication Tools: Early versions of Skype
+Distributed Computing: BOINC platform projects
+
+
+  3. Clustered Systems
+  #
+
+
+  Architecture
+  #
+
+┌───────────────────────────────────────┐
+│                                       │
+│            CLUSTER MANAGER            │
+│                                       │
+└───────┬───────────┬───────────┬───────┘
+        │           │           │
+        ▼           ▼           ▼
+┌───────────┐ ┌───────────┐ ┌───────────┐
+│           │ │           │ │           │
+│  NODE 1   │ │  NODE 2   │ │  NODE 3   │
+│           │ │           │ │           │
+└───────────┘ └───────────┘ └───────────┘
+
+  Key Characteristics
+  #
+
+
+Physical Proximity: Nodes typically located in the same data center
+Homogeneous Hardware: Often uses similar or identical machines
+Shared Resources: Common storage, memory, or processing capabilities
+High Availability: Designed for fault tolerance and continuous operation
+
+
+  Technical Implementation
+  #
+
+
+Resource Management: Uses cluster managers like Kubernetes, Mesos
+Job Scheduling: Distributes workloads across available nodes
+Shared Storage: Often uses distributed file systems or SANs
+Heartbeat Protocols: Monitors node health and manages failover
+
+
+  Real-World Examples
+  #
+
+
+High-Performance Computing: Scientific simulation clusters
+Container Orchestration: Kubernetes clusters running microservices
+Big Data Processing: Hadoop/Spark clusters
+Database Clusters: MySQL Cluster, PostgreSQL with replication
+
+
+  4. Grid Computing Systems
+  #
+
+
+  Architecture
+  #
+
+┌───────────────┐     ┌───────────────┐
+│  ORGANIZATION │     │  ORGANIZATION │
+│       A       │     │       B       │
+│ ┌─────┐ ┌─────┐     │ ┌─────┐ ┌─────┐
+│ │NODE │ │NODE │     │ │NODE │ │NODE │
+│ │  1  │ │  2  │     │ │  1  │ │  2  │
+│ └─────┘ └─────┘     │ └─────┘ └─────┘
+└───────┬───────┘     └───────┬───────┘
+        │                     │
+        ▼                     ▼
+┌───────────────────────────────────────┐
+│                                       │
+│          GRID MIDDLEWARE              │
+│                                       │
+└───────────────────┬───────────────────┘
+                    │
+                    ▼
+┌───────────────────────────────────────┐
+│                                       │
+│         RESEARCH PROBLEM              │
+│                                       │
+└───────────────────────────────────────┘
+
+  Key Characteristics
+  #
+
+
+Geographic Distribution: Resources spread across multiple locations
+Heterogeneous Resources: Different types of computers and networks
+Virtual Organizations: Collaboration across institutional boundaries
+Resource Sharing: Focuses on sharing computing power for large problems
+
+
+  Technical Implementation
+  #
+
+
+Grid Middleware: Software like Globus Toolkit that manages resources
+Job Submission: Uses specialized protocols for submitting computing tasks
+Security Infrastructure: Certificate-based authentication across domains
+Data Management: Tools for moving large datasets between grid sites
+
+
+  Real-World Examples
+  #
+
+
+Scientific Computing: SETI@home (search for extraterrestrial intelligence)
+Medical Research: Folding@home (protein folding simulations)
+Particle Physics: LHC Computing Grid (analyzing CERN data)
+Climate Modeling: Earth System Grid (climate simulation data)
+
+
+  5. Distributed Databases
+  #
+
+
+  Architecture
+  #
+
+┌─────────────┐      ┌─────────────┐
+│             │      │             │
+│  DATABASE   │◄────►│  DATABASE   │
+│   NODE 1    │      │   NODE 2    │
+│  (Shard A)  │      │  (Shard B)  │
+└──────┬──────┘      └──────┬──────┘
+       │                    │
+       │     ┌─────────┐    │
+       └────►│         │◄───┘
+             │ QUERY   │
+             │ ROUTER  │
+             │         │
+             └────┬────┘
+                  │
+                  ▼
+             ┌─────────┐
+             │         │
+             │ CLIENT  │
+             │         │
+             └─────────┘
+
+  Key Characteristics
+  #
+
+
+Data Partitioning: Information divided across multiple nodes (sharding)
+Replication: Data copied to multiple locations for redundancy
+Consistency Models: Various approaches to maintaining data consistency
+Distributed Transactions: Mechanisms for maintaining ACID properties across nodes
+
+
+  Technical Implementation
+  #
+
+
+Consensus Algorithms: Paxos, Raft for maintaining consistency
+Partitioning Strategies: Range-based, hash-based, or directory-based sharding
+Query Processing: Distributed query execution and optimization
+CAP Theorem Tradeoffs: Balancing Consistency, Availability, and Partition tolerance
+
+
+  Real-World Examples
+  #
+
+
+NoSQL Databases: Cassandra (AP system), MongoDB (CP system)
+NewSQL Databases: Google Spanner, CockroachDB
+Time-Series Databases: InfluxDB, TimescaleDB
+Graph Databases: Neo4j (clustered), Amazon Neptune
+
+
+  6. Distributed File Systems
+  #
+
+
+  Architecture
+  #
+
+┌─────────────┐      ┌─────────────┐
+│             │      │             │
+│   STORAGE   │      │   STORAGE   │
+│   NODE 1    │      │   NODE 2    │
+│             │      │             │
+└──────┬──────┘      └──────┬──────┘
+       │                    │
+       │    ┌──────────┐    │
+       └───►│          │◄───┘
+            │ METADATA │
+            │  SERVER  │
+            │          │
+            └─────┬────┘
+                  │
+                  ▼
+             ┌─────────┐
+             │         │
+             │ CLIENT  │
+             │         │
+             └─────────┘
+
+  Key Characteristics
+  #
+
+
+Transparent Access: Files appear as if they&rsquo;re on a local system
+Location Independence: Users don&rsquo;t need to know physical file locations
+Fault Tolerance: System continues operating despite node failures
+Scalability: Can add storage nodes to increase capacity
+
+
+  Technical Implementation
+  #
+
+
+Chunking: Files split into blocks distributed across nodes
+Metadata Management: Separate servers track file locations and attributes
+Caching: Local caching improves performance for frequently accessed files
+Consistency Protocols: Mechanisms to handle concurrent file access
+
+
+  Real-World Examples
+  #
+
+
+Cloud Storage: Amazon S3, Google Cloud Storage
+Big Data Storage: Hadoop Distributed File System (HDFS)
+Enterprise Storage: GlusterFS, Ceph
+Research Systems: Google File System (GFS), Andrew File System (AFS)
+
+
+  7. Cloud-Based Distributed Systems
+  #
+
+
+  Architecture
+  #
+
+┌───────────────────────────────────────────────────────┐
+│                                                       │
+│                    CLOUD PROVIDER                     │
+│                                                       │
+│  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐  │
+│  │             │   │             │   │             │  │
+│  │    COMPUTE  │   │   STORAGE   │   │  DATABASE   │  │
+│  │   SERVICES  │   │  SERVICES   │   │  SERVICES   │  │
+│  │             │   │             │   │             │  │
+│  └─────────────┘   └─────────────┘   └─────────────┘  │
+│                                                       │
+└───────────────────────────┬───────────────────────────┘
+                            │
+                            ▼
+┌───────────────┐    ┌─────────────┐    ┌───────────────┐
+│               │    │             │    │               │
+│    MOBILE     │    │    WEB      │    │     IOT       │
+│    CLIENTS    │    │   CLIENTS   │    │    DEVICES    │
+│               │    │             │    │               │
+└───────────────┘    └─────────────┘    └───────────────┘
+
+  Key Characteristics
+  #
+
+
+Elasticity: Resources can scale up or down based on demand
+Service-Based: Composed of multiple specialized services
+Multi-Tenancy: Infrastructure shared among multiple customers
+Pay-Per-Use: Resources billed based on actual consumption
+
+
+  Technical Implementation
+  #
+
+
+Virtualization: Uses VMs, containers, or serverless functions
+Service Orchestration: Automated provisioning and management
+API Gateways: Manages access to backend services
+Monitoring &amp; Telemetry: Distributed tracing and logging
+
+
+  Real-World Examples
+  #
+
+
+IaaS: Amazon EC2, Microsoft Azure VMs
+PaaS: Heroku, Google App Engine
+SaaS: Salesforce, Microsoft 365
+Serverless: AWS Lambda, Azure Functions
+
+
+  8. Microservices Architecture
+  #
+
+
+  Architecture
+  #
+
+┌────────────┐  ┌────────────┐  ┌────────────┐
+│            │  │            │  │            │
+│   USER     │  │  PRODUCT   │  │   ORDER    │
+│  SERVICE   │  │  SERVICE   │  │  SERVICE   │
+│            │  │            │  │            │
+└─────┬──────┘  └─────┬──────┘  └─────┬──────┘
+      │               │               │
+      │               │               │
+      ▼               ▼               ▼
+┌────────────────────────────────────────────┐
+│                                            │
+│              API GATEWAY                   │
+│                                            │
+└────────────────────┬───────────────────────┘
+                     │
+                     ▼
+              ┌─────────────┐
+              │             │
+              │   CLIENT    │
+              │             │
+              └─────────────┘
+
+  Key Characteristics
+  #
+
+
+Service Independence: Each service can be developed and deployed separately
+Domain-Focused: Services organized around business capabilities
+Decentralized Data: Each service typically manages its own data
+Smart Endpoints, Dumb Pipes: Logic in services, simple communication channels
+
+
+  Technical Implementation
+  #
+
+
+Service Discovery: Mechanisms for services to find each other
+API Gateways: Single entry point for clients
+Circuit Breakers: Prevent cascading failures
+Event-Driven Communication: Often uses message queues for asynchronous communication
+
+
+  Real-World Examples
+  #
+
+
+E-commerce Platforms: Amazon&rsquo;s service-oriented architecture
+Streaming Services: Netflix microservices (700&#43; services)
+Financial Systems: PayPal&rsquo;s payment processing platform
+Transportation: Uber&rsquo;s ride-sharing platform
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/lecture-resources/lecture-1/types-ds/">
+  <meta property="og:site_name" content="Distributed Systems Lab">
+  <meta property="og:title" content="Types of Distributed Systems">
+  <meta property="og:description" content="Types of Distributed Systems # Distributed systems can be categorized based on their architecture, purpose, and how components interact. Each type has distinct characteristics that make it suitable for specific use cases.
+1. Client-Server Systems # Architecture # ┌─────────┐ ┌─────────┐ ┌─────────┐ │ │ │ │ │ │ │ CLIENT │────►│ SERVER │◄────│ CLIENT │ │ A │ │ │ │ B │ └─────────┘ └─────────┘ └─────────┘ ▲ │ ▼ ┌─────────┐ │ │ │ CLIENT │ │ C │ └─────────┘ Key Characteristics # Role Separation: Clear division between service providers (servers) and consumers (clients) Centralized Control: Servers manage resources and enforce access policies Request-Response Pattern: Communication follows a request-response cycle Scalability Challenge: Servers can become bottlenecks under high load Technical Implementation # Communication Protocols: HTTP/HTTPS, WebSockets, gRPC Load Distribution: Often uses load balancers to distribute client requests State Management: Servers typically maintain session state Real-World Examples # Web Applications: Gmail, online banking portals API Services: Twitter API, payment gateways Database Clients: SQL clients connecting to database servers Enterprise Applications: SAP, Salesforce 2. Peer-to-Peer (P2P) Systems # Architecture # ┌─────────┐ ┌─────────┐ ┌─────────┐ │ │◄───►│ │◄───►│ │ │ PEER A │ │ PEER B │ │ PEER C │ │ │◄─┐ │ │ ┌─►│ │ └─────────┘ │ └─────────┘ │ └─────────┘ │ │ │ ┌─────────┐ │ │ │ │ │ └─►│ PEER D │◄─┘ │ │ └─────────┘ Key Characteristics # Equality: All nodes can function as both clients and servers Decentralization: No central coordination point Resilience: System continues functioning when nodes join or leave Resource Sharing: Computing power, storage, and bandwidth are collectively shared Technical Implementation # Discovery Mechanisms: DHT (Distributed Hash Tables), gossip protocols Routing Algorithms: Chord, Kademlia, Pastry Data Replication: Content is often replicated across multiple peers Security Challenges: Trust establishment without central authority Real-World Examples # File Sharing: BitTorrent, IPFS (InterPlanetary File System) Cryptocurrency Networks: Bitcoin, Ethereum blockchain Communication Tools: Early versions of Skype Distributed Computing: BOINC platform projects 3. Clustered Systems # Architecture # ┌───────────────────────────────────────┐ │ │ │ CLUSTER MANAGER │ │ │ └───────┬───────────┬───────────┬───────┘ │ │ │ ▼ ▼ ▼ ┌───────────┐ ┌───────────┐ ┌───────────┐ │ │ │ │ │ │ │ NODE 1 │ │ NODE 2 │ │ NODE 3 │ │ │ │ │ │ │ └───────────┘ └───────────┘ └───────────┘ Key Characteristics # Physical Proximity: Nodes typically located in the same data center Homogeneous Hardware: Often uses similar or identical machines Shared Resources: Common storage, memory, or processing capabilities High Availability: Designed for fault tolerance and continuous operation Technical Implementation # Resource Management: Uses cluster managers like Kubernetes, Mesos Job Scheduling: Distributes workloads across available nodes Shared Storage: Often uses distributed file systems or SANs Heartbeat Protocols: Monitors node health and manages failover Real-World Examples # High-Performance Computing: Scientific simulation clusters Container Orchestration: Kubernetes clusters running microservices Big Data Processing: Hadoop/Spark clusters Database Clusters: MySQL Cluster, PostgreSQL with replication 4. Grid Computing Systems # Architecture # ┌───────────────┐ ┌───────────────┐ │ ORGANIZATION │ │ ORGANIZATION │ │ A │ │ B │ │ ┌─────┐ ┌─────┐ │ ┌─────┐ ┌─────┐ │ │NODE │ │NODE │ │ │NODE │ │NODE │ │ │ 1 │ │ 2 │ │ │ 1 │ │ 2 │ │ └─────┘ └─────┘ │ └─────┘ └─────┘ └───────┬───────┘ └───────┬───────┘ │ │ ▼ ▼ ┌───────────────────────────────────────┐ │ │ │ GRID MIDDLEWARE │ │ │ └───────────────────┬───────────────────┘ │ ▼ ┌───────────────────────────────────────┐ │ │ │ RESEARCH PROBLEM │ │ │ └───────────────────────────────────────┘ Key Characteristics # Geographic Distribution: Resources spread across multiple locations Heterogeneous Resources: Different types of computers and networks Virtual Organizations: Collaboration across institutional boundaries Resource Sharing: Focuses on sharing computing power for large problems Technical Implementation # Grid Middleware: Software like Globus Toolkit that manages resources Job Submission: Uses specialized protocols for submitting computing tasks Security Infrastructure: Certificate-based authentication across domains Data Management: Tools for moving large datasets between grid sites Real-World Examples # Scientific Computing: SETI@home (search for extraterrestrial intelligence) Medical Research: Folding@home (protein folding simulations) Particle Physics: LHC Computing Grid (analyzing CERN data) Climate Modeling: Earth System Grid (climate simulation data) 5. Distributed Databases # Architecture # ┌─────────────┐ ┌─────────────┐ │ │ │ │ │ DATABASE │◄────►│ DATABASE │ │ NODE 1 │ │ NODE 2 │ │ (Shard A) │ │ (Shard B) │ └──────┬──────┘ └──────┬──────┘ │ │ │ ┌─────────┐ │ └────►│ │◄───┘ │ QUERY │ │ ROUTER │ │ │ └────┬────┘ │ ▼ ┌─────────┐ │ │ │ CLIENT │ │ │ └─────────┘ Key Characteristics # Data Partitioning: Information divided across multiple nodes (sharding) Replication: Data copied to multiple locations for redundancy Consistency Models: Various approaches to maintaining data consistency Distributed Transactions: Mechanisms for maintaining ACID properties across nodes Technical Implementation # Consensus Algorithms: Paxos, Raft for maintaining consistency Partitioning Strategies: Range-based, hash-based, or directory-based sharding Query Processing: Distributed query execution and optimization CAP Theorem Tradeoffs: Balancing Consistency, Availability, and Partition tolerance Real-World Examples # NoSQL Databases: Cassandra (AP system), MongoDB (CP system) NewSQL Databases: Google Spanner, CockroachDB Time-Series Databases: InfluxDB, TimescaleDB Graph Databases: Neo4j (clustered), Amazon Neptune 6. Distributed File Systems # Architecture # ┌─────────────┐ ┌─────────────┐ │ │ │ │ │ STORAGE │ │ STORAGE │ │ NODE 1 │ │ NODE 2 │ │ │ │ │ └──────┬──────┘ └──────┬──────┘ │ │ │ ┌──────────┐ │ └───►│ │◄───┘ │ METADATA │ │ SERVER │ │ │ └─────┬────┘ │ ▼ ┌─────────┐ │ │ │ CLIENT │ │ │ └─────────┘ Key Characteristics # Transparent Access: Files appear as if they’re on a local system Location Independence: Users don’t need to know physical file locations Fault Tolerance: System continues operating despite node failures Scalability: Can add storage nodes to increase capacity Technical Implementation # Chunking: Files split into blocks distributed across nodes Metadata Management: Separate servers track file locations and attributes Caching: Local caching improves performance for frequently accessed files Consistency Protocols: Mechanisms to handle concurrent file access Real-World Examples # Cloud Storage: Amazon S3, Google Cloud Storage Big Data Storage: Hadoop Distributed File System (HDFS) Enterprise Storage: GlusterFS, Ceph Research Systems: Google File System (GFS), Andrew File System (AFS) 7. Cloud-Based Distributed Systems # Architecture # ┌───────────────────────────────────────────────────────┐ │ │ │ CLOUD PROVIDER │ │ │ │ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ │ │ │ │ │ │ │ │ │ │ │ COMPUTE │ │ STORAGE │ │ DATABASE │ │ │ │ SERVICES │ │ SERVICES │ │ SERVICES │ │ │ │ │ │ │ │ │ │ │ └─────────────┘ └─────────────┘ └─────────────┘ │ │ │ └───────────────────────────┬───────────────────────────┘ │ ▼ ┌───────────────┐ ┌─────────────┐ ┌───────────────┐ │ │ │ │ │ │ │ MOBILE │ │ WEB │ │ IOT │ │ CLIENTS │ │ CLIENTS │ │ DEVICES │ │ │ │ │ │ │ └───────────────┘ └─────────────┘ └───────────────┘ Key Characteristics # Elasticity: Resources can scale up or down based on demand Service-Based: Composed of multiple specialized services Multi-Tenancy: Infrastructure shared among multiple customers Pay-Per-Use: Resources billed based on actual consumption Technical Implementation # Virtualization: Uses VMs, containers, or serverless functions Service Orchestration: Automated provisioning and management API Gateways: Manages access to backend services Monitoring &amp; Telemetry: Distributed tracing and logging Real-World Examples # IaaS: Amazon EC2, Microsoft Azure VMs PaaS: Heroku, Google App Engine SaaS: Salesforce, Microsoft 365 Serverless: AWS Lambda, Azure Functions 8. Microservices Architecture # Architecture # ┌────────────┐ ┌────────────┐ ┌────────────┐ │ │ │ │ │ │ │ USER │ │ PRODUCT │ │ ORDER │ │ SERVICE │ │ SERVICE │ │ SERVICE │ │ │ │ │ │ │ └─────┬──────┘ └─────┬──────┘ └─────┬──────┘ │ │ │ │ │ │ ▼ ▼ ▼ ┌────────────────────────────────────────────┐ │ │ │ API GATEWAY │ │ │ └────────────────────┬───────────────────────┘ │ ▼ ┌─────────────┐ │ │ │ CLIENT │ │ │ └─────────────┘ Key Characteristics # Service Independence: Each service can be developed and deployed separately Domain-Focused: Services organized around business capabilities Decentralized Data: Each service typically manages its own data Smart Endpoints, Dumb Pipes: Logic in services, simple communication channels Technical Implementation # Service Discovery: Mechanisms for services to find each other API Gateways: Single entry point for clients Circuit Breakers: Prevent cascading failures Event-Driven Communication: Often uses message queues for asynchronous communication Real-World Examples # E-commerce Platforms: Amazon’s service-oriented architecture Streaming Services: Netflix microservices (700&#43; services) Financial Systems: PayPal’s payment processing platform Transportation: Uber’s ride-sharing platform">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>Types of Distributed Systems | Distributed Systems Lab</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/lecture-resources/lecture-1/types-ds/">
+<link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.d8765ae1c20771b33cb18730cb587c8b6888f3707b7d8d51bc033d7e21cec69a.js" integrity="sha256-2HZa4cIHcbM8sYcwy1h8i2iI83B7fY1RvAM9fiHOxpo=" crossorigin="anonymous"></script>
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1GNGFG1C4"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-T1GNGFG1C4');
+        }
+      </script><!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Distributed Systems Lab</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/details/" class="">Details</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/timeline/" class="">Course Timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/prerequisites/" class="">Prerequisites</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/tools/" class="">Tools</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-546b9044c321d8afbf101ab5c84d42f6" class="toggle" checked />
+    <label for="section-546b9044c321d8afbf101ab5c84d42f6" class="flex justify-between">
+      <a role="button" class="">Lecture Resources</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="toggle" checked />
+    <label for="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="flex justify-between">
+      <a role="button" class="">Lecture 1: Introduction</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/cs/" class="">Centralized Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ds/" class="">Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/types-ds/" class="active">Types of Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ms/" class="">Microservices</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-1/" class="">Phase 1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-2/" class="">Phase 2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-3/" class="">Phase 3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-4/" class="">Phase 4</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-5/" class="">Phase 5</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-6/" class="">Phase 6</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/system-design/" class="">Systems Design Problems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/exploration/" class="">Some Distributed Systems Exploration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/career-path/" class="">Career Path</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/about-me/" class="">About Me</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Types of Distributed Systems</h3>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-client-server-systems">1. Client-Server Systems</a>
+      <ul>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#key-characteristics">Key Characteristics</a></li>
+        <li><a href="#technical-implementation">Technical Implementation</a></li>
+        <li><a href="#real-world-examples">Real-World Examples</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-peer-to-peer-p2p-systems">2. Peer-to-Peer (P2P) Systems</a>
+      <ul>
+        <li><a href="#architecture-1">Architecture</a></li>
+        <li><a href="#key-characteristics-1">Key Characteristics</a></li>
+        <li><a href="#technical-implementation-1">Technical Implementation</a></li>
+        <li><a href="#real-world-examples-1">Real-World Examples</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-clustered-systems">3. Clustered Systems</a>
+      <ul>
+        <li><a href="#architecture-2">Architecture</a></li>
+        <li><a href="#key-characteristics-2">Key Characteristics</a></li>
+        <li><a href="#technical-implementation-2">Technical Implementation</a></li>
+        <li><a href="#real-world-examples-2">Real-World Examples</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-grid-computing-systems">4. Grid Computing Systems</a>
+      <ul>
+        <li><a href="#architecture-3">Architecture</a></li>
+        <li><a href="#key-characteristics-3">Key Characteristics</a></li>
+        <li><a href="#technical-implementation-3">Technical Implementation</a></li>
+        <li><a href="#real-world-examples-3">Real-World Examples</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-distributed-databases">5. Distributed Databases</a>
+      <ul>
+        <li><a href="#architecture-4">Architecture</a></li>
+        <li><a href="#key-characteristics-4">Key Characteristics</a></li>
+        <li><a href="#technical-implementation-4">Technical Implementation</a></li>
+        <li><a href="#real-world-examples-4">Real-World Examples</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-distributed-file-systems">6. Distributed File Systems</a>
+      <ul>
+        <li><a href="#architecture-5">Architecture</a></li>
+        <li><a href="#key-characteristics-5">Key Characteristics</a></li>
+        <li><a href="#technical-implementation-5">Technical Implementation</a></li>
+        <li><a href="#real-world-examples-5">Real-World Examples</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-cloud-based-distributed-systems">7. Cloud-Based Distributed Systems</a>
+      <ul>
+        <li><a href="#architecture-6">Architecture</a></li>
+        <li><a href="#key-characteristics-6">Key Characteristics</a></li>
+        <li><a href="#technical-implementation-6">Technical Implementation</a></li>
+        <li><a href="#real-world-examples-6">Real-World Examples</a></li>
+      </ul>
+    </li>
+    <li><a href="#8-microservices-architecture">8. Microservices Architecture</a>
+      <ul>
+        <li><a href="#architecture-7">Architecture</a></li>
+        <li><a href="#key-characteristics-7">Key Characteristics</a></li>
+        <li><a href="#technical-implementation-7">Technical Implementation</a></li>
+        <li><a href="#real-world-examples-7">Real-World Examples</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="types-of-distributed-systems">
+  Types of Distributed Systems
+  <a class="anchor" href="#types-of-distributed-systems">#</a>
+</h1>
+<p>Distributed systems can be categorized based on their architecture, purpose, and how components interact. Each type has distinct characteristics that make it suitable for specific use cases.</p>
+<h2 id="1-client-server-systems">
+  1. Client-Server Systems
+  <a class="anchor" href="#1-client-server-systems">#</a>
+</h2>
+<h3 id="architecture">
+  Architecture
+  <a class="anchor" href="#architecture">#</a>
+</h3>
+<pre tabindex="0"><code>┌─────────┐     ┌─────────┐     ┌─────────┐
+│         │     │         │     │         │
+│ CLIENT  │────►│ SERVER  │◄────│ CLIENT  │
+│    A    │     │         │     │    B    │
+└─────────┘     └─────────┘     └─────────┘
+                     ▲
+                     │
+                     ▼
+                ┌─────────┐
+                │         │
+                │ CLIENT  │
+                │    C    │
+                └─────────┘
+</code></pre><h3 id="key-characteristics">
+  Key Characteristics
+  <a class="anchor" href="#key-characteristics">#</a>
+</h3>
+<ul>
+<li><strong>Role Separation</strong>: Clear division between service providers (servers) and consumers (clients)</li>
+<li><strong>Centralized Control</strong>: Servers manage resources and enforce access policies</li>
+<li><strong>Request-Response Pattern</strong>: Communication follows a request-response cycle</li>
+<li><strong>Scalability Challenge</strong>: Servers can become bottlenecks under high load</li>
+</ul>
+<h3 id="technical-implementation">
+  Technical Implementation
+  <a class="anchor" href="#technical-implementation">#</a>
+</h3>
+<ul>
+<li><strong>Communication Protocols</strong>: HTTP/HTTPS, WebSockets, gRPC</li>
+<li><strong>Load Distribution</strong>: Often uses load balancers to distribute client requests</li>
+<li><strong>State Management</strong>: Servers typically maintain session state</li>
+</ul>
+<h3 id="real-world-examples">
+  Real-World Examples
+  <a class="anchor" href="#real-world-examples">#</a>
+</h3>
+<ul>
+<li><strong>Web Applications</strong>: Gmail, online banking portals</li>
+<li><strong>API Services</strong>: Twitter API, payment gateways</li>
+<li><strong>Database Clients</strong>: SQL clients connecting to database servers</li>
+<li><strong>Enterprise Applications</strong>: SAP, Salesforce</li>
+</ul>
+<h2 id="2-peer-to-peer-p2p-systems">
+  2. Peer-to-Peer (P2P) Systems
+  <a class="anchor" href="#2-peer-to-peer-p2p-systems">#</a>
+</h2>
+<h3 id="architecture-1">
+  Architecture
+  <a class="anchor" href="#architecture-1">#</a>
+</h3>
+<pre tabindex="0"><code>┌─────────┐     ┌─────────┐     ┌─────────┐
+│         │◄───►│         │◄───►│         │
+│ PEER A  │     │ PEER B  │     │ PEER C  │
+│         │◄─┐  │         │  ┌─►│         │
+└─────────┘  │  └─────────┘  │  └─────────┘
+             │               │
+             │  ┌─────────┐  │
+             │  │         │  │
+             └─►│ PEER D  │◄─┘
+                │         │
+                └─────────┘
+</code></pre><h3 id="key-characteristics-1">
+  Key Characteristics
+  <a class="anchor" href="#key-characteristics-1">#</a>
+</h3>
+<ul>
+<li><strong>Equality</strong>: All nodes can function as both clients and servers</li>
+<li><strong>Decentralization</strong>: No central coordination point</li>
+<li><strong>Resilience</strong>: System continues functioning when nodes join or leave</li>
+<li><strong>Resource Sharing</strong>: Computing power, storage, and bandwidth are collectively shared</li>
+</ul>
+<h3 id="technical-implementation-1">
+  Technical Implementation
+  <a class="anchor" href="#technical-implementation-1">#</a>
+</h3>
+<ul>
+<li><strong>Discovery Mechanisms</strong>: DHT (Distributed Hash Tables), gossip protocols</li>
+<li><strong>Routing Algorithms</strong>: Chord, Kademlia, Pastry</li>
+<li><strong>Data Replication</strong>: Content is often replicated across multiple peers</li>
+<li><strong>Security Challenges</strong>: Trust establishment without central authority</li>
+</ul>
+<h3 id="real-world-examples-1">
+  Real-World Examples
+  <a class="anchor" href="#real-world-examples-1">#</a>
+</h3>
+<ul>
+<li><strong>File Sharing</strong>: BitTorrent, IPFS (InterPlanetary File System)</li>
+<li><strong>Cryptocurrency Networks</strong>: Bitcoin, Ethereum blockchain</li>
+<li><strong>Communication Tools</strong>: Early versions of Skype</li>
+<li><strong>Distributed Computing</strong>: BOINC platform projects</li>
+</ul>
+<h2 id="3-clustered-systems">
+  3. Clustered Systems
+  <a class="anchor" href="#3-clustered-systems">#</a>
+</h2>
+<h3 id="architecture-2">
+  Architecture
+  <a class="anchor" href="#architecture-2">#</a>
+</h3>
+<pre tabindex="0"><code>┌───────────────────────────────────────┐
+│                                       │
+│            CLUSTER MANAGER            │
+│                                       │
+└───────┬───────────┬───────────┬───────┘
+        │           │           │
+        ▼           ▼           ▼
+┌───────────┐ ┌───────────┐ ┌───────────┐
+│           │ │           │ │           │
+│  NODE 1   │ │  NODE 2   │ │  NODE 3   │
+│           │ │           │ │           │
+└───────────┘ └───────────┘ └───────────┘
+</code></pre><h3 id="key-characteristics-2">
+  Key Characteristics
+  <a class="anchor" href="#key-characteristics-2">#</a>
+</h3>
+<ul>
+<li><strong>Physical Proximity</strong>: Nodes typically located in the same data center</li>
+<li><strong>Homogeneous Hardware</strong>: Often uses similar or identical machines</li>
+<li><strong>Shared Resources</strong>: Common storage, memory, or processing capabilities</li>
+<li><strong>High Availability</strong>: Designed for fault tolerance and continuous operation</li>
+</ul>
+<h3 id="technical-implementation-2">
+  Technical Implementation
+  <a class="anchor" href="#technical-implementation-2">#</a>
+</h3>
+<ul>
+<li><strong>Resource Management</strong>: Uses cluster managers like Kubernetes, Mesos</li>
+<li><strong>Job Scheduling</strong>: Distributes workloads across available nodes</li>
+<li><strong>Shared Storage</strong>: Often uses distributed file systems or SANs</li>
+<li><strong>Heartbeat Protocols</strong>: Monitors node health and manages failover</li>
+</ul>
+<h3 id="real-world-examples-2">
+  Real-World Examples
+  <a class="anchor" href="#real-world-examples-2">#</a>
+</h3>
+<ul>
+<li><strong>High-Performance Computing</strong>: Scientific simulation clusters</li>
+<li><strong>Container Orchestration</strong>: Kubernetes clusters running microservices</li>
+<li><strong>Big Data Processing</strong>: Hadoop/Spark clusters</li>
+<li><strong>Database Clusters</strong>: MySQL Cluster, PostgreSQL with replication</li>
+</ul>
+<h2 id="4-grid-computing-systems">
+  4. Grid Computing Systems
+  <a class="anchor" href="#4-grid-computing-systems">#</a>
+</h2>
+<h3 id="architecture-3">
+  Architecture
+  <a class="anchor" href="#architecture-3">#</a>
+</h3>
+<pre tabindex="0"><code>┌───────────────┐     ┌───────────────┐
+│  ORGANIZATION │     │  ORGANIZATION │
+│       A       │     │       B       │
+│ ┌─────┐ ┌─────┐     │ ┌─────┐ ┌─────┐
+│ │NODE │ │NODE │     │ │NODE │ │NODE │
+│ │  1  │ │  2  │     │ │  1  │ │  2  │
+│ └─────┘ └─────┘     │ └─────┘ └─────┘
+└───────┬───────┘     └───────┬───────┘
+        │                     │
+        ▼                     ▼
+┌───────────────────────────────────────┐
+│                                       │
+│          GRID MIDDLEWARE              │
+│                                       │
+└───────────────────┬───────────────────┘
+                    │
+                    ▼
+┌───────────────────────────────────────┐
+│                                       │
+│         RESEARCH PROBLEM              │
+│                                       │
+└───────────────────────────────────────┘
+</code></pre><h3 id="key-characteristics-3">
+  Key Characteristics
+  <a class="anchor" href="#key-characteristics-3">#</a>
+</h3>
+<ul>
+<li><strong>Geographic Distribution</strong>: Resources spread across multiple locations</li>
+<li><strong>Heterogeneous Resources</strong>: Different types of computers and networks</li>
+<li><strong>Virtual Organizations</strong>: Collaboration across institutional boundaries</li>
+<li><strong>Resource Sharing</strong>: Focuses on sharing computing power for large problems</li>
+</ul>
+<h3 id="technical-implementation-3">
+  Technical Implementation
+  <a class="anchor" href="#technical-implementation-3">#</a>
+</h3>
+<ul>
+<li><strong>Grid Middleware</strong>: Software like Globus Toolkit that manages resources</li>
+<li><strong>Job Submission</strong>: Uses specialized protocols for submitting computing tasks</li>
+<li><strong>Security Infrastructure</strong>: Certificate-based authentication across domains</li>
+<li><strong>Data Management</strong>: Tools for moving large datasets between grid sites</li>
+</ul>
+<h3 id="real-world-examples-3">
+  Real-World Examples
+  <a class="anchor" href="#real-world-examples-3">#</a>
+</h3>
+<ul>
+<li><strong>Scientific Computing</strong>: SETI@home (search for extraterrestrial intelligence)</li>
+<li><strong>Medical Research</strong>: Folding@home (protein folding simulations)</li>
+<li><strong>Particle Physics</strong>: LHC Computing Grid (analyzing CERN data)</li>
+<li><strong>Climate Modeling</strong>: Earth System Grid (climate simulation data)</li>
+</ul>
+<h2 id="5-distributed-databases">
+  5. Distributed Databases
+  <a class="anchor" href="#5-distributed-databases">#</a>
+</h2>
+<h3 id="architecture-4">
+  Architecture
+  <a class="anchor" href="#architecture-4">#</a>
+</h3>
+<pre tabindex="0"><code>┌─────────────┐      ┌─────────────┐
+│             │      │             │
+│  DATABASE   │◄────►│  DATABASE   │
+│   NODE 1    │      │   NODE 2    │
+│  (Shard A)  │      │  (Shard B)  │
+└──────┬──────┘      └──────┬──────┘
+       │                    │
+       │     ┌─────────┐    │
+       └────►│         │◄───┘
+             │ QUERY   │
+             │ ROUTER  │
+             │         │
+             └────┬────┘
+                  │
+                  ▼
+             ┌─────────┐
+             │         │
+             │ CLIENT  │
+             │         │
+             └─────────┘
+</code></pre><h3 id="key-characteristics-4">
+  Key Characteristics
+  <a class="anchor" href="#key-characteristics-4">#</a>
+</h3>
+<ul>
+<li><strong>Data Partitioning</strong>: Information divided across multiple nodes (sharding)</li>
+<li><strong>Replication</strong>: Data copied to multiple locations for redundancy</li>
+<li><strong>Consistency Models</strong>: Various approaches to maintaining data consistency</li>
+<li><strong>Distributed Transactions</strong>: Mechanisms for maintaining ACID properties across nodes</li>
+</ul>
+<h3 id="technical-implementation-4">
+  Technical Implementation
+  <a class="anchor" href="#technical-implementation-4">#</a>
+</h3>
+<ul>
+<li><strong>Consensus Algorithms</strong>: Paxos, Raft for maintaining consistency</li>
+<li><strong>Partitioning Strategies</strong>: Range-based, hash-based, or directory-based sharding</li>
+<li><strong>Query Processing</strong>: Distributed query execution and optimization</li>
+<li><strong>CAP Theorem Tradeoffs</strong>: Balancing Consistency, Availability, and Partition tolerance</li>
+</ul>
+<h3 id="real-world-examples-4">
+  Real-World Examples
+  <a class="anchor" href="#real-world-examples-4">#</a>
+</h3>
+<ul>
+<li><strong>NoSQL Databases</strong>: Cassandra (AP system), MongoDB (CP system)</li>
+<li><strong>NewSQL Databases</strong>: Google Spanner, CockroachDB</li>
+<li><strong>Time-Series Databases</strong>: InfluxDB, TimescaleDB</li>
+<li><strong>Graph Databases</strong>: Neo4j (clustered), Amazon Neptune</li>
+</ul>
+<h2 id="6-distributed-file-systems">
+  6. Distributed File Systems
+  <a class="anchor" href="#6-distributed-file-systems">#</a>
+</h2>
+<h3 id="architecture-5">
+  Architecture
+  <a class="anchor" href="#architecture-5">#</a>
+</h3>
+<pre tabindex="0"><code>┌─────────────┐      ┌─────────────┐
+│             │      │             │
+│   STORAGE   │      │   STORAGE   │
+│   NODE 1    │      │   NODE 2    │
+│             │      │             │
+└──────┬──────┘      └──────┬──────┘
+       │                    │
+       │    ┌──────────┐    │
+       └───►│          │◄───┘
+            │ METADATA │
+            │  SERVER  │
+            │          │
+            └─────┬────┘
+                  │
+                  ▼
+             ┌─────────┐
+             │         │
+             │ CLIENT  │
+             │         │
+             └─────────┘
+</code></pre><h3 id="key-characteristics-5">
+  Key Characteristics
+  <a class="anchor" href="#key-characteristics-5">#</a>
+</h3>
+<ul>
+<li><strong>Transparent Access</strong>: Files appear as if they&rsquo;re on a local system</li>
+<li><strong>Location Independence</strong>: Users don&rsquo;t need to know physical file locations</li>
+<li><strong>Fault Tolerance</strong>: System continues operating despite node failures</li>
+<li><strong>Scalability</strong>: Can add storage nodes to increase capacity</li>
+</ul>
+<h3 id="technical-implementation-5">
+  Technical Implementation
+  <a class="anchor" href="#technical-implementation-5">#</a>
+</h3>
+<ul>
+<li><strong>Chunking</strong>: Files split into blocks distributed across nodes</li>
+<li><strong>Metadata Management</strong>: Separate servers track file locations and attributes</li>
+<li><strong>Caching</strong>: Local caching improves performance for frequently accessed files</li>
+<li><strong>Consistency Protocols</strong>: Mechanisms to handle concurrent file access</li>
+</ul>
+<h3 id="real-world-examples-5">
+  Real-World Examples
+  <a class="anchor" href="#real-world-examples-5">#</a>
+</h3>
+<ul>
+<li><strong>Cloud Storage</strong>: Amazon S3, Google Cloud Storage</li>
+<li><strong>Big Data Storage</strong>: Hadoop Distributed File System (HDFS)</li>
+<li><strong>Enterprise Storage</strong>: GlusterFS, Ceph</li>
+<li><strong>Research Systems</strong>: Google File System (GFS), Andrew File System (AFS)</li>
+</ul>
+<h2 id="7-cloud-based-distributed-systems">
+  7. Cloud-Based Distributed Systems
+  <a class="anchor" href="#7-cloud-based-distributed-systems">#</a>
+</h2>
+<h3 id="architecture-6">
+  Architecture
+  <a class="anchor" href="#architecture-6">#</a>
+</h3>
+<pre tabindex="0"><code>┌───────────────────────────────────────────────────────┐
+│                                                       │
+│                    CLOUD PROVIDER                     │
+│                                                       │
+│  ┌─────────────┐   ┌─────────────┐   ┌─────────────┐  │
+│  │             │   │             │   │             │  │
+│  │    COMPUTE  │   │   STORAGE   │   │  DATABASE   │  │
+│  │   SERVICES  │   │  SERVICES   │   │  SERVICES   │  │
+│  │             │   │             │   │             │  │
+│  └─────────────┘   └─────────────┘   └─────────────┘  │
+│                                                       │
+└───────────────────────────┬───────────────────────────┘
+                            │
+                            ▼
+┌───────────────┐    ┌─────────────┐    ┌───────────────┐
+│               │    │             │    │               │
+│    MOBILE     │    │    WEB      │    │     IOT       │
+│    CLIENTS    │    │   CLIENTS   │    │    DEVICES    │
+│               │    │             │    │               │
+└───────────────┘    └─────────────┘    └───────────────┘
+</code></pre><h3 id="key-characteristics-6">
+  Key Characteristics
+  <a class="anchor" href="#key-characteristics-6">#</a>
+</h3>
+<ul>
+<li><strong>Elasticity</strong>: Resources can scale up or down based on demand</li>
+<li><strong>Service-Based</strong>: Composed of multiple specialized services</li>
+<li><strong>Multi-Tenancy</strong>: Infrastructure shared among multiple customers</li>
+<li><strong>Pay-Per-Use</strong>: Resources billed based on actual consumption</li>
+</ul>
+<h3 id="technical-implementation-6">
+  Technical Implementation
+  <a class="anchor" href="#technical-implementation-6">#</a>
+</h3>
+<ul>
+<li><strong>Virtualization</strong>: Uses VMs, containers, or serverless functions</li>
+<li><strong>Service Orchestration</strong>: Automated provisioning and management</li>
+<li><strong>API Gateways</strong>: Manages access to backend services</li>
+<li><strong>Monitoring &amp; Telemetry</strong>: Distributed tracing and logging</li>
+</ul>
+<h3 id="real-world-examples-6">
+  Real-World Examples
+  <a class="anchor" href="#real-world-examples-6">#</a>
+</h3>
+<ul>
+<li><strong>IaaS</strong>: Amazon EC2, Microsoft Azure VMs</li>
+<li><strong>PaaS</strong>: Heroku, Google App Engine</li>
+<li><strong>SaaS</strong>: Salesforce, Microsoft 365</li>
+<li><strong>Serverless</strong>: AWS Lambda, Azure Functions</li>
+</ul>
+<h2 id="8-microservices-architecture">
+  8. Microservices Architecture
+  <a class="anchor" href="#8-microservices-architecture">#</a>
+</h2>
+<h3 id="architecture-7">
+  Architecture
+  <a class="anchor" href="#architecture-7">#</a>
+</h3>
+<pre tabindex="0"><code>┌────────────┐  ┌────────────┐  ┌────────────┐
+│            │  │            │  │            │
+│   USER     │  │  PRODUCT   │  │   ORDER    │
+│  SERVICE   │  │  SERVICE   │  │  SERVICE   │
+│            │  │            │  │            │
+└─────┬──────┘  └─────┬──────┘  └─────┬──────┘
+      │               │               │
+      │               │               │
+      ▼               ▼               ▼
+┌────────────────────────────────────────────┐
+│                                            │
+│              API GATEWAY                   │
+│                                            │
+└────────────────────┬───────────────────────┘
+                     │
+                     ▼
+              ┌─────────────┐
+              │             │
+              │   CLIENT    │
+              │             │
+              └─────────────┘
+</code></pre><h3 id="key-characteristics-7">
+  Key Characteristics
+  <a class="anchor" href="#key-characteristics-7">#</a>
+</h3>
+<ul>
+<li><strong>Service Independence</strong>: Each service can be developed and deployed separately</li>
+<li><strong>Domain-Focused</strong>: Services organized around business capabilities</li>
+<li><strong>Decentralized Data</strong>: Each service typically manages its own data</li>
+<li><strong>Smart Endpoints, Dumb Pipes</strong>: Logic in services, simple communication channels</li>
+</ul>
+<h3 id="technical-implementation-7">
+  Technical Implementation
+  <a class="anchor" href="#technical-implementation-7">#</a>
+</h3>
+<ul>
+<li><strong>Service Discovery</strong>: Mechanisms for services to find each other</li>
+<li><strong>API Gateways</strong>: Single entry point for clients</li>
+<li><strong>Circuit Breakers</strong>: Prevent cascading failures</li>
+<li><strong>Event-Driven Communication</strong>: Often uses message queues for asynchronous communication</li>
+</ul>
+<h3 id="real-world-examples-7">
+  Real-World Examples
+  <a class="anchor" href="#real-world-examples-7">#</a>
+</h3>
+<ul>
+<li><strong>E-commerce Platforms</strong>: Amazon&rsquo;s service-oriented architecture</li>
+<li><strong>Streaming Services</strong>: Netflix microservices (700+ services)</li>
+<li><strong>Financial Systems</strong>: PayPal&rsquo;s payment processing platform</li>
+<li><strong>Transportation</strong>: Uber&rsquo;s ride-sharing platform</li>
+</ul>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-client-server-systems">1. Client-Server Systems</a>
+      <ul>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#key-characteristics">Key Characteristics</a></li>
+        <li><a href="#technical-implementation">Technical Implementation</a></li>
+        <li><a href="#real-world-examples">Real-World Examples</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-peer-to-peer-p2p-systems">2. Peer-to-Peer (P2P) Systems</a>
+      <ul>
+        <li><a href="#architecture-1">Architecture</a></li>
+        <li><a href="#key-characteristics-1">Key Characteristics</a></li>
+        <li><a href="#technical-implementation-1">Technical Implementation</a></li>
+        <li><a href="#real-world-examples-1">Real-World Examples</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-clustered-systems">3. Clustered Systems</a>
+      <ul>
+        <li><a href="#architecture-2">Architecture</a></li>
+        <li><a href="#key-characteristics-2">Key Characteristics</a></li>
+        <li><a href="#technical-implementation-2">Technical Implementation</a></li>
+        <li><a href="#real-world-examples-2">Real-World Examples</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-grid-computing-systems">4. Grid Computing Systems</a>
+      <ul>
+        <li><a href="#architecture-3">Architecture</a></li>
+        <li><a href="#key-characteristics-3">Key Characteristics</a></li>
+        <li><a href="#technical-implementation-3">Technical Implementation</a></li>
+        <li><a href="#real-world-examples-3">Real-World Examples</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-distributed-databases">5. Distributed Databases</a>
+      <ul>
+        <li><a href="#architecture-4">Architecture</a></li>
+        <li><a href="#key-characteristics-4">Key Characteristics</a></li>
+        <li><a href="#technical-implementation-4">Technical Implementation</a></li>
+        <li><a href="#real-world-examples-4">Real-World Examples</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-distributed-file-systems">6. Distributed File Systems</a>
+      <ul>
+        <li><a href="#architecture-5">Architecture</a></li>
+        <li><a href="#key-characteristics-5">Key Characteristics</a></li>
+        <li><a href="#technical-implementation-5">Technical Implementation</a></li>
+        <li><a href="#real-world-examples-5">Real-World Examples</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-cloud-based-distributed-systems">7. Cloud-Based Distributed Systems</a>
+      <ul>
+        <li><a href="#architecture-6">Architecture</a></li>
+        <li><a href="#key-characteristics-6">Key Characteristics</a></li>
+        <li><a href="#technical-implementation-6">Technical Implementation</a></li>
+        <li><a href="#real-world-examples-6">Real-World Examples</a></li>
+      </ul>
+    </li>
+    <li><a href="#8-microservices-architecture">8. Microservices Architecture</a>
+      <ul>
+        <li><a href="#architecture-7">Architecture</a></li>
+        <li><a href="#key-characteristics-7">Key Characteristics</a></li>
+        <li><a href="#technical-implementation-7">Technical Implementation</a></li>
+        <li><a href="#real-world-examples-7">Real-World Examples</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

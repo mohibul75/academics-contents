@@ -21,12 +21,12 @@ We’ll build and evolve a system from the ground up through a real-world inspir
 
 ## 🎓 Who Is This Lab For?
 
-This Lab is designed for Software Engineering students at [IIT, University of Dhaka](http://www.iit.du.ac.bd/) as part of their academic curriculum. Specifically, it serves as the practical component for the **CSE601: Distributed Systems** course offered in the 3rd year, 6th semester (April-July 2025).
+This Lab is designed for anyone interested in exploring distributed systems concepts through hands-on practice. It provides a practical approach to understanding how distributed systems work in real-world environments.
 
-🌱 Beyond academics, this lab is perfect for:
-- Students eager to apply theoretical concepts in real-world scenarios
+🌱 This lab is perfect for:
+- Technology enthusiasts eager to apply theoretical concepts in real-world scenarios
 - Early-career developers looking to strengthen their backend skills
-- Tech enthusiasts passionate about modern system architecture
+- Tech professionals passionate about modern system architecture
 - Anyone who believes in **learning by building** practical projects
 
 If you're curious about how modern tech giants architect their systems, how cloud-native applications function, or how to design resilient distributed services—this lab will provide hands-on experience with industry-relevant tools and practices.
