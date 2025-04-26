@@ -60,6 +60,8 @@ All modules interact with this **shared relational database**, typically Postgre
 
 Here’s how external clients (like CLI tools or a potential frontend) interact with the system.
 
+These are some apis of the monolithic version of the library system. you are open to add more apis for completing the system.
+
 ### 🔹 User Endpoints
 
 #### `POST /api/users`
