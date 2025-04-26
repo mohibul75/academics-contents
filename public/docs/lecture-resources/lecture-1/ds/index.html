@@ -17,6 +17,15 @@ A distributed system is a collection of autonomous computing elements that appea
   🏗️ Technical Architecture
   #
 
+    ┌──────────────────────────┐                 ┌────────────────────────┐
+    │                          │                 │                        │
+    │       CLIENT 1           │                 │       CLIENT 2         │
+    │                          │                 │                        │
+    └──────────────┬───────────┘                 └───────────┬────────────┘
+                   │                                         │
+                   │                                         │
+                   │                                         │
+                   ▼                                         ▼
                   ┌───────────────────────────────────┐
                   │                                   │
                   │        LOAD BALANCER             │
@@ -45,14 +54,6 @@ A distributed system is a collection of autonomous computing elements that appea
     │    (Order Processing)  │                   │   (Payment Service)    │
     │                        │                   │                        │
     └────────────────────────┘                   └────────────────────────┘
-                 ▲                                          ▲
-                 │                                          │
-                 │                                          │
-    ┌────────────┴─────────────┐                 ┌──────────┴─────────────┐
-    │                          │                 │                        │
-    │       CLIENT 1           │                 │       CLIENT 2         │
-    │                          │                 │                        │
-    └──────────────────────────┘                 └────────────────────────┘
 
   🔍 Real-World Analogy
   #
@@ -65,7 +66,7 @@ Imagine a collaborative research project:">
   <meta property="og:title" content="Distributed Systems">
   <meta property="og:description" content="Introduction to Distributed Systems # ✨ What is a Distributed System? # A distributed system is a collection of autonomous computing elements that appears to its users as a single coherent system.
 👉 These independent nodes communicate and coordinate their actions by passing messages over a network to achieve a common goal.
-🏗️ Technical Architecture # ┌───────────────────────────────────┐ │ │ │ LOAD BALANCER │ │ │ └───────────┬───────────┬───────────┘ │ │ ┌────────────┘ └────────────┐ │ │ ┌────────────▼─────────────┐ ┌────────────────▼───────────┐ │ │ │ │ │ SERVER A │◄────►│ SERVER B │ │ (Authentication) │ │ (Product Catalog) │ │ │ │ │ └────────────┬─────────────┘ └────────────┬───────────────┘ │ │ │ ┌────────────────┐ │ └───────────►│ │◄───┘ │ DATABASE │ │ │ └────────┬───────┘ │ │ ┌────────────────────────┐ │ ┌────────────────────────┐ │ │ │ │ │ │ SERVER C │◄────────┴────────►│ SERVER D │ │ (Order Processing) │ │ (Payment Service) │ │ │ │ │ └────────────────────────┘ └────────────────────────┘ ▲ ▲ │ │ │ │ ┌────────────┴─────────────┐ ┌──────────┴─────────────┐ │ │ │ │ │ CLIENT 1 │ │ CLIENT 2 │ │ │ │ │ └──────────────────────────┘ └────────────────────────┘ 🔍 Real-World Analogy # Imagine a collaborative research project:">
+🏗️ Technical Architecture # ┌──────────────────────────┐ ┌────────────────────────┐ │ │ │ │ │ CLIENT 1 │ │ CLIENT 2 │ │ │ │ │ └──────────────┬───────────┘ └───────────┬────────────┘ │ │ │ │ │ │ ▼ ▼ ┌───────────────────────────────────┐ │ │ │ LOAD BALANCER │ │ │ └───────────┬───────────┬───────────┘ │ │ ┌────────────┘ └────────────┐ │ │ ┌────────────▼─────────────┐ ┌────────────────▼───────────┐ │ │ │ │ │ SERVER A │◄────►│ SERVER B │ │ (Authentication) │ │ (Product Catalog) │ │ │ │ │ └────────────┬─────────────┘ └────────────┬───────────────┘ │ │ │ ┌────────────────┐ │ └───────────►│ │◄───┘ │ DATABASE │ │ │ └────────┬───────┘ │ │ ┌────────────────────────┐ │ ┌────────────────────────┐ │ │ │ │ │ │ SERVER C │◄────────┴────────►│ SERVER D │ │ (Order Processing) │ │ (Payment Service) │ │ │ │ │ └────────────────────────┘ └────────────────────────┘ 🔍 Real-World Analogy # Imagine a collaborative research project:">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="docs">
@@ -496,7 +497,16 @@ https://github.com/alex-shpak/hugo-book
   🏗️ Technical Architecture
   <a class="anchor" href="#-technical-architecture">#</a>
 </h3>
-<pre tabindex="0"><code>                  ┌───────────────────────────────────┐
+<pre tabindex="0"><code>    ┌──────────────────────────┐                 ┌────────────────────────┐
+    │                          │                 │                        │
+    │       CLIENT 1           │                 │       CLIENT 2         │
+    │                          │                 │                        │
+    └──────────────┬───────────┘                 └───────────┬────────────┘
+                   │                                         │
+                   │                                         │
+                   │                                         │
+                   ▼                                         ▼
+                  ┌───────────────────────────────────┐
                   │                                   │
                   │        LOAD BALANCER             │
                   │                                   │
@@ -524,14 +534,6 @@ https://github.com/alex-shpak/hugo-book
     │    (Order Processing)  │                   │   (Payment Service)    │
     │                        │                   │                        │
     └────────────────────────┘                   └────────────────────────┘
-                 ▲                                          ▲
-                 │                                          │
-                 │                                          │
-    ┌────────────┴─────────────┐                 ┌──────────┴─────────────┐
-    │                          │                 │                        │
-    │       CLIENT 1           │                 │       CLIENT 2         │
-    │                          │                 │                        │
-    └──────────────────────────┘                 └────────────────────────┘
 </code></pre><h3 id="-real-world-analogy">
   🔍 Real-World Analogy
   <a class="anchor" href="#-real-world-analogy">#</a>
