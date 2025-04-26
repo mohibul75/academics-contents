@@ -486,6 +486,7 @@ https://github.com/alex-shpak/hugo-book
     <li><a href="#-internal-communication">🔄 Internal Communication</a></li>
     <li><a href="#-api-documentation-rest-endpoints">🧪 API Documentation (REST Endpoints)</a>
       <ul>
+        <li><a href="#api-design-principles">API Design Principles</a></li>
         <li><a href="#-user-endpoints">🔹 User Endpoints</a></li>
         <li><a href="#-book-endpoints">🔹 Book Endpoints</a></li>
         <li><a href="#-loan-endpoints">🔹 Loan Endpoints</a></li>
@@ -589,8 +590,19 @@ https://github.com/alex-shpak/hugo-book
   🧪 API Documentation (REST Endpoints)
   <a class="anchor" href="#-api-documentation-rest-endpoints">#</a>
 </h2>
-<p>Here’s how external clients (like CLI tools or a potential frontend) interact with the system.</p>
-<p>These are some apis of the monolithic version of the library system. you are open to add more apis for completing the system.</p>
+<p>The Smart Library System exposes a comprehensive RESTful API that follows standard HTTP methods and status codes. This API allows external clients (web applications, mobile apps, CLI tools) to interact with the system.</p>
+<h3 id="api-design-principles">
+  API Design Principles
+  <a class="anchor" href="#api-design-principles">#</a>
+</h3>
+<ul>
+<li><strong>RESTful Architecture</strong>: Resources are accessed via standard HTTP methods (GET, POST, PUT, DELETE)</li>
+<li><strong>JSON Payloads</strong>: All requests and responses use JSON format for data exchange</li>
+<li><strong>Consistent Naming</strong>: Endpoints follow a consistent naming convention (/api/{resource})</li>
+<li><strong>Stateless Communication</strong>: No client state is stored on the server between requests</li>
+<li><strong>Proper Status Codes</strong>: HTTP status codes indicate success (2xx), client errors (4xx), or server errors (5xx)</li>
+</ul>
+<p>The following endpoints demonstrate the core functionality of the monolithic library system. You are open to add more APIs to complete this system based on additional requirements or use cases.</p>
 <h3 id="-user-endpoints">
   🔹 User Endpoints
   <a class="anchor" href="#-user-endpoints">#</a>
@@ -923,6 +935,7 @@ https://github.com/alex-shpak/hugo-book
     <li><a href="#-internal-communication">🔄 Internal Communication</a></li>
     <li><a href="#-api-documentation-rest-endpoints">🧪 API Documentation (REST Endpoints)</a>
       <ul>
+        <li><a href="#api-design-principles">API Design Principles</a></li>
         <li><a href="#-user-endpoints">🔹 User Endpoints</a></li>
         <li><a href="#-book-endpoints">🔹 Book Endpoints</a></li>
         <li><a href="#-loan-endpoints">🔹 Loan Endpoints</a></li>

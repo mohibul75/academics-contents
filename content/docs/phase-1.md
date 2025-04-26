@@ -58,9 +58,17 @@ All modules interact with this **shared relational database**, typically Postgre
 
 ## 🧪 API Documentation (REST Endpoints)
 
-Here’s how external clients (like CLI tools or a potential frontend) interact with the system.
+The Smart Library System exposes a comprehensive RESTful API that follows standard HTTP methods and status codes. This API allows external clients (web applications, mobile apps, CLI tools) to interact with the system.
 
-These are some apis of the monolithic version of the library system. you are open to add more apis for completing the system.
+### API Design Principles
+
+- **RESTful Architecture**: Resources are accessed via standard HTTP methods (GET, POST, PUT, DELETE)
+- **JSON Payloads**: All requests and responses use JSON format for data exchange
+- **Consistent Naming**: Endpoints follow a consistent naming convention (/api/{resource})
+- **Stateless Communication**: No client state is stored on the server between requests
+- **Proper Status Codes**: HTTP status codes indicate success (2xx), client errors (4xx), or server errors (5xx)
+
+The following endpoints demonstrate the core functionality of the monolithic library system. You are open to add more APIs to complete this system based on additional requirements or use cases.
 
 ### 🔹 User Endpoints
 
