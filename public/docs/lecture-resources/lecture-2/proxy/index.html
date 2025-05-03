@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  🔄 Proxies in Distributed Systems
+  #
+
+
+  🧭 Introduction
+  #
+
+Modern distributed systems rely on proxies to manage complexity, enhance security, and improve performance. In microservice architectures, proxies play a crucial role in service discovery, load balancing, and API gateway functionality.
+A proxy serves as an intermediary that sits between clients and servers, intercepting and potentially modifying the communication between them. This pattern enables numerous architectural benefits that we&rsquo;ll explore in this lecture.">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/lecture-resources/lecture-2/proxy/">
+  <meta property="og:site_name" content="Distributed Systems Lab">
+  <meta property="og:title" content="Proxy Fundamentals">
+  <meta property="og:description" content="🔄 Proxies in Distributed Systems # 🧭 Introduction # Modern distributed systems rely on proxies to manage complexity, enhance security, and improve performance. In microservice architectures, proxies play a crucial role in service discovery, load balancing, and API gateway functionality.
+A proxy serves as an intermediary that sits between clients and servers, intercepting and potentially modifying the communication between them. This pattern enables numerous architectural benefits that we’ll explore in this lecture.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>Proxy Fundamentals | Distributed Systems Lab</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/lecture-resources/lecture-2/proxy/">
+<link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.e0dbb304318af74ec4c43edd70180030cd9c0dc18d8efec1f7c56aa995d3b104.js" integrity="sha256-4NuzBDGK907ExD7dcBgAMM2cDcGNjv7B98VqqZXTsQQ=" crossorigin="anonymous"></script>
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1GNGFG1C4"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-T1GNGFG1C4');
+        }
+      </script><!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Distributed Systems Lab</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/details/" class="">Details</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/timeline/" class="">Course Timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/prerequisites/" class="">Prerequisites</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/tools/" class="">Tools</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-546b9044c321d8afbf101ab5c84d42f6" class="toggle" checked />
+    <label for="section-546b9044c321d8afbf101ab5c84d42f6" class="flex justify-between">
+      <a role="button" class="">Lecture Resources</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="toggle"  />
+    <label for="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="flex justify-between">
+      <a role="button" class="">Lecture 1: Introduction</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/cs/" class="">Centralized Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ds/" class="">Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/types-ds/" class="">Types of Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ms/" class="">Microservices</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-a7062be986807b90f862fe3e30dfe2c8" class="toggle" checked />
+    <label for="section-a7062be986807b90f862fe3e30dfe2c8" class="flex justify-between">
+      <a href="/docs/lecture-resources/lecture-2/" class="">Lecture 2: Proxies in Distributed Systems</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-2/proxy/" class="active">Proxy Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-2/reverse-proxy/" class="">Reverse Proxy Implementation</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-1/" class="">Phase 1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-2/" class="">Phase 2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-3/" class="">Phase 3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-4/" class="">Phase 4</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-5/" class="">Phase 5</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-6/" class="">Phase 6</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/system-design/" class="">Systems Design Problems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/exploration/" class="">Some Distributed Systems Exploration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/career-path/" class="">Career Path</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/about-me/" class="">About Me</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Proxy Fundamentals</h3>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#-introduction">🧭 Introduction</a></li>
+    <li><a href="#-what-is-a-proxy">🛡️ What is a Proxy?</a></li>
+    <li><a href="#-forward-proxy">🔄 Forward Proxy</a>
+      <ul>
+        <li><a href="#characteristics">Characteristics:</a></li>
+        <li><a href="#key-use-cases">Key Use Cases:</a></li>
+        <li><a href="#-diagram">🌐 Diagram</a></li>
+      </ul>
+    </li>
+    <li><a href="#-how-forward-proxies-work">🔍 How Forward Proxies Work</a></li>
+    <li><a href="#-key-concepts-to-remember">🧠 Key Concepts to Remember</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="-proxies-in-distributed-systems">
+  🔄 Proxies in Distributed Systems
+  <a class="anchor" href="#-proxies-in-distributed-systems">#</a>
+</h1>
+<h2 id="-introduction">
+  🧭 Introduction
+  <a class="anchor" href="#-introduction">#</a>
+</h2>
+<p>Modern distributed systems rely on <strong>proxies</strong> to manage complexity, enhance security, and improve performance. In microservice architectures, proxies play a crucial role in <strong>service discovery</strong>, <strong>load balancing</strong>, and <strong>API gateway</strong> functionality.</p>
+<p>A proxy serves as an intermediary that sits between clients and servers, intercepting and potentially modifying the communication between them. This pattern enables numerous architectural benefits that we&rsquo;ll explore in this lecture.</p>
+<hr>
+<h2 id="-what-is-a-proxy">
+  🛡️ What is a Proxy?
+  <a class="anchor" href="#-what-is-a-proxy">#</a>
+</h2>
+<p>A <strong>proxy</strong> is an intermediary server that acts on behalf of another entity in a network communication. It intercepts requests, may transform them, and forwards them to the appropriate destination.</p>
+<p>Proxies serve several key purposes in distributed systems:</p>
+<ul>
+<li><strong>Abstraction</strong>: Hide implementation details of backend services</li>
+<li><strong>Security</strong>: Filter traffic and protect backend services</li>
+<li><strong>Performance</strong>: Cache responses and optimize data transfer</li>
+<li><strong>Routing</strong>: Direct traffic based on content or request patterns</li>
+<li><strong>Monitoring</strong>: Log and analyze traffic patterns</li>
+</ul>
+<hr>
+<h2 id="-forward-proxy">
+  🔄 Forward Proxy
+  <a class="anchor" href="#-forward-proxy">#</a>
+</h2>
+<p>A <strong>forward proxy</strong> acts on behalf of the <strong>client</strong>. It sits between clients and the wider internet, forwarding client requests to external servers.</p>
+<h3 id="characteristics">
+  Characteristics:
+  <a class="anchor" href="#characteristics">#</a>
+</h3>
+<ul>
+<li>The client is <strong>aware</strong> of the proxy and must be configured to use it</li>
+<li>Commonly used for <strong>access control</strong>, <strong>content filtering</strong>, and <strong>anonymity</strong></li>
+<li>Hides the <strong>client&rsquo;s identity</strong> from the server</li>
+<li>Often deployed in corporate or educational networks</li>
+</ul>
+<h3 id="key-use-cases">
+  Key Use Cases:
+  <a class="anchor" href="#key-use-cases">#</a>
+</h3>
+<ul>
+<li><strong>Internet access control</strong> in organizations</li>
+<li><strong>Content filtering</strong> for compliance or security</li>
+<li><strong>Anonymizing client traffic</strong> for privacy</li>
+<li><strong>Caching frequently accessed content</strong> to improve performance</li>
+<li><strong>Bypassing geo-restrictions</strong> on content</li>
+</ul>
+<h3 id="-diagram">
+  🌐 Diagram
+  <a class="anchor" href="#-diagram">#</a>
+</h3>
+<pre tabindex="0"><code>                                 INTERNET
+                                    |
+                                    |
++------------------+        +---------------+        +------------------+
+|                  |        |               |        |                  |
+|   Client 1   ----+-------&gt;|               |-------&gt;|   Web Server 1   |
+|                  |        |               |        |                  |
++------------------+        |               |        +------------------+
+                           |               |
++------------------+        |   FORWARD    |        +------------------+
+|                  |        |    PROXY     |        |                  |
+|   Client 2   ----+-------&gt;|               |-------&gt;|   Web Server 2   |
+|                  |        |               |        |                  |
++------------------+        |               |        +------------------+
+                           |               |
++------------------+        |               |
+|                  |        |               |
+|   Client 3   ----+-------&gt;|               |
+|                  |        |               |
++------------------+        +---------------+
+                                    ^
+                                    |
+                           PRIVATE NETWORK
+</code></pre><hr>
+<h2 id="-how-forward-proxies-work">
+  🔍 How Forward Proxies Work
+  <a class="anchor" href="#-how-forward-proxies-work">#</a>
+</h2>
+<ol>
+<li><strong>Client Configuration</strong>: The client is explicitly configured to send requests through the proxy</li>
+<li><strong>Request Interception</strong>: The proxy receives the client&rsquo;s request</li>
+<li><strong>Policy Enforcement</strong>: The proxy applies access control and filtering policies</li>
+<li><strong>Request Forwarding</strong>: If allowed, the proxy forwards the request to the destination server</li>
+<li><strong>Response Processing</strong>: The proxy receives the server&rsquo;s response, potentially caches it</li>
+<li><strong>Client Delivery</strong>: The proxy returns the response to the client</li>
+</ol>
+<hr>
+<h2 id="-key-concepts-to-remember">
+  🧠 Key Concepts to Remember
+  <a class="anchor" href="#-key-concepts-to-remember">#</a>
+</h2>
+<ul>
+<li>Forward proxies are <strong>client-facing</strong> intermediaries</li>
+<li>They require <strong>explicit client configuration</strong></li>
+<li>They&rsquo;re excellent for <strong>access control</strong> and <strong>content filtering</strong></li>
+<li>They <strong>hide client identity</strong> from destination servers</li>
+<li>Common implementations include <strong>Squid</strong>, <strong>TinyProxy</strong>, and <strong>NGINX</strong> (when configured as a forward proxy)</li>
+</ul>
+<p>In the next section, we&rsquo;ll explore <strong>Reverse Proxies</strong> and their critical role in modern microservice architectures.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#-introduction">🧭 Introduction</a></li>
+    <li><a href="#-what-is-a-proxy">🛡️ What is a Proxy?</a></li>
+    <li><a href="#-forward-proxy">🔄 Forward Proxy</a>
+      <ul>
+        <li><a href="#characteristics">Characteristics:</a></li>
+        <li><a href="#key-use-cases">Key Use Cases:</a></li>
+        <li><a href="#-diagram">🌐 Diagram</a></li>
+      </ul>
+    </li>
+    <li><a href="#-how-forward-proxies-work">🔍 How Forward Proxies Work</a></li>
+    <li><a href="#-key-concepts-to-remember">🧠 Key Concepts to Remember</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

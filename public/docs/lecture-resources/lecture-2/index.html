@@ -4,45 +4,44 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="
-  ⚙️ Phase 5: Managing with Docker Compose
-  #
-
-With multiple services running, we now use Docker Compose to manage them together through a unified configuration.
-
-  🎯 You’ll Learn:
+  🌐 Proxies in Distributed Systems
   #
 
 
-Structuring a docker-compose.yml file
-Defining services, networks, and volumes
-Scaling services for development/testing
-Making services talk to each other by name
+  Overview
+  #
 
+In this lecture, we explore the critical role of proxies in distributed systems architecture. Proxies serve as intermediaries that facilitate communication between different components, enabling scalability, security, and efficient resource management.
 
-  🛠 Topics Covered:
+  Learning Objectives
   #
 
 
-Docker Compose syntax and service definitions
-Declaring DB containers (e.g., Postgres, MySQL)
-Health checks and restart policies
-Local development workflows with Compose
-Mounting source code with volumes: for live reloading
-">
+Understand the fundamental concepts of proxies in distributed systems
+Differentiate between forward and reverse proxies
+Master the implementation of Nginx as a reverse proxy for microservices
+Apply proxy patterns to solve real-world distributed systems challenges
+
+
+  Topics Covered
+  #
+
+
+
+Proxy Fundamentals">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
-<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/phase-5/">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/lecture-resources/lecture-2/">
   <meta property="og:site_name" content="Distributed Systems Lab">
-  <meta property="og:title" content="Phase 5">
-  <meta property="og:description" content="⚙️ Phase 5: Managing with Docker Compose # With multiple services running, we now use Docker Compose to manage them together through a unified configuration.
-🎯 You’ll Learn: # Structuring a docker-compose.yml file Defining services, networks, and volumes Scaling services for development/testing Making services talk to each other by name 🛠 Topics Covered: # Docker Compose syntax and service definitions Declaring DB containers (e.g., Postgres, MySQL) Health checks and restart policies Local development workflows with Compose Mounting source code with volumes: for live reloading">
+  <meta property="og:title" content="Lecture 2: Proxies in Distributed Systems">
+  <meta property="og:description" content="🌐 Proxies in Distributed Systems # Overview # In this lecture, we explore the critical role of proxies in distributed systems architecture. Proxies serve as intermediaries that facilitate communication between different components, enabling scalability, security, and efficient resource management.
+Learning Objectives # Understand the fundamental concepts of proxies in distributed systems Differentiate between forward and reverse proxies Master the implementation of Nginx as a reverse proxy for microservices Apply proxy patterns to solve real-world distributed systems challenges Topics Covered # Proxy Fundamentals">
   <meta property="og:locale" content="en_us">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="docs">
-<title>Phase 5 | Distributed Systems Lab</title>
+  <meta property="og:type" content="website">
+<title>Lecture 2: Proxies in Distributed Systems | Distributed Systems Lab</title>
 <link rel="icon" href="/favicon.png" >
 <link rel="manifest" href="/manifest.json">
-<link rel="canonical" href="http://localhost:1313/docs/phase-5/">
+<link rel="canonical" href="http://localhost:1313/docs/lecture-resources/lecture-2/">
 <link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
   <script defer src="/fuse.min.js"></script>
   <script defer src="/en.search.min.e0dbb304318af74ec4c43edd70180030cd9c0dc18d8efec1f7c56aa995d3b104.js" integrity="sha256-4NuzBDGK907ExD7dcBgAMM2cDcGNjv7B98VqqZXTsQQ=" crossorigin="anonymous"></script>
@@ -60,7 +59,8 @@ Mounting source code with volumes: for live reloading
           gtag('js', new Date());
           gtag('config', 'G-T1GNGFG1C4');
         }
-      </script><!--
+      </script><link rel="alternate" type="application/rss+xml" href="http://localhost:1313/docs/lecture-resources/lecture-2/index.xml" title="Distributed Systems Lab" />
+<!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
 -->
@@ -163,7 +163,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <input type="checkbox" id="section-546b9044c321d8afbf101ab5c84d42f6" class="toggle"  />
+    <input type="checkbox" id="section-546b9044c321d8afbf101ab5c84d42f6" class="toggle" checked />
     <label for="section-546b9044c321d8afbf101ab5c84d42f6" class="flex justify-between">
       <a role="button" class="">Lecture Resources</a>
     </label>
@@ -252,9 +252,9 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <input type="checkbox" id="section-a7062be986807b90f862fe3e30dfe2c8" class="toggle"  />
+    <input type="checkbox" id="section-a7062be986807b90f862fe3e30dfe2c8" class="toggle" checked />
     <label for="section-a7062be986807b90f862fe3e30dfe2c8" class="flex justify-between">
-      <a href="/docs/lecture-resources/lecture-2/" class="">Lecture 2: Proxy</a>
+      <a href="/docs/lecture-resources/lecture-2/" class="active">Lecture 2: Proxies in Distributed Systems</a>
     </label>
   
 
@@ -268,7 +268,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/docs/lecture-resources/lecture-2/proxy/" class="">Proxy</a>
+    <a href="/docs/lecture-resources/lecture-2/proxy/" class="">Proxy Fundamentals</a>
   
 
         </li>
@@ -281,7 +281,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/docs/lecture-resources/lecture-2/reverse-proxy/" class="">Reverse Proxy</a>
+    <a href="/docs/lecture-resources/lecture-2/reverse-proxy/" class="">Reverse Proxy Implementation</a>
   
 
         </li>
@@ -356,7 +356,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/docs/phase-5/" class="active">Phase 5</a>
+    <a href="/docs/phase-5/" class="">Phase 5</a>
   
 
         </li>
@@ -462,7 +462,7 @@ https://github.com/alex-shpak/hugo-book
     <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
-  <h3>Phase 5</h3>
+  <h3>Lecture 2: Proxies in Distributed Systems</h3>
 
   <label for="toc-control">
     
@@ -478,12 +478,10 @@ https://github.com/alex-shpak/hugo-book
   
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#-phase-5-managing-with-docker-compose">⚙️ Phase 5: Managing with Docker Compose</a>
-      <ul>
-        <li><a href="#-youll-learn">🎯 You’ll Learn:</a></li>
-        <li><a href="#-topics-covered">🛠 Topics Covered:</a></li>
-      </ul>
-    </li>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#topics-covered">Topics Covered</a></li>
+    <li><a href="#practical-applications">Practical Applications</a></li>
   </ul>
 </nav>
 
@@ -496,31 +494,56 @@ https://github.com/alex-shpak/hugo-book
 
       
       
-  <article class="markdown book-article"><h2 id="-phase-5-managing-with-docker-compose">
-  ⚙️ Phase 5: Managing with Docker Compose
-  <a class="anchor" href="#-phase-5-managing-with-docker-compose">#</a>
+  <article class="markdown book-article"><h1 id="-proxies-in-distributed-systems">
+  🌐 Proxies in Distributed Systems
+  <a class="anchor" href="#-proxies-in-distributed-systems">#</a>
+</h1>
+<h2 id="overview">
+  Overview
+  <a class="anchor" href="#overview">#</a>
 </h2>
-<p>With multiple services running, we now use <strong>Docker Compose</strong> to manage them together through a unified configuration.</p>
-<h3 id="-youll-learn">
-  🎯 You’ll Learn:
-  <a class="anchor" href="#-youll-learn">#</a>
-</h3>
+<p>In this lecture, we explore the critical role of proxies in distributed systems architecture. Proxies serve as intermediaries that facilitate communication between different components, enabling scalability, security, and efficient resource management.</p>
+<h2 id="learning-objectives">
+  Learning Objectives
+  <a class="anchor" href="#learning-objectives">#</a>
+</h2>
 <ul>
-<li>Structuring a <code>docker-compose.yml</code> file</li>
-<li>Defining services, networks, and volumes</li>
-<li>Scaling services for development/testing</li>
-<li>Making services talk to each other by name</li>
+<li>Understand the fundamental concepts of proxies in distributed systems</li>
+<li>Differentiate between forward and reverse proxies</li>
+<li>Master the implementation of Nginx as a reverse proxy for microservices</li>
+<li>Apply proxy patterns to solve real-world distributed systems challenges</li>
 </ul>
-<h3 id="-topics-covered">
-  🛠 Topics Covered:
-  <a class="anchor" href="#-topics-covered">#</a>
-</h3>
+<h2 id="topics-covered">
+  Topics Covered
+  <a class="anchor" href="#topics-covered">#</a>
+</h2>
+<ol>
+<li>
+<p><strong>Proxy Fundamentals</strong></p>
 <ul>
-<li>Docker Compose syntax and service definitions</li>
-<li>Declaring DB containers (e.g., Postgres, MySQL)</li>
-<li>Health checks and restart policies</li>
-<li>Local development workflows with Compose</li>
-<li>Mounting source code with <code>volumes:</code> for live reloading</li>
+<li>Definition and types of proxies</li>
+<li>Use cases in modern distributed architectures</li>
+</ul>
+</li>
+<li>
+<p><strong>Reverse Proxies with Nginx</strong></p>
+<ul>
+<li>Configuration and implementation</li>
+<li>Load balancing and routing strategies</li>
+<li>Security enhancements</li>
+</ul>
+</li>
+</ol>
+<h2 id="practical-applications">
+  Practical Applications
+  <a class="anchor" href="#practical-applications">#</a>
+</h2>
+<p>The concepts covered in this lecture are essential for:</p>
+<ul>
+<li>Microservice architecture implementation</li>
+<li>API gateway design</li>
+<li>Service mesh infrastructure</li>
+<li>Cloud-native application development</li>
 </ul>
 </article>
  
@@ -547,6 +570,10 @@ https://github.com/alex-shpak/hugo-book
 
       
   
+  <div class="book-comments">
+
+</div>
+  
  
 
       <label for="menu-control" class="hidden book-menu-overlay"></label>
@@ -559,12 +586,10 @@ https://github.com/alex-shpak/hugo-book
   
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#-phase-5-managing-with-docker-compose">⚙️ Phase 5: Managing with Docker Compose</a>
-      <ul>
-        <li><a href="#-youll-learn">🎯 You’ll Learn:</a></li>
-        <li><a href="#-topics-covered">🛠 Topics Covered:</a></li>
-      </ul>
-    </li>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#topics-covered">Topics Covered</a></li>
+    <li><a href="#practical-applications">Practical Applications</a></li>
   </ul>
 </nav>
 

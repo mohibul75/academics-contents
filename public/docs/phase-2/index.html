@@ -38,7 +38,7 @@ Handles registration, profile management, and user-related queries.">
 <link rel="canonical" href="http://localhost:1313/docs/phase-2/">
 <link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
   <script defer src="/fuse.min.js"></script>
-  <script defer src="/en.search.min.d8765ae1c20771b33cb18730cb587c8b6888f3707b7d8d51bc033d7e21cec69a.js" integrity="sha256-2HZa4cIHcbM8sYcwy1h8i2iI83B7fY1RvAM9fiHOxpo=" crossorigin="anonymous"></script>
+  <script defer src="/en.search.min.e0dbb304318af74ec4c43edd70180030cd9c0dc18d8efec1f7c56aa995d3b104.js" integrity="sha256-4NuzBDGK907ExD7dcBgAMM2cDcGNjv7B98VqqZXTsQQ=" crossorigin="anonymous"></script>
 
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1GNGFG1C4"></script>
       <script>
@@ -156,58 +156,6 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/docs/phase-1/" class="">Phase 1</a>
-  
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="/docs/phase-2/" class="active">Phase 2</a>
-  
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="/docs/phase-3/" class="">Phase 3</a>
-  
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
-    <a href="/docs/phase-4/" class="">Phase 4</a>
-  
-
-        </li>
-      
-    
-      
-        <li>
-          
-  
-  
-
-  
     <input type="checkbox" id="section-546b9044c321d8afbf101ab5c84d42f6" class="toggle"  />
     <label for="section-546b9044c321d8afbf101ab5c84d42f6" class="flex justify-between">
       <a role="button" class="">Lecture Resources</a>
@@ -290,7 +238,106 @@ https://github.com/alex-shpak/hugo-book
         </li>
       
     
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-a7062be986807b90f862fe3e30dfe2c8" class="toggle"  />
+    <label for="section-a7062be986807b90f862fe3e30dfe2c8" class="flex justify-between">
+      <a href="/docs/lecture-resources/lecture-2/" class="">Lecture 2: Proxy</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-2/proxy/" class="">Proxy</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-2/reverse-proxy/" class="">Reverse Proxy</a>
+  
+
+        </li>
+      
+    
   </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-1/" class="">Phase 1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-2/" class="active">Phase 2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-3/" class="">Phase 3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-4/" class="">Phase 4</a>
+  
 
         </li>
       
@@ -432,9 +479,23 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#3-loan-service">3. <strong>Loan Service</strong></a></li>
       </ul>
     </li>
-    <li><a href="#-inter-service-communication">🔗 Inter-Service Communication</a></li>
     <li><a href="#-databases-one-per-service">🛢️ Databases (One per service)</a></li>
-    <li><a href="#-deployment-strategy">⚙️ Deployment Strategy</a></li>
+    <li><a href="#-inter-service-communication">🔗 Inter-Service Communication</a>
+      <ul>
+        <li><a href="#communication-patterns">Communication Patterns</a></li>
+        <li><a href="#implementation-details">Implementation Details</a></li>
+        <li><a href="#example-loan-creation-flow">Example: Loan Creation Flow</a></li>
+        <li><a href="#error-handling">Error Handling</a></li>
+      </ul>
+    </li>
+    <li><a href="#-api-documentation-microservices">🧪 API Documentation (Microservices)</a>
+      <ul>
+        <li><a href="#api-design-principles">API Design Principles</a></li>
+        <li><a href="#-user-service-endpoints">🔹 User Service Endpoints</a></li>
+        <li><a href="#-book-service-endpoints">🔹 Book Service Endpoints</a></li>
+        <li><a href="#-loan-service-endpoints">🔹 Loan Service Endpoints</a></li>
+      </ul>
+    </li>
     <li><a href="#-advantages-of-microservices">✅ Advantages of Microservices</a></li>
     <li><a href="#-trade-offs">⚠️ Trade-offs</a></li>
   </ul>
@@ -472,26 +533,6 @@ https://github.com/alex-shpak/hugo-book
 <li>🚪 REST Base Path: <code>/api/users</code></li>
 <li>📦 Owns a <strong>user database</strong>.</li>
 </ul>
-<h4 id="-api-endpoints">
-  🔹 API Endpoints
-  <a class="anchor" href="#-api-endpoints">#</a>
-</h4>
-<h5 id="post-apiusers">
-  <code>POST /api/users</code>
-  <a class="anchor" href="#post-apiusers">#</a>
-</h5>
-<p>Register a new user.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Alice&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;email&#34;</span>: <span style="color:#e6db74">&#34;alice@example.com&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;student&#34;</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h5 id="get-apiusersid">
-  <code>GET /api/users/{id}</code>
-  <a class="anchor" href="#get-apiusersid">#</a>
-</h5>
-<p>Fetch user details by ID.</p>
-<hr>
 <h3 id="2-book-service">
   2. <strong>Book Service</strong>
   <a class="anchor" href="#2-book-service">#</a>
@@ -501,35 +542,6 @@ https://github.com/alex-shpak/hugo-book
 <li>🚪 REST Base Path: <code>/api/books</code></li>
 <li>📦 Owns a <strong>book database</strong>.</li>
 </ul>
-<h4 id="-api-endpoints-1">
-  🔹 API Endpoints
-  <a class="anchor" href="#-api-endpoints-1">#</a>
-</h4>
-<h5 id="post-apibooks">
-  <code>POST /api/books</code>
-  <a class="anchor" href="#post-apibooks">#</a>
-</h5>
-<p>Add a new book.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;Clean Code&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;author&#34;</span>: <span style="color:#e6db74">&#34;Robert C. Martin&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;isbn&#34;</span>: <span style="color:#e6db74">&#34;9780132350884&#34;</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;copies&#34;</span>: <span style="color:#ae81ff">3</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><h5 id="get-apibookssearchcode">
-  <code>GET /api/books?search=code</code>
-  <a class="anchor" href="#get-apibookssearchcode">#</a>
-</h5>
-<p>Search books by title, author, or keyword.</p>
-<h5 id="patch-apibooksid">
-  <code>PATCH /api/books/{id}</code>
-  <a class="anchor" href="#patch-apibooksid">#</a>
-</h5>
-<p>Update a book&rsquo;s available copies (used by Loan Service during issue/return).</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;copies&#34;</span>: <span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><hr>
 <h3 id="3-loan-service">
   3. <strong>Loan Service</strong>
   <a class="anchor" href="#3-loan-service">#</a>
@@ -539,59 +551,6 @@ https://github.com/alex-shpak/hugo-book
 <li>🚪 REST Base Path: <code>/api/loans</code></li>
 <li>📦 Owns a <strong>loan database</strong>.</li>
 </ul>
-<h4 id="-api-endpoints-2">
-  🔹 API Endpoints
-  <a class="anchor" href="#-api-endpoints-2">#</a>
-</h4>
-<h5 id="post-apiloans">
-  <code>POST /api/loans</code>
-  <a class="anchor" href="#post-apiloans">#</a>
-</h5>
-<p>Create a loan.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;user_id&#34;</span>: <span style="color:#ae81ff">1</span>,
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;book_id&#34;</span>: <span style="color:#ae81ff">42</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>Process:</strong></p>
-<ul>
-<li>Validate <code>user_id</code> via <code>User Service</code>.</li>
-<li>Validate <code>book_id</code> and availability via <code>Book Service</code>.</li>
-<li>If all checks pass, reduce the book&rsquo;s available copy count.</li>
-</ul>
-<hr>
-<h5 id="post-apireturns">
-  <code>POST /api/returns</code>
-  <a class="anchor" href="#post-apireturns">#</a>
-</h5>
-<p>Return a borrowed book.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
-</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;loan_id&#34;</span>: <span style="color:#ae81ff">1001</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>Process:</strong></p>
-<ul>
-<li>Update loan status.</li>
-<li>Increment book availability in <strong>Book Service</strong>.</li>
-</ul>
-<hr>
-<h5 id="get-apiloansuseruser_id">
-  <code>GET /api/loans/user/{user_id}</code>
-  <a class="anchor" href="#get-apiloansuseruser_id">#</a>
-</h5>
-<p>Get a user&rsquo;s loan history (active and returned books).</p>
-<hr>
-<h2 id="-inter-service-communication">
-  🔗 Inter-Service Communication
-  <a class="anchor" href="#-inter-service-communication">#</a>
-</h2>
-<ul>
-<li><strong>Loan Service</strong> makes HTTP calls to:
-<ul>
-<li><code>User Service</code>: to validate user identity.</li>
-<li><code>Book Service</code>: to check and update book inventory.</li>
-</ul>
-</li>
-</ul>
-<p>No shared database. Each service is <strong>data-isolated</strong> for decoupling and autonomy.</p>
 <hr>
 <h2 id="-databases-one-per-service">
   🛢️ Databases (One per service)
@@ -624,25 +583,381 @@ https://github.com/alex-shpak/hugo-book
   </tbody>
 </table>
 <hr>
-<h2 id="-deployment-strategy">
-  ⚙️ Deployment Strategy
-  <a class="anchor" href="#-deployment-strategy">#</a>
+<h2 id="-inter-service-communication">
+  🔗 Inter-Service Communication
+  <a class="anchor" href="#-inter-service-communication">#</a>
 </h2>
-<p>Each microservice:</p>
+<h3 id="communication-patterns">
+  Communication Patterns
+  <a class="anchor" href="#communication-patterns">#</a>
+</h3>
+<p>In this microservices architecture, services communicate with each other through <strong>synchronous HTTP/REST APIs</strong>. Here&rsquo;s how the communication flows:</p>
+<ol>
+<li><strong>Direct Service-to-Service Communication</strong>:
 <ul>
-<li>Runs in its <strong>own container or VM</strong>.</li>
-<li>Has its <strong>own codebase</strong>, tests, deployment pipeline.</li>
-<li>Can be updated, scaled, or restarted <strong>independently</strong>.</li>
+<li>The <strong>Loan Service</strong> directly calls APIs exposed by the <strong>User Service</strong> and <strong>Book Service</strong>.</li>
+<li>For example, when issuing a book, the Loan Service:
+<ul>
+<li>Calls <code>GET /api/users/{id}</code> to verify the user exists</li>
+<li>Calls <code>GET /api/books/{id}</code> to check book availability</li>
+<li>Calls <code>PATCH /api/books/{id}/availability</code> to update book availability</li>
 </ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="implementation-details">
+  Implementation Details
+  <a class="anchor" href="#implementation-details">#</a>
+</h3>
+<ul>
+<li><strong>Service URLs</strong>: In development, services might use predefined URLs (e.g., <code>http://user-service:8081</code>, <code>http://book-service:8082</code>).</li>
+<li><strong>HTTP Clients</strong>: Services use HTTP clients to make API calls.</li>
+<li><strong>Circuit Breakers</strong>: Implement circuit breakers to handle failures gracefully.</li>
+<li><strong>Timeout Handling</strong>: Set appropriate timeouts for inter-service calls to prevent cascading failures.</li>
+</ul>
+<h3 id="example-loan-creation-flow">
+  Example: Loan Creation Flow
+  <a class="anchor" href="#example-loan-creation-flow">#</a>
+</h3>
+<p>When a client sends a request to create a loan:</p>
+<ol>
+<li><strong>Client</strong> sends <code>POST /api/loans</code> to the <strong>Loan Service</strong></li>
+<li><strong>Loan Service</strong> performs:
+<pre tabindex="0"><code>GET /api/users/{user_id} → User Service
+↓
+GET /api/books/{book_id} → Book Service
+↓
+PATCH /api/books/{book_id}/availability → Book Service
+↓
+INSERT into loan_db.loans
+↓
+Return response to Client
+</code></pre></li>
+</ol>
+<h3 id="error-handling">
+  Error Handling
+  <a class="anchor" href="#error-handling">#</a>
+</h3>
+<ul>
+<li>If the <strong>User Service</strong> is unavailable, the <strong>Loan Service</strong> returns a 503 Service Unavailable response.</li>
+<li>If the <strong>Book Service</strong> is unavailable, the <strong>Loan Service</strong> returns a 503 Service Unavailable response.</li>
+<li>If the user doesn&rsquo;t exist, the <strong>Loan Service</strong> returns a 404 Not Found response.</li>
+<li>If the book doesn&rsquo;t exist or has no available copies, the <strong>Loan Service</strong> returns a 400 Bad Request response.</li>
+</ul>
+<p>No shared database. Each service is <strong>data-isolated</strong> for decoupling and autonomy.</p>
 <hr>
+<h2 id="-api-documentation-microservices">
+  🧪 API Documentation (Microservices)
+  <a class="anchor" href="#-api-documentation-microservices">#</a>
+</h2>
+<p>The Smart Library System&rsquo;s microservices architecture exposes RESTful APIs for each service. These APIs follow standard HTTP methods and status codes, allowing clients and other services to interact with the system.</p>
+<h3 id="api-design-principles">
+  API Design Principles
+  <a class="anchor" href="#api-design-principles">#</a>
+</h3>
+<ul>
+<li><strong>RESTful Architecture</strong>: Resources are accessed via standard HTTP methods (GET, POST, PUT, DELETE)</li>
+<li><strong>JSON Payloads</strong>: All requests and responses use JSON format for data exchange</li>
+<li><strong>Service Isolation</strong>: Each service has its own API namespace and database</li>
+<li><strong>Stateless Communication</strong>: No client state is stored on the server between requests</li>
+<li><strong>Proper Status Codes</strong>: HTTP status codes indicate success (2xx), client errors (4xx), or server errors (5xx)</li>
+</ul>
+<p>The following endpoints demonstrate the core functionality of each microservice. You are open to add more APIs to complete this system based on additional requirements or use cases.</p>
+<h3 id="-user-service-endpoints">
+  🔹 User Service Endpoints
+  <a class="anchor" href="#-user-service-endpoints">#</a>
+</h3>
+<h4 id="post-apiusers">
+  <code>POST /api/users</code>
+  <a class="anchor" href="#post-apiusers">#</a>
+</h4>
+<p>Create/register a new user.</p>
+<p><strong>Request:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Alice Smith&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;email&#34;</span>: <span style="color:#e6db74">&#34;alice@example.com&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;student&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Response:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Alice Smith&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;email&#34;</span>: <span style="color:#e6db74">&#34;alice@example.com&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;student&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;created_at&#34;</span>: <span style="color:#e6db74">&#34;2025-05-03T13:30:00Z&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="get-apiusersid">
+  <code>GET /api/users/{id}</code>
+  <a class="anchor" href="#get-apiusersid">#</a>
+</h4>
+<p>Fetch user profile by ID.</p>
+<p><strong>Response:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Alice Smith&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;email&#34;</span>: <span style="color:#e6db74">&#34;alice@example.com&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;student&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;created_at&#34;</span>: <span style="color:#e6db74">&#34;2025-05-03T13:30:00Z&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;updated_at&#34;</span>: <span style="color:#e6db74">&#34;2025-05-03T13:30:00Z&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="put-apiusersid">
+  <code>PUT /api/users/{id}</code>
+  <a class="anchor" href="#put-apiusersid">#</a>
+</h4>
+<p>Update user information.</p>
+<p><strong>Request:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Alice Johnson&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;email&#34;</span>: <span style="color:#e6db74">&#34;alice.johnson@example.com&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Response:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Alice Johnson&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;email&#34;</span>: <span style="color:#e6db74">&#34;alice.johnson@example.com&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;role&#34;</span>: <span style="color:#e6db74">&#34;student&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;created_at&#34;</span>: <span style="color:#e6db74">&#34;2025-05-03T13:30:00Z&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;updated_at&#34;</span>: <span style="color:#e6db74">&#34;2025-05-03T14:15:00Z&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<h3 id="-book-service-endpoints">
+  🔹 Book Service Endpoints
+  <a class="anchor" href="#-book-service-endpoints">#</a>
+</h3>
+<h4 id="post-apibooks">
+  <code>POST /api/books</code>
+  <a class="anchor" href="#post-apibooks">#</a>
+</h4>
+<p>Add a new book.</p>
+<p><strong>Request:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;Clean Code&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;author&#34;</span>: <span style="color:#e6db74">&#34;Robert C. Martin&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;isbn&#34;</span>: <span style="color:#e6db74">&#34;9780132350884&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;copies&#34;</span>: <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Response:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">42</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;Clean Code&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;author&#34;</span>: <span style="color:#e6db74">&#34;Robert C. Martin&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;isbn&#34;</span>: <span style="color:#e6db74">&#34;9780132350884&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;copies&#34;</span>: <span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;available_copies&#34;</span>: <span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;created_at&#34;</span>: <span style="color:#e6db74">&#34;2025-05-03T13:45:00Z&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="get-apibookssearchclean">
+  <code>GET /api/books?search=clean</code>
+  <a class="anchor" href="#get-apibookssearchclean">#</a>
+</h4>
+<p>Search for books by title, author, or keyword.</p>
+<p><strong>Response:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;books&#34;</span>: [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">42</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;Clean Code&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;author&#34;</span>: <span style="color:#e6db74">&#34;Robert C. Martin&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;isbn&#34;</span>: <span style="color:#e6db74">&#34;9780132350884&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;copies&#34;</span>: <span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;available_copies&#34;</span>: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">43</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;Clean Architecture&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;author&#34;</span>: <span style="color:#e6db74">&#34;Robert C. Martin&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;isbn&#34;</span>: <span style="color:#e6db74">&#34;9780134494166&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;copies&#34;</span>: <span style="color:#ae81ff">2</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;available_copies&#34;</span>: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  ],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;total&#34;</span>: <span style="color:#ae81ff">2</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;page&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;per_page&#34;</span>: <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="get-apibooksid">
+  <code>GET /api/books/{id}</code>
+  <a class="anchor" href="#get-apibooksid">#</a>
+</h4>
+<p>Retrieve detailed information about a specific book.</p>
+<p><strong>Response:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">42</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;Clean Code&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;author&#34;</span>: <span style="color:#e6db74">&#34;Robert C. Martin&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;isbn&#34;</span>: <span style="color:#e6db74">&#34;9780132350884&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;copies&#34;</span>: <span style="color:#ae81ff">3</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;available_copies&#34;</span>: <span style="color:#ae81ff">2</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;created_at&#34;</span>: <span style="color:#e6db74">&#34;2025-05-03T13:45:00Z&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;updated_at&#34;</span>: <span style="color:#e6db74">&#34;2025-05-03T14:30:00Z&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="put-apibooksid">
+  <code>PUT /api/books/{id}</code>
+  <a class="anchor" href="#put-apibooksid">#</a>
+</h4>
+<p>Update book information.</p>
+<p><strong>Request:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;copies&#34;</span>: <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Response:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">42</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;Clean Code&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;author&#34;</span>: <span style="color:#e6db74">&#34;Robert C. Martin&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;isbn&#34;</span>: <span style="color:#e6db74">&#34;9780132350884&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;copies&#34;</span>: <span style="color:#ae81ff">5</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;available_copies&#34;</span>: <span style="color:#ae81ff">4</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;created_at&#34;</span>: <span style="color:#e6db74">&#34;2025-05-03T13:45:00Z&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;updated_at&#34;</span>: <span style="color:#e6db74">&#34;2025-05-03T15:10:00Z&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="patch-apibooksidavailability">
+  <code>PATCH /api/books/{id}/availability</code>
+  <a class="anchor" href="#patch-apibooksidavailability">#</a>
+</h4>
+<p>Update a book&rsquo;s available copies (used internally by Loan Service during issue/return).</p>
+<p><strong>Request:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;available_copies&#34;</span>: <span style="color:#ae81ff">4</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;operation&#34;</span>: <span style="color:#e6db74">&#34;increment&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Response:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">42</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;available_copies&#34;</span>: <span style="color:#ae81ff">4</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;updated_at&#34;</span>: <span style="color:#e6db74">&#34;2025-05-03T15:20:00Z&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="delete-apibooksid">
+  <code>DELETE /api/books/{id}</code>
+  <a class="anchor" href="#delete-apibooksid">#</a>
+</h4>
+<p>Remove a book from the catalog.</p>
+<p><strong>Response:</strong></p>
+<pre tabindex="0"><code>204 No Content
+</code></pre><hr>
+<h3 id="-loan-service-endpoints">
+  🔹 Loan Service Endpoints
+  <a class="anchor" href="#-loan-service-endpoints">#</a>
+</h3>
+<h4 id="post-apiloans">
+  <code>POST /api/loans</code>
+  <a class="anchor" href="#post-apiloans">#</a>
+</h4>
+<p>Issue a book to a user.</p>
+<p><strong>Request:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;user_id&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;book_id&#34;</span>: <span style="color:#ae81ff">42</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;due_date&#34;</span>: <span style="color:#e6db74">&#34;2025-06-03T23:59:59Z&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Process:</strong></p>
+<ul>
+<li>Validate <code>user_id</code> via <code>User Service</code>.</li>
+<li>Validate <code>book_id</code> and availability via <code>Book Service</code>.</li>
+<li>If all checks pass, reduce the book&rsquo;s available copy count.</li>
+</ul>
+<p><strong>Response:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">1001</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;user_id&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;book_id&#34;</span>: <span style="color:#ae81ff">42</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;issue_date&#34;</span>: <span style="color:#e6db74">&#34;2025-05-03T15:30:00Z&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;due_date&#34;</span>: <span style="color:#e6db74">&#34;2025-06-03T23:59:59Z&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#e6db74">&#34;ACTIVE&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="post-apireturns">
+  <code>POST /api/returns</code>
+  <a class="anchor" href="#post-apireturns">#</a>
+</h4>
+<p>Return a borrowed book.</p>
+<p><strong>Request:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;loan_id&#34;</span>: <span style="color:#ae81ff">1001</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><strong>Process:</strong></p>
+<ul>
+<li>Update loan status.</li>
+<li>Increment book availability in <strong>Book Service</strong>.</li>
+</ul>
+<p><strong>Response:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">1001</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;user_id&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;book_id&#34;</span>: <span style="color:#ae81ff">42</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;issue_date&#34;</span>: <span style="color:#e6db74">&#34;2025-05-03T15:30:00Z&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;due_date&#34;</span>: <span style="color:#e6db74">&#34;2025-06-03T23:59:59Z&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;return_date&#34;</span>: <span style="color:#e6db74">&#34;2025-05-15T10:45:00Z&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#e6db74">&#34;RETURNED&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="get-apiloansuseruser_id">
+  <code>GET /api/loans/user/{user_id}</code>
+  <a class="anchor" href="#get-apiloansuseruser_id">#</a>
+</h4>
+<p>Get a user&rsquo;s loan history (active and returned books).</p>
+<p><strong>Response:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;loans&#34;</span>: [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">1001</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;book&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">42</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;Clean Code&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;author&#34;</span>: <span style="color:#e6db74">&#34;Robert C. Martin&#34;</span>
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;issue_date&#34;</span>: <span style="color:#e6db74">&#34;2025-05-03T15:30:00Z&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;due_date&#34;</span>: <span style="color:#e6db74">&#34;2025-06-03T23:59:59Z&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;return_date&#34;</span>: <span style="color:#e6db74">&#34;2025-05-15T10:45:00Z&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#e6db74">&#34;RETURNED&#34;</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">1002</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;book&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">43</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;Clean Architecture&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;author&#34;</span>: <span style="color:#e6db74">&#34;Robert C. Martin&#34;</span>
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;issue_date&#34;</span>: <span style="color:#e6db74">&#34;2025-05-10T09:15:00Z&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;due_date&#34;</span>: <span style="color:#e6db74">&#34;2025-06-10T23:59:59Z&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#e6db74">&#34;ACTIVE&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  ],
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;total&#34;</span>: <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h4 id="get-apiloansid">
+  <code>GET /api/loans/{id}</code>
+  <a class="anchor" href="#get-apiloansid">#</a>
+</h4>
+<p>Get details of a specific loan.</p>
+<p><strong>Response:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">1001</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;user&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Alice Johnson&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;email&#34;</span>: <span style="color:#e6db74">&#34;alice.johnson@example.com&#34;</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;book&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;id&#34;</span>: <span style="color:#ae81ff">42</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;title&#34;</span>: <span style="color:#e6db74">&#34;Clean Code&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;author&#34;</span>: <span style="color:#e6db74">&#34;Robert C. Martin&#34;</span>
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;issue_date&#34;</span>: <span style="color:#e6db74">&#34;2025-05-03T15:30:00Z&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;due_date&#34;</span>: <span style="color:#e6db74">&#34;2025-06-03T23:59:59Z&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;return_date&#34;</span>: <span style="color:#e6db74">&#34;2025-05-15T10:45:00Z&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;status&#34;</span>: <span style="color:#e6db74">&#34;RETURNED&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
 <h2 id="-advantages-of-microservices">
   ✅ Advantages of Microservices
   <a class="anchor" href="#-advantages-of-microservices">#</a>
 </h2>
 <ul>
-<li>Independent development and deployment.</li>
-<li>Fault isolation: one service failing doesn’t crash the whole app.</li>
-<li>Easier scaling: Book Service can be scaled independently if traffic spikes.</li>
+<li><strong>Independent Development</strong>: Teams can work on different services simultaneously.</li>
+<li><strong>Technology Diversity</strong>: Each service can use the most appropriate tech stack.</li>
+<li><strong>Fault Isolation</strong>: One service failing doesn&rsquo;t crash the whole application.</li>
+<li><strong>Scalability</strong>: Services can be scaled independently based on demand.</li>
+<li><strong>Focused Responsibility</strong>: Each service has a clear, bounded context.</li>
 </ul>
 <hr>
 <h2 id="-trade-offs">
@@ -650,9 +965,11 @@ https://github.com/alex-shpak/hugo-book
   <a class="anchor" href="#-trade-offs">#</a>
 </h2>
 <ul>
-<li>Increased operational complexity.</li>
-<li>Requires robust <strong>service discovery</strong>, <strong>monitoring</strong>, and <strong>API versioning</strong>.</li>
-<li>Debugging across services can be harder without centralized logs.</li>
+<li><strong>Increased Operational Complexity</strong>: Managing multiple services requires more sophisticated DevOps.</li>
+<li><strong>Network Latency</strong>: Inter-service communication adds overhead compared to function calls.</li>
+<li><strong>Data Consistency Challenges</strong>: Maintaining consistency across service boundaries is harder.</li>
+<li><strong>Distributed Debugging</strong>: Tracing issues across services requires specialized tooling.</li>
+<li><strong>Service Discovery</strong>: Services need to locate and communicate with each other reliably.</li>
 </ul>
 </article>
  
@@ -699,9 +1016,23 @@ https://github.com/alex-shpak/hugo-book
         <li><a href="#3-loan-service">3. <strong>Loan Service</strong></a></li>
       </ul>
     </li>
-    <li><a href="#-inter-service-communication">🔗 Inter-Service Communication</a></li>
     <li><a href="#-databases-one-per-service">🛢️ Databases (One per service)</a></li>
-    <li><a href="#-deployment-strategy">⚙️ Deployment Strategy</a></li>
+    <li><a href="#-inter-service-communication">🔗 Inter-Service Communication</a>
+      <ul>
+        <li><a href="#communication-patterns">Communication Patterns</a></li>
+        <li><a href="#implementation-details">Implementation Details</a></li>
+        <li><a href="#example-loan-creation-flow">Example: Loan Creation Flow</a></li>
+        <li><a href="#error-handling">Error Handling</a></li>
+      </ul>
+    </li>
+    <li><a href="#-api-documentation-microservices">🧪 API Documentation (Microservices)</a>
+      <ul>
+        <li><a href="#api-design-principles">API Design Principles</a></li>
+        <li><a href="#-user-service-endpoints">🔹 User Service Endpoints</a></li>
+        <li><a href="#-book-service-endpoints">🔹 Book Service Endpoints</a></li>
+        <li><a href="#-loan-service-endpoints">🔹 Loan Service Endpoints</a></li>
+      </ul>
+    </li>
     <li><a href="#-advantages-of-microservices">✅ Advantages of Microservices</a></li>
     <li><a href="#-trade-offs">⚠️ Trade-offs</a></li>
   </ul>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Lecture 2: Proxies in Distributed Systems on Distributed Systems Lab</title>
+    <link>http://localhost:1313/docs/lecture-resources/lecture-2/</link>
+    <description>Recent content in Lecture 2: Proxies in Distributed Systems on Distributed Systems Lab</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <atom:link href="http://localhost:1313/docs/lecture-resources/lecture-2/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Proxy Fundamentals</title>
+      <link>http://localhost:1313/docs/lecture-resources/lecture-2/proxy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/lecture-resources/lecture-2/proxy/</guid>
+      <description>&lt;h1 id=&#34;-proxies-in-distributed-systems&#34;&gt;&#xA;  🔄 Proxies in Distributed Systems&#xA;  &lt;a class=&#34;anchor&#34; href=&#34;#-proxies-in-distributed-systems&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h1&gt;&#xA;&lt;h2 id=&#34;-introduction&#34;&gt;&#xA;  🧭 Introduction&#xA;  &lt;a class=&#34;anchor&#34; href=&#34;#-introduction&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h2&gt;&#xA;&lt;p&gt;Modern distributed systems rely on &lt;strong&gt;proxies&lt;/strong&gt; to manage complexity, enhance security, and improve performance. In microservice architectures, proxies play a crucial role in &lt;strong&gt;service discovery&lt;/strong&gt;, &lt;strong&gt;load balancing&lt;/strong&gt;, and &lt;strong&gt;API gateway&lt;/strong&gt; functionality.&lt;/p&gt;&#xA;&lt;p&gt;A proxy serves as an intermediary that sits between clients and servers, intercepting and potentially modifying the communication between them. This pattern enables numerous architectural benefits that we&amp;rsquo;ll explore in this lecture.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Reverse Proxy Implementation</title>
+      <link>http://localhost:1313/docs/lecture-resources/lecture-2/reverse-proxy/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/docs/lecture-resources/lecture-2/reverse-proxy/</guid>
+      <description>&lt;h1 id=&#34;-reverse-proxies-in-microservices&#34;&gt;&#xA;  🔀 Reverse Proxies in Microservices&#xA;  &lt;a class=&#34;anchor&#34; href=&#34;#-reverse-proxies-in-microservices&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h1&gt;&#xA;&lt;h2 id=&#34;-forward-proxy-vs-reverse-proxy&#34;&gt;&#xA;  🔍 Forward Proxy vs Reverse Proxy&#xA;  &lt;a class=&#34;anchor&#34; href=&#34;#-forward-proxy-vs-reverse-proxy&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h2&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;Feature&lt;/th&gt;&#xA;          &lt;th&gt;Forward Proxy&lt;/th&gt;&#xA;          &lt;th&gt;Reverse Proxy&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;Position&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;Between client and internet&lt;/td&gt;&#xA;          &lt;td&gt;Between internet and backend servers&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;Client Awareness&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;Configured in client&lt;/td&gt;&#xA;          &lt;td&gt;Transparent to client&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;Used For&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;Anonymity, content filtering, caching&lt;/td&gt;&#xA;          &lt;td&gt;Load balancing, SSL, routing, caching&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;Hides&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;Client&lt;/td&gt;&#xA;          &lt;td&gt;Server&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;&lt;strong&gt;Example Tools&lt;/strong&gt;&lt;/td&gt;&#xA;          &lt;td&gt;Squid, TinyProxy&lt;/td&gt;&#xA;          &lt;td&gt;Nginx, HAProxy, Apache HTTPD&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;-what-is-a-reverse-proxy&#34;&gt;&#xA;  🔄 What is a Reverse Proxy?&#xA;  &lt;a class=&#34;anchor&#34; href=&#34;#-what-is-a-reverse-proxy&#34;&gt;#&lt;/a&gt;&#xA;&lt;/h2&gt;&#xA;&lt;p&gt;A &lt;strong&gt;reverse proxy&lt;/strong&gt; sits in front of one or more backend servers, intercepting requests from clients before they reach the servers. Unlike a forward proxy that acts on behalf of clients, a reverse proxy acts on behalf of servers.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

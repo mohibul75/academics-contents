@@ -13,6 +13,11 @@ bookSearchExclude: false
 This lab is structured as a step-by-step journey through the lifecycle of building a distributed system with microservices.
 
 ---
+## 📂 Reference Project
+
+You will find a reference project for this lab in the following repository: [Distributed Systems Project](https://github.com/mohibul75/reference-project-for-distributed-systems-lab).
+
+---
 
 ## 🚀 Phase 1: Monolithic Smart Library System
 
