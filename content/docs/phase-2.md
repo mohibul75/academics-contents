@@ -425,15 +425,6 @@ Get details of a specific loan.
 
 ---
 
-## ⚙️ Deployment Strategy
-
-Each microservice:
-- Runs in its **own container or VM**.
-- Has its **own codebase**, tests, deployment pipeline.
-- Can be updated, scaled, or restarted **independently**.
-
----
-
 ## ✅ Advantages of Microservices
 
 - **Independent Development**: Teams can work on different services simultaneously.
