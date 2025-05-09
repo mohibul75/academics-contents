@@ -5,7 +5,7 @@ theme = "hugo-book"
 uglyURLs = false
 googleAnalytics='G-T1GNGFG1C4'
 
-disableAdsense = false
+disableAdsense = true
 
 [params]
   author = "Mohibul Alam"
