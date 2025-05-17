@@ -4,29 +4,43 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="
-  🔄 Proxies in Distributed Systems
+  Containerization with Docker
   #
 
 
-  🧭 Introduction
+  Overview
   #
 
-Modern distributed systems rely on proxies to manage complexity, enhance security, and improve performance. In microservice architectures, proxies play a crucial role in service discovery, load balancing, and API gateway functionality.
-A proxy serves as an intermediary that sits between clients and servers, intercepting and potentially modifying the communication between them. This pattern enables numerous architectural benefits that we&rsquo;ll explore in this lecture.">
+This lecture introduces Docker, a platform that revolutionizes application development, deployment, and management through containerization technology. Docker enables developers to package applications with all necessary dependencies into standardized units called containers, ensuring consistent behavior across different environments.
+
+  Key Topics
+  #
+
+
+Fundamentals of Docker: Learn what Docker is and how it differs from traditional virtualization technologies
+Container Architecture: Understand how Docker leverages Linux kernel features (namespaces and cgroups) to create lightweight, isolated environments
+Docker Ecosystem: Explore Docker images, containers, registries, and the Docker Engine
+Development Workflow: Learn how to write Dockerfiles, build images, and run containers
+Practical Applications: Examine real-world use cases for Docker in development, testing, and production environments
+
+
+  Learning Objectives
+  #
+
+By the end of this lecture, you will be able to:">
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
-<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/lecture-resources/lecture-2/proxy/">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/lecture-resources/lecture-3/">
   <meta property="og:site_name" content="Distributed Systems Lab">
-  <meta property="og:title" content="Proxy Fundamentals">
-  <meta property="og:description" content="🔄 Proxies in Distributed Systems # 🧭 Introduction # Modern distributed systems rely on proxies to manage complexity, enhance security, and improve performance. In microservice architectures, proxies play a crucial role in service discovery, load balancing, and API gateway functionality.
-A proxy serves as an intermediary that sits between clients and servers, intercepting and potentially modifying the communication between them. This pattern enables numerous architectural benefits that we’ll explore in this lecture.">
+  <meta property="og:title" content="Lecture 3: Containerization with Docker">
+  <meta property="og:description" content="Containerization with Docker # Overview # This lecture introduces Docker, a platform that revolutionizes application development, deployment, and management through containerization technology. Docker enables developers to package applications with all necessary dependencies into standardized units called containers, ensuring consistent behavior across different environments.
+Key Topics # Fundamentals of Docker: Learn what Docker is and how it differs from traditional virtualization technologies Container Architecture: Understand how Docker leverages Linux kernel features (namespaces and cgroups) to create lightweight, isolated environments Docker Ecosystem: Explore Docker images, containers, registries, and the Docker Engine Development Workflow: Learn how to write Dockerfiles, build images, and run containers Practical Applications: Examine real-world use cases for Docker in development, testing, and production environments Learning Objectives # By the end of this lecture, you will be able to:">
   <meta property="og:locale" content="en_us">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="docs">
-<title>Proxy Fundamentals | Distributed Systems Lab</title>
+  <meta property="og:type" content="website">
+<title>Lecture 3: Containerization with Docker | Distributed Systems Lab</title>
 <link rel="icon" href="/favicon.png" >
 <link rel="manifest" href="/manifest.json">
-<link rel="canonical" href="http://localhost:1313/docs/lecture-resources/lecture-2/proxy/">
+<link rel="canonical" href="http://localhost:1313/docs/lecture-resources/lecture-3/">
 <link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
   <script defer src="/fuse.min.js"></script>
   <script defer src="/en.search.min.1e6eb7e71ced2f0312ed3343993e9a70aa9161793b0479e05902a6ff94d2257f.js" integrity="sha256-Hm635xztLwMS7TNDmT6acKqRYXk7BHngWQKm/5TSJX8=" crossorigin="anonymous"></script>
@@ -44,7 +58,8 @@ A proxy serves as an intermediary that sits between clients and servers, interce
           gtag('js', new Date());
           gtag('config', 'G-T1GNGFG1C4');
         }
-      </script><!--
+      </script><link rel="alternate" type="application/rss+xml" href="http://localhost:1313/docs/lecture-resources/lecture-3/index.xml" title="Distributed Systems Lab" />
+<!--
 Made with Book Theme
 https://github.com/alex-shpak/hugo-book
 -->
@@ -242,7 +257,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <input type="checkbox" id="section-a7062be986807b90f862fe3e30dfe2c8" class="toggle" checked />
+    <input type="checkbox" id="section-a7062be986807b90f862fe3e30dfe2c8" class="toggle"  />
     <label for="section-a7062be986807b90f862fe3e30dfe2c8" class="flex justify-between">
       <a href="/docs/lecture-resources/lecture-2/" class="">Lecture 2: Proxies in Distributed Systems</a>
     </label>
@@ -258,7 +273,7 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <a href="/docs/lecture-resources/lecture-2/proxy/" class="active">Proxy Fundamentals</a>
+    <a href="/docs/lecture-resources/lecture-2/proxy/" class="">Proxy Fundamentals</a>
   
 
         </li>
@@ -289,9 +304,9 @@ https://github.com/alex-shpak/hugo-book
   
 
   
-    <input type="checkbox" id="section-a10ab1c6fa9bd8f6efd555c5ce792946" class="toggle"  />
+    <input type="checkbox" id="section-a10ab1c6fa9bd8f6efd555c5ce792946" class="toggle" checked />
     <label for="section-a10ab1c6fa9bd8f6efd555c5ce792946" class="flex justify-between">
-      <a href="/docs/lecture-resources/lecture-3/" class="">Lecture 3: Containerization with Docker</a>
+      <a href="/docs/lecture-resources/lecture-3/" class="active">Lecture 3: Containerization with Docker</a>
     </label>
   
 
@@ -538,7 +553,7 @@ https://github.com/alex-shpak/hugo-book
     <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
   </label>
 
-  <h3>Proxy Fundamentals</h3>
+  <h3>Lecture 3: Containerization with Docker</h3>
 
   <label for="toc-control">
     
@@ -554,17 +569,14 @@ https://github.com/alex-shpak/hugo-book
   
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#-introduction">🧭 Introduction</a></li>
-    <li><a href="#-what-is-a-proxy">🛡️ What is a Proxy?</a></li>
-    <li><a href="#-forward-proxy">🔄 Forward Proxy</a>
+    <li><a href="#overview">Overview</a>
       <ul>
-        <li><a href="#characteristics">Characteristics:</a></li>
-        <li><a href="#key-use-cases">Key Use Cases:</a></li>
-        <li><a href="#-diagram">🌐 Diagram</a></li>
+        <li><a href="#key-topics">Key Topics</a></li>
+        <li><a href="#learning-objectives">Learning Objectives</a></li>
+        <li><a href="#why-docker-matters">Why Docker Matters</a></li>
       </ul>
     </li>
-    <li><a href="#-how-forward-proxies-work">🔍 How Forward Proxies Work</a></li>
-    <li><a href="#-key-concepts-to-remember">🧠 Key Concepts to Remember</a></li>
+    <li><a href="#further-reading">Further Reading</a></li>
   </ul>
 </nav>
 
@@ -577,110 +589,53 @@ https://github.com/alex-shpak/hugo-book
 
       
       
-  <article class="markdown book-article"><h1 id="-proxies-in-distributed-systems">
-  🔄 Proxies in Distributed Systems
-  <a class="anchor" href="#-proxies-in-distributed-systems">#</a>
+  <article class="markdown book-article"><h1 id="containerization-with-docker">
+  Containerization with Docker
+  <a class="anchor" href="#containerization-with-docker">#</a>
 </h1>
-<h2 id="-introduction">
-  🧭 Introduction
-  <a class="anchor" href="#-introduction">#</a>
+<h2 id="overview">
+  Overview
+  <a class="anchor" href="#overview">#</a>
 </h2>
-<p>Modern distributed systems rely on <strong>proxies</strong> to manage complexity, enhance security, and improve performance. In microservice architectures, proxies play a crucial role in <strong>service discovery</strong>, <strong>load balancing</strong>, and <strong>API gateway</strong> functionality.</p>
-<p>A proxy serves as an intermediary that sits between clients and servers, intercepting and potentially modifying the communication between them. This pattern enables numerous architectural benefits that we&rsquo;ll explore in this lecture.</p>
-<hr>
-<h2 id="-what-is-a-proxy">
-  🛡️ What is a Proxy?
-  <a class="anchor" href="#-what-is-a-proxy">#</a>
-</h2>
-<p>A <strong>proxy</strong> is an intermediary server that acts on behalf of another entity in a network communication. It intercepts requests, may transform them, and forwards them to the appropriate destination.</p>
-<p>Proxies serve several key purposes in distributed systems:</p>
-<ul>
-<li><strong>Abstraction</strong>: Hide implementation details of backend services</li>
-<li><strong>Security</strong>: Filter traffic and protect backend services</li>
-<li><strong>Performance</strong>: Cache responses and optimize data transfer</li>
-<li><strong>Routing</strong>: Direct traffic based on content or request patterns</li>
-<li><strong>Monitoring</strong>: Log and analyze traffic patterns</li>
-</ul>
-<hr>
-<h2 id="-forward-proxy">
-  🔄 Forward Proxy
-  <a class="anchor" href="#-forward-proxy">#</a>
-</h2>
-<p>A <strong>forward proxy</strong> acts on behalf of the <strong>client</strong>. It sits between clients and the wider internet, forwarding client requests to external servers.</p>
-<h3 id="characteristics">
-  Characteristics:
-  <a class="anchor" href="#characteristics">#</a>
+<p>This lecture introduces Docker, a platform that revolutionizes application development, deployment, and management through containerization technology. Docker enables developers to package applications with all necessary dependencies into standardized units called containers, ensuring consistent behavior across different environments.</p>
+<h3 id="key-topics">
+  Key Topics
+  <a class="anchor" href="#key-topics">#</a>
 </h3>
 <ul>
-<li>The client is <strong>aware</strong> of the proxy and must be configured to use it</li>
-<li>Commonly used for <strong>access control</strong>, <strong>content filtering</strong>, and <strong>anonymity</strong></li>
-<li>Hides the <strong>client&rsquo;s identity</strong> from the server</li>
-<li>Often deployed in corporate or educational networks</li>
+<li><strong>Fundamentals of Docker</strong>: Learn what Docker is and how it differs from traditional virtualization technologies</li>
+<li><strong>Container Architecture</strong>: Understand how Docker leverages Linux kernel features (namespaces and cgroups) to create lightweight, isolated environments</li>
+<li><strong>Docker Ecosystem</strong>: Explore Docker images, containers, registries, and the Docker Engine</li>
+<li><strong>Development Workflow</strong>: Learn how to write Dockerfiles, build images, and run containers</li>
+<li><strong>Practical Applications</strong>: Examine real-world use cases for Docker in development, testing, and production environments</li>
 </ul>
-<h3 id="key-use-cases">
-  Key Use Cases:
-  <a class="anchor" href="#key-use-cases">#</a>
+<h3 id="learning-objectives">
+  Learning Objectives
+  <a class="anchor" href="#learning-objectives">#</a>
 </h3>
+<p>By the end of this lecture, you will be able to:</p>
 <ul>
-<li><strong>Internet access control</strong> in organizations</li>
-<li><strong>Content filtering</strong> for compliance or security</li>
-<li><strong>Anonymizing client traffic</strong> for privacy</li>
-<li><strong>Caching frequently accessed content</strong> to improve performance</li>
-<li><strong>Bypassing geo-restrictions</strong> on content</li>
+<li>Understand the technical foundations of containerization</li>
+<li>Create and manage Docker containers using essential commands</li>
+<li>Write effective Dockerfiles for application packaging</li>
+<li>Implement Docker in your development workflow</li>
+<li>Compare Docker containers with traditional virtual machines</li>
 </ul>
-<h3 id="-diagram">
-  🌐 Diagram
-  <a class="anchor" href="#-diagram">#</a>
+<h3 id="why-docker-matters">
+  Why Docker Matters
+  <a class="anchor" href="#why-docker-matters">#</a>
 </h3>
-<pre tabindex="0"><code>                                 INTERNET
-                                    |
-                                    |
-+------------------+        +---------------+        +------------------+
-|                  |        |               |        |                  |
-|   Client 1   ----+-------&gt;|               |-------&gt;|   Web Server 1   |
-|                  |        |               |        |                  |
-+------------------+        |               |        +------------------+
-                           |               |
-+------------------+        |   FORWARD    |        +------------------+
-|                  |        |    PROXY     |        |                  |
-|   Client 2   ----+-------&gt;|               |-------&gt;|   Web Server 2   |
-|                  |        |               |        |                  |
-+------------------+        |               |        +------------------+
-                           |               |
-+------------------+        |               |
-|                  |        |               |
-|   Client 3   ----+-------&gt;|               |
-|                  |        |               |
-+------------------+        +---------------+
-                                    ^
-                                    |
-                           PRIVATE NETWORK
-</code></pre><hr>
-<h2 id="-how-forward-proxies-work">
-  🔍 How Forward Proxies Work
-  <a class="anchor" href="#-how-forward-proxies-work">#</a>
+<p>Docker addresses the classic &ldquo;it works on my machine&rdquo; problem by providing a consistent, portable runtime environment. This technology has become fundamental in modern development practices, cloud computing, and DevOps, making it an essential skill for today&rsquo;s software engineers.</p>
+<h2 id="further-reading">
+  Further Reading
+  <a class="anchor" href="#further-reading">#</a>
 </h2>
-<ol>
-<li><strong>Client Configuration</strong>: The client is explicitly configured to send requests through the proxy</li>
-<li><strong>Request Interception</strong>: The proxy receives the client&rsquo;s request</li>
-<li><strong>Policy Enforcement</strong>: The proxy applies access control and filtering policies</li>
-<li><strong>Request Forwarding</strong>: If allowed, the proxy forwards the request to the destination server</li>
-<li><strong>Response Processing</strong>: The proxy receives the server&rsquo;s response, potentially caches it</li>
-<li><strong>Client Delivery</strong>: The proxy returns the response to the client</li>
-</ol>
-<hr>
-<h2 id="-key-concepts-to-remember">
-  🧠 Key Concepts to Remember
-  <a class="anchor" href="#-key-concepts-to-remember">#</a>
-</h2>
+<p>For deeper insights into Docker technologies, check out these articles:</p>
 <ul>
-<li>Forward proxies are <strong>client-facing</strong> intermediaries</li>
-<li>They require <strong>explicit client configuration</strong></li>
-<li>They&rsquo;re excellent for <strong>access control</strong> and <strong>content filtering</strong></li>
-<li>They <strong>hide client identity</strong> from destination servers</li>
-<li>Common implementations include <strong>Squid</strong>, <strong>TinyProxy</strong>, and <strong>NGINX</strong> (when configured as a forward proxy)</li>
+<li><a href="https://medium.com/@mohibulalam75/exploring-lightweight-docker-base-images-alpine-slim-and-debian-releases-bookworm-bullseye-688f88067f4b">Exploring Lightweight Docker Base Images: Alpine, Slim, and Debian Releases</a></li>
+<li><a href="https://medium.com/@mohibulalam75/optimizing-docker-images-for-faster-deployments-and-efficient-resource-usage-dd40c8fe7d9f">Optimizing Docker Images for Faster Deployments and Efficient Resource Usage</a></li>
+<li><a href="https://medium.com/@mohibulalam75/distroless-docker-images-explained-secure-lightweight-and-ready-for-production-a275f8e76204">Distroless Docker Images Explained: Secure, Lightweight, and Ready for Production</a></li>
 </ul>
-<p>In the next section, we&rsquo;ll explore <strong>Reverse Proxies</strong> and their critical role in modern microservice architectures.</p>
 </article>
  
       
@@ -731,6 +686,10 @@ https://github.com/alex-shpak/hugo-book
 
       
   
+  <div class="book-comments">
+
+</div>
+  
  
 
       <label for="menu-control" class="hidden book-menu-overlay"></label>
@@ -743,17 +702,14 @@ https://github.com/alex-shpak/hugo-book
   
 <nav id="TableOfContents">
   <ul>
-    <li><a href="#-introduction">🧭 Introduction</a></li>
-    <li><a href="#-what-is-a-proxy">🛡️ What is a Proxy?</a></li>
-    <li><a href="#-forward-proxy">🔄 Forward Proxy</a>
+    <li><a href="#overview">Overview</a>
       <ul>
-        <li><a href="#characteristics">Characteristics:</a></li>
-        <li><a href="#key-use-cases">Key Use Cases:</a></li>
-        <li><a href="#-diagram">🌐 Diagram</a></li>
+        <li><a href="#key-topics">Key Topics</a></li>
+        <li><a href="#learning-objectives">Learning Objectives</a></li>
+        <li><a href="#why-docker-matters">Why Docker Matters</a></li>
       </ul>
     </li>
-    <li><a href="#-how-forward-proxies-work">🔍 How Forward Proxies Work</a></li>
-    <li><a href="#-key-concepts-to-remember">🧠 Key Concepts to Remember</a></li>
+    <li><a href="#further-reading">Further Reading</a></li>
   </ul>
 </nav>
 

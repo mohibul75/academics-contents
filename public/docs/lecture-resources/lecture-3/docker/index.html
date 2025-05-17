@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  🐳 Docker Demystified: A Deep Dive into Modern Application Delivery
+  #
+
+
+  📚 Table of Contents
+  #
+
+
+What is Docker?
+Evolution of Docker: From Linux Kernel to Container Revolution
+Containers, Images, and Registries
+Why Docker Matters in the Software Development Life Cycle (SDLC)
+Docker vs Virtual Machines: A Technical Comparison
+How Docker Uses the OS Kernel: Namespaces &amp; cgroups
+User Space vs Kernel Space in Docker
+Writing a Simple Dockerfile
+Conclusion
+
+
+
+  🐳 What is Docker?
+  #
+
+Docker is a platform for developing, shipping, and running applications inside lightweight containers. It ensures your software runs reliably when moved from one environment to another—be it from a developer’s laptop to testing, staging, or production environments.">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/lecture-resources/lecture-3/docker/">
+  <meta property="og:site_name" content="Distributed Systems Lab">
+  <meta property="og:title" content="Docker">
+  <meta property="og:description" content="🐳 Docker Demystified: A Deep Dive into Modern Application Delivery # 📚 Table of Contents # What is Docker? Evolution of Docker: From Linux Kernel to Container Revolution Containers, Images, and Registries Why Docker Matters in the Software Development Life Cycle (SDLC) Docker vs Virtual Machines: A Technical Comparison How Docker Uses the OS Kernel: Namespaces &amp; cgroups User Space vs Kernel Space in Docker Writing a Simple Dockerfile Conclusion 🐳 What is Docker? # Docker is a platform for developing, shipping, and running applications inside lightweight containers. It ensures your software runs reliably when moved from one environment to another—be it from a developer’s laptop to testing, staging, or production environments.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>Docker | Distributed Systems Lab</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/lecture-resources/lecture-3/docker/">
+<link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.1e6eb7e71ced2f0312ed3343993e9a70aa9161793b0479e05902a6ff94d2257f.js" integrity="sha256-Hm635xztLwMS7TNDmT6acKqRYXk7BHngWQKm/5TSJX8=" crossorigin="anonymous"></script>
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1GNGFG1C4"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-T1GNGFG1C4');
+        }
+      </script><!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+
+
+
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Distributed Systems Lab</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/details/" class="">Details</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/timeline/" class="">Course Timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/prerequisites/" class="">Prerequisites</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/tools/" class="">Tools</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-546b9044c321d8afbf101ab5c84d42f6" class="toggle" checked />
+    <label for="section-546b9044c321d8afbf101ab5c84d42f6" class="flex justify-between">
+      <a role="button" class="">Lecture Resources</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="toggle"  />
+    <label for="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="flex justify-between">
+      <a role="button" class="">Lecture 1: Introduction</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/cs/" class="">Centralized Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ds/" class="">Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/types-ds/" class="">Types of Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ms/" class="">Microservices</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-a7062be986807b90f862fe3e30dfe2c8" class="toggle"  />
+    <label for="section-a7062be986807b90f862fe3e30dfe2c8" class="flex justify-between">
+      <a href="/docs/lecture-resources/lecture-2/" class="">Lecture 2: Proxies in Distributed Systems</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-2/proxy/" class="">Proxy Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-2/reverse-proxy/" class="">Reverse Proxy Implementation</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-a10ab1c6fa9bd8f6efd555c5ce792946" class="toggle" checked />
+    <label for="section-a10ab1c6fa9bd8f6efd555c5ce792946" class="flex justify-between">
+      <a href="/docs/lecture-resources/lecture-3/" class="">Lecture 3: Containerization with Docker</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker/" class="active">Docker</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-lab/" class="">Docker Hands-On Lab</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-lab-go/" class="">Docker Lab with Go</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-cheatsheet/" class="">Docker Command Cheat Sheet</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-best-practices/" class="">Docker Best Practices</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-1/" class="">Phase 1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-2/" class="">Phase 2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-3/" class="">Phase 3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-4/" class="">Phase 4</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-5/" class="">Phase 5</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-6/" class="">Phase 6</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/system-design/" class="">Systems Design Problems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/exploration/" class="">Some Distributed Systems Exploration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/career-path/" class="">Career Path</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/about-me/" class="">About Me</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Docker</h3>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#-table-of-contents">📚 Table of Contents</a></li>
+    <li><a href="#-what-is-docker">🐳 What is Docker?</a>
+      <ul>
+        <li><a href="#in-simple-terms">In Simple Terms:</a></li>
+      </ul>
+    </li>
+    <li><a href="#-evolution-of-docker-from-linux-kernel-to-container-revolution">🧬 Evolution of Docker: From Linux Kernel to Container Revolution</a>
+      <ul>
+        <li><a href="#-linux-namespaces">🔹 Linux Namespaces:</a></li>
+        <li><a href="#-linux-control-groups-cgroups">🔹 Linux Control Groups (cgroups):</a></li>
+        <li><a href="#-unionfs">🔹 UnionFS:</a></li>
+        <li><a href="#ascii-diagram-traditional-vs-dockerized-process">ASCII Diagram: Traditional vs Dockerized Process</a></li>
+      </ul>
+    </li>
+    <li><a href="#-containers-images-and-registries">📦 Containers, Images, and Registries</a>
+      <ul>
+        <li><a href="#-what-is-a-container">🔸 What is a Container?</a></li>
+        <li><a href="#-what-is-a-docker-image">🔸 What is a Docker Image?</a></li>
+        <li><a href="#layers-in-an-image-unionfs">Layers in an Image (UnionFS):</a></li>
+        <li><a href="#-what-is-a-docker-registry">🔸 What is a Docker Registry?</a></li>
+      </ul>
+    </li>
+    <li><a href="#-why-docker-matters-in-the-software-development-life-cycle-sdlc">🔁 Why Docker Matters in the Software Development Life Cycle (SDLC)</a>
+      <ul>
+        <li><a href="#-1-development">🔨 1. Development</a></li>
+        <li><a href="#-2-testing">🧪 2. Testing</a></li>
+        <li><a href="#-3-deployment">🚀 3. Deployment</a></li>
+        <li><a href="#-4-operations">📈 4. Operations</a></li>
+      </ul>
+    </li>
+    <li><a href="#-docker-vs-virtual-machines-a-technical-comparison">🆚 Docker vs Virtual Machines: A Technical Comparison</a>
+      <ul>
+        <li><a href="#-key-differences">📌 Key Differences</a></li>
+        <li><a href="#ascii-diagram-vm-vs-docker">ASCII Diagram: VM vs Docker</a></li>
+      </ul>
+    </li>
+    <li><a href="#-how-docker-uses-the-os-kernel-namespaces--cgroups">🧠 How Docker Uses the OS Kernel: Namespaces &amp; cgroups</a>
+      <ul>
+        <li><a href="#namespaces-isolation">Namespaces (Isolation)</a></li>
+        <li><a href="#control-groups-resource-limits">Control Groups (Resource Limits)</a></li>
+      </ul>
+    </li>
+    <li><a href="#-user-space-vs-kernel-space-in-docker">⚙️ User Space vs Kernel Space in Docker</a>
+      <ul>
+        <li><a href="#-kernel-space">🔹 Kernel Space:</a></li>
+        <li><a href="#-user-space">🔹 User Space:</a></li>
+        <li><a href="#diagram">Diagram:</a></li>
+      </ul>
+    </li>
+    <li><a href="#-writing-a-simple-dockerfile">🧾 Writing a Simple Dockerfile</a>
+      <ul>
+        <li><a href="#-file-structure">📁 File Structure</a></li>
+        <li><a href="#apppy"><code>app.py</code></a></li>
+        <li><a href="#dockerfile"><code>Dockerfile</code></a></li>
+        <li><a href="#build--run">Build &amp; Run</a></li>
+      </ul>
+    </li>
+    <li><a href="#-conclusion">✅ Conclusion</a></li>
+    <li><a href="#-further-reading">📚 Further Reading</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="-docker-demystified-a-deep-dive-into-modern-application-delivery">
+  🐳 Docker Demystified: A Deep Dive into Modern Application Delivery
+  <a class="anchor" href="#-docker-demystified-a-deep-dive-into-modern-application-delivery">#</a>
+</h1>
+<h2 id="-table-of-contents">
+  📚 Table of Contents
+  <a class="anchor" href="#-table-of-contents">#</a>
+</h2>
+<ol>
+<li><a href="#what-is-docker">What is Docker?</a></li>
+<li><a href="#evolution-of-docker-from-linux-kernel-to-container-revolution">Evolution of Docker: From Linux Kernel to Container Revolution</a></li>
+<li><a href="#containers-images-and-registries">Containers, Images, and Registries</a></li>
+<li><a href="#why-docker-matters-in-the-software-development-life-cycle-sdlc">Why Docker Matters in the Software Development Life Cycle (SDLC)</a></li>
+<li><a href="#docker-vs-virtual-machines-a-technical-comparison">Docker vs Virtual Machines: A Technical Comparison</a></li>
+<li><a href="#how-docker-uses-the-os-kernel-namespaces--cgroups">How Docker Uses the OS Kernel: Namespaces &amp; cgroups</a></li>
+<li><a href="#user-space-vs-kernel-space-in-docker">User Space vs Kernel Space in Docker</a></li>
+<li><a href="#writing-a-simple-dockerfile">Writing a Simple Dockerfile</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ol>
+<hr>
+<h2 id="-what-is-docker">
+  🐳 What is Docker?
+  <a class="anchor" href="#-what-is-docker">#</a>
+</h2>
+<p><strong>Docker</strong> is a platform for developing, shipping, and running applications inside lightweight containers. It ensures your software runs reliably when moved from one environment to another—be it from a developer’s laptop to testing, staging, or production environments.</p>
+<h3 id="in-simple-terms">
+  In Simple Terms:
+  <a class="anchor" href="#in-simple-terms">#</a>
+</h3>
+<blockquote>
+<p>Docker = Standardized Software Environment + Speed + Portability</p></blockquote>
+<hr>
+<h2 id="-evolution-of-docker-from-linux-kernel-to-container-revolution">
+  🧬 Evolution of Docker: From Linux Kernel to Container Revolution
+  <a class="anchor" href="#-evolution-of-docker-from-linux-kernel-to-container-revolution">#</a>
+</h2>
+<p>Docker wasn’t built from scratch. It evolved by wrapping powerful but complex Linux kernel features—<strong>namespaces</strong> and <strong>cgroups</strong>—into an easy-to-use tool.</p>
+<h3 id="-linux-namespaces">
+  🔹 Linux Namespaces:
+  <a class="anchor" href="#-linux-namespaces">#</a>
+</h3>
+<p>Introduced in the Linux kernel to <strong>isolate</strong> processes, users, network, and filesystems. Each process thinks it&rsquo;s running on a dedicated OS.</p>
+<h3 id="-linux-control-groups-cgroups">
+  🔹 Linux Control Groups (cgroups):
+  <a class="anchor" href="#-linux-control-groups-cgroups">#</a>
+</h3>
+<p>These control how much <strong>CPU, memory, and I/O</strong> resources each group of processes can use.</p>
+<h3 id="-unionfs">
+  🔹 UnionFS:
+  <a class="anchor" href="#-unionfs">#</a>
+</h3>
+<p>A layered filesystem Docker uses to compose images efficiently by stacking file changes.</p>
+<h3 id="ascii-diagram-traditional-vs-dockerized-process">
+  ASCII Diagram: Traditional vs Dockerized Process
+  <a class="anchor" href="#ascii-diagram-traditional-vs-dockerized-process">#</a>
+</h3>
+<pre tabindex="0"><code>Before Docker:
++----------------------+
+| Linux Host           |
+|----------------------|
+| App A, B, C          | ← Global processes
++----------------------+
+
+With Docker:
++----------------------+
+| Container A | Isolated PID, FS |
+| Container B | Own User, Net    |
+| Container C | Limited Resources|
++----------------------+
+</code></pre><p>Docker made it all accessible with a simple CLI/API and <strong>Docker Engine</strong>.</p>
+<hr>
+<h2 id="-containers-images-and-registries">
+  📦 Containers, Images, and Registries
+  <a class="anchor" href="#-containers-images-and-registries">#</a>
+</h2>
+<h3 id="-what-is-a-container">
+  🔸 What is a Container?
+  <a class="anchor" href="#-what-is-a-container">#</a>
+</h3>
+<p>A container is an <strong>isolated execution environment</strong> for running applications. It includes the app, libraries, dependencies, and runtime—but shares the host kernel.</p>
+<pre tabindex="0"><code>Container = App + Dependencies + Libraries + Configs
+</code></pre><p>Each container is <strong>ephemeral</strong>, meaning it can be started, stopped, moved, or deleted quickly.</p>
+<hr>
+<h3 id="-what-is-a-docker-image">
+  🔸 What is a Docker Image?
+  <a class="anchor" href="#-what-is-a-docker-image">#</a>
+</h3>
+<p>A <strong>Docker image</strong> is a read-only <strong>blueprint</strong> for a container. It defines:</p>
+<ul>
+<li>What the container contains (code, binaries, configs)</li>
+<li>How the container behaves (start commands)</li>
+</ul>
+<p>Images are built using a <code>Dockerfile</code>.</p>
+<h3 id="layers-in-an-image-unionfs">
+  Layers in an Image (UnionFS):
+  <a class="anchor" href="#layers-in-an-image-unionfs">#</a>
+</h3>
+<pre tabindex="0"><code>Base Image (e.g., ubuntu:20.04)
++----------------------+
+| App Dependencies     |
++----------------------+
+| App Source Code      |
++----------------------+
+| Run Instructions     |
++----------------------+
+</code></pre><hr>
+<h3 id="-what-is-a-docker-registry">
+  🔸 What is a Docker Registry?
+  <a class="anchor" href="#-what-is-a-docker-registry">#</a>
+</h3>
+<p>A <strong>Docker registry</strong> is a storage and distribution system for images.</p>
+<ul>
+<li><strong>Docker Hub</strong>: Default public registry</li>
+<li><strong>Private registries</strong>: For enterprise use (e.g., AWS ECR, GitHub Container Registry)</li>
+</ul>
+<p>You <strong>pull</strong> images from registries and <strong>push</strong> them when publishing your own.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Pull official nginx image</span>
+</span></span><span style="display:flex;"><span>docker pull nginx
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Push your image to Docker Hub</span>
+</span></span><span style="display:flex;"><span>docker push yourname/myapp:1.0
+</span></span></code></pre></div><hr>
+<h2 id="-why-docker-matters-in-the-software-development-life-cycle-sdlc">
+  🔁 Why Docker Matters in the Software Development Life Cycle (SDLC)
+  <a class="anchor" href="#-why-docker-matters-in-the-software-development-life-cycle-sdlc">#</a>
+</h2>
+<p>Docker brings consistency, scalability, and speed to every phase of the SDLC.</p>
+<h3 id="-1-development">
+  🔨 1. Development
+  <a class="anchor" href="#-1-development">#</a>
+</h3>
+<ul>
+<li>Uniform environments across teams</li>
+<li>Quick setup and teardown of dev environments</li>
+</ul>
+<h3 id="-2-testing">
+  🧪 2. Testing
+  <a class="anchor" href="#-2-testing">#</a>
+</h3>
+<ul>
+<li>Test on production-like containers</li>
+<li>Use parallel, isolated test instances</li>
+</ul>
+<h3 id="-3-deployment">
+  🚀 3. Deployment
+  <a class="anchor" href="#-3-deployment">#</a>
+</h3>
+<ul>
+<li>Consistent container runs on any server or cloud</li>
+<li>Seamless with CI/CD pipelines (GitHub Actions, GitLab CI)</li>
+</ul>
+<h3 id="-4-operations">
+  📈 4. Operations
+  <a class="anchor" href="#-4-operations">#</a>
+</h3>
+<ul>
+<li>Scales easily with Kubernetes, Docker Swarm</li>
+<li>Simplifies monitoring and rolling updates</li>
+</ul>
+<hr>
+<h2 id="-docker-vs-virtual-machines-a-technical-comparison">
+  🆚 Docker vs Virtual Machines: A Technical Comparison
+  <a class="anchor" href="#-docker-vs-virtual-machines-a-technical-comparison">#</a>
+</h2>
+<h3 id="-key-differences">
+  📌 Key Differences
+  <a class="anchor" href="#-key-differences">#</a>
+</h3>
+<table>
+  <thead>
+      <tr>
+          <th>Feature</th>
+          <th>Virtual Machine</th>
+          <th>Docker Container</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Boot Time</td>
+          <td>Minutes</td>
+          <td>Seconds</td>
+      </tr>
+      <tr>
+          <td>OS Requirements</td>
+          <td>Full Guest OS per VM</td>
+          <td>Shares Host OS Kernel</td>
+      </tr>
+      <tr>
+          <td>Size</td>
+          <td>GBs</td>
+          <td>MBs</td>
+      </tr>
+      <tr>
+          <td>Performance</td>
+          <td>Slower (Hypervisor overhead)</td>
+          <td>Near-native</td>
+      </tr>
+      <tr>
+          <td>Portability</td>
+          <td>Limited</td>
+          <td>High (Run Anywhere)</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="ascii-diagram-vm-vs-docker">
+  ASCII Diagram: VM vs Docker
+  <a class="anchor" href="#ascii-diagram-vm-vs-docker">#</a>
+</h3>
+<pre tabindex="0"><code>Traditional VM:
++-------------+
+| App         |
+| Guest OS    |
+| Hypervisor  |
+| Host OS     |
+| Hardware    |
++-------------+
+
+Docker:
++-------------+
+| App         |
+| Docker Engine
+| Host OS     |
+| Hardware    |
++-------------+
+</code></pre><hr>
+<h2 id="-how-docker-uses-the-os-kernel-namespaces--cgroups">
+  🧠 How Docker Uses the OS Kernel: Namespaces &amp; cgroups
+  <a class="anchor" href="#-how-docker-uses-the-os-kernel-namespaces--cgroups">#</a>
+</h2>
+<h3 id="namespaces-isolation">
+  Namespaces (Isolation)
+  <a class="anchor" href="#namespaces-isolation">#</a>
+</h3>
+<p>Each container gets its <strong>own view</strong> of the system:</p>
+<ul>
+<li><strong>PID namespace</strong>: Unique process tree</li>
+<li><strong>Net namespace</strong>: Own network interfaces</li>
+<li><strong>Mount namespace</strong>: Own filesystem mounts</li>
+</ul>
+<h3 id="control-groups-resource-limits">
+  Control Groups (Resource Limits)
+  <a class="anchor" href="#control-groups-resource-limits">#</a>
+</h3>
+<p>Docker sets limits using cgroups:</p>
+<ul>
+<li>CPU shares</li>
+<li>Memory limits</li>
+<li>Block I/O constraints</li>
+</ul>
+<hr>
+<h2 id="-user-space-vs-kernel-space-in-docker">
+  ⚙️ User Space vs Kernel Space in Docker
+  <a class="anchor" href="#-user-space-vs-kernel-space-in-docker">#</a>
+</h2>
+<h3 id="-kernel-space">
+  🔹 Kernel Space:
+  <a class="anchor" href="#-kernel-space">#</a>
+</h3>
+<ul>
+<li>Manages core OS operations</li>
+<li>Shared among containers and host</li>
+</ul>
+<h3 id="-user-space">
+  🔹 User Space:
+  <a class="anchor" href="#-user-space">#</a>
+</h3>
+<ul>
+<li>Where applications run</li>
+<li>Isolated in each container</li>
+</ul>
+<h3 id="diagram">
+  Diagram:
+  <a class="anchor" href="#diagram">#</a>
+</h3>
+<pre tabindex="0"><code>+----------------------------+
+|       Kernel Space         |  ← Shared
++----------------------------+
+| Container A: User Space    |
+| Container B: User Space    |
+| Container C: User Space    |
++----------------------------+
+</code></pre><p>Docker containers are <strong>isolated in user space</strong>, but share the <strong>host kernel</strong> for efficient resource usage.</p>
+<hr>
+<h2 id="-writing-a-simple-dockerfile">
+  🧾 Writing a Simple Dockerfile
+  <a class="anchor" href="#-writing-a-simple-dockerfile">#</a>
+</h2>
+<p>Let’s package a basic Python app using Docker.</p>
+<h3 id="-file-structure">
+  📁 File Structure
+  <a class="anchor" href="#-file-structure">#</a>
+</h3>
+<pre tabindex="0"><code>myapp/
+├── app.py
+└── Dockerfile
+</code></pre><h3 id="apppy">
+  <code>app.py</code>
+  <a class="anchor" href="#apppy">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Hello from inside Docker!&#34;</span>)
+</span></span></code></pre></div><h3 id="dockerfile">
+  <code>Dockerfile</code>
+  <a class="anchor" href="#dockerfile">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#75715e"># Start from a Python base image</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> python:3.10-slim</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Set working directory</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /app</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Copy source code</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> app.py .<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Define container start command</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;python&#34;</span>, <span style="color:#e6db74">&#34;app.py&#34;</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h3 id="build--run">
+  Build &amp; Run
+  <a class="anchor" href="#build--run">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker build -t hello-docker .
+</span></span><span style="display:flex;"><span>docker run hello-docker
+</span></span></code></pre></div><p>🖨️ <strong>Output:</strong></p>
+<pre tabindex="0"><code>Hello from inside Docker!
+</code></pre><hr>
+<h2 id="-conclusion">
+  ✅ Conclusion
+  <a class="anchor" href="#-conclusion">#</a>
+</h2>
+<p>Docker is not just another tool—it’s a paradigm shift in how we build, ship, and run software. By combining decades of operating system research (namespaces, cgroups) with a friendly interface, Docker democratized containerization for developers and enterprises alike.</p>
+<p>Whether you&rsquo;re creating monoliths, microservices, or distributed systems, Docker empowers you with:</p>
+<ul>
+<li><strong>Speed</strong></li>
+<li><strong>Consistency</strong></li>
+<li><strong>Isolation</strong></li>
+<li><strong>Portability</strong></li>
+</ul>
+<hr>
+<h2 id="-further-reading">
+  📚 Further Reading
+  <a class="anchor" href="#-further-reading">#</a>
+</h2>
+<ul>
+<li><a href="https://docs.docker.com/">Docker Docs</a></li>
+<li><a href="https://man7.org/linux/man-pages/man7/namespaces.7.html">Namespaces - man7.org</a></li>
+<li><a href="https://man7.org/linux/man-pages/man7/cgroups.7.html">Control Groups (cgroups)</a></li>
+<li><a href="https://docs.docker.com/engine/reference/builder/">Dockerfile Reference</a></li>
+<li><a href="https://github.com/opencontainers/image-spec">OCI Image Spec</a></li>
+</ul>
+</article>
+ 
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3938526066745812"
+     data-ad-slot="9958014946"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3938526066745812"
+     data-ad-slot="3338364768"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#-table-of-contents">📚 Table of Contents</a></li>
+    <li><a href="#-what-is-docker">🐳 What is Docker?</a>
+      <ul>
+        <li><a href="#in-simple-terms">In Simple Terms:</a></li>
+      </ul>
+    </li>
+    <li><a href="#-evolution-of-docker-from-linux-kernel-to-container-revolution">🧬 Evolution of Docker: From Linux Kernel to Container Revolution</a>
+      <ul>
+        <li><a href="#-linux-namespaces">🔹 Linux Namespaces:</a></li>
+        <li><a href="#-linux-control-groups-cgroups">🔹 Linux Control Groups (cgroups):</a></li>
+        <li><a href="#-unionfs">🔹 UnionFS:</a></li>
+        <li><a href="#ascii-diagram-traditional-vs-dockerized-process">ASCII Diagram: Traditional vs Dockerized Process</a></li>
+      </ul>
+    </li>
+    <li><a href="#-containers-images-and-registries">📦 Containers, Images, and Registries</a>
+      <ul>
+        <li><a href="#-what-is-a-container">🔸 What is a Container?</a></li>
+        <li><a href="#-what-is-a-docker-image">🔸 What is a Docker Image?</a></li>
+        <li><a href="#layers-in-an-image-unionfs">Layers in an Image (UnionFS):</a></li>
+        <li><a href="#-what-is-a-docker-registry">🔸 What is a Docker Registry?</a></li>
+      </ul>
+    </li>
+    <li><a href="#-why-docker-matters-in-the-software-development-life-cycle-sdlc">🔁 Why Docker Matters in the Software Development Life Cycle (SDLC)</a>
+      <ul>
+        <li><a href="#-1-development">🔨 1. Development</a></li>
+        <li><a href="#-2-testing">🧪 2. Testing</a></li>
+        <li><a href="#-3-deployment">🚀 3. Deployment</a></li>
+        <li><a href="#-4-operations">📈 4. Operations</a></li>
+      </ul>
+    </li>
+    <li><a href="#-docker-vs-virtual-machines-a-technical-comparison">🆚 Docker vs Virtual Machines: A Technical Comparison</a>
+      <ul>
+        <li><a href="#-key-differences">📌 Key Differences</a></li>
+        <li><a href="#ascii-diagram-vm-vs-docker">ASCII Diagram: VM vs Docker</a></li>
+      </ul>
+    </li>
+    <li><a href="#-how-docker-uses-the-os-kernel-namespaces--cgroups">🧠 How Docker Uses the OS Kernel: Namespaces &amp; cgroups</a>
+      <ul>
+        <li><a href="#namespaces-isolation">Namespaces (Isolation)</a></li>
+        <li><a href="#control-groups-resource-limits">Control Groups (Resource Limits)</a></li>
+      </ul>
+    </li>
+    <li><a href="#-user-space-vs-kernel-space-in-docker">⚙️ User Space vs Kernel Space in Docker</a>
+      <ul>
+        <li><a href="#-kernel-space">🔹 Kernel Space:</a></li>
+        <li><a href="#-user-space">🔹 User Space:</a></li>
+        <li><a href="#diagram">Diagram:</a></li>
+      </ul>
+    </li>
+    <li><a href="#-writing-a-simple-dockerfile">🧾 Writing a Simple Dockerfile</a>
+      <ul>
+        <li><a href="#-file-structure">📁 File Structure</a></li>
+        <li><a href="#apppy"><code>app.py</code></a></li>
+        <li><a href="#dockerfile"><code>Dockerfile</code></a></li>
+        <li><a href="#build--run">Build &amp; Run</a></li>
+      </ul>
+    </li>
+    <li><a href="#-conclusion">✅ Conclusion</a></li>
+    <li><a href="#-further-reading">📚 Further Reading</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

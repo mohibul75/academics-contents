@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  Docker Command Cheat Sheet
+  #
+
+This cheat sheet provides a quick reference for commonly used Docker commands.
+
+  Docker System Commands
+  #
+
+
+  
+      
+          Command
+          Description
+      
+  
+  
+      
+          docker version
+          Display Docker version information
+      
+      
+          docker info
+          Display system-wide information
+      
+      
+          docker system prune
+          Remove all unused containers, networks, images, and build cache
+      
+      
+          docker system df
+          Show Docker disk usage
+      
+  
+
+
+  Docker Image Commands
+  #
+
+
+  
+      
+          Command
+          Description
+      
+  
+  
+      
+          docker images
+          List all images
+      
+      
+          docker pull &lt;image-name&gt;
+          Pull an image from registry
+      
+      
+          docker build -t &lt;name:tag&gt; &lt;path&gt;
+          Build an image from Dockerfile
+      
+      
+          docker rmi &lt;image-id&gt;
+          Remove an image
+      
+      
+          docker image prune
+          Remove unused images
+      
+      
+          docker tag &lt;source-image&gt; &lt;target-image&gt;
+          Create a tag for image
+      
+      
+          docker history &lt;image-name&gt;
+          Show history of an image
+      
+      
+          docker save -o &lt;file.tar&gt; &lt;image-name&gt;
+          Save image to a tar archive
+      
+      
+          docker load -i &lt;file.tar&gt;
+          Load image from a tar archive
+      
+      
+          docker inspect &lt;image-id&gt;
+          Display detailed information about an image
+      
+  
+
+
+  Docker Container Commands
+  #
+
+
+  
+      
+          Command
+          Description
+      
+  
+  
+      
+          docker ps
+          List running containers
+      
+      
+          docker ps -a
+          List all containers (including stopped)
+      
+      
+          docker run &lt;image-name&gt;
+          Run a container
+      
+      
+          docker run -it &lt;image-name&gt; &lt;command&gt;
+          Run container interactively
+      
+      
+          docker run -d &lt;image-name&gt;
+          Run container in detached mode
+      
+      
+          docker run -p &lt;host-port&gt;:&lt;container-port&gt; &lt;image-name&gt;
+          Run container with port mapping
+      
+      
+          docker run -v &lt;host-path&gt;:&lt;container-path&gt; &lt;image-name&gt;
+          Run container with volume mount
+      
+      
+          docker run --name &lt;container-name&gt; &lt;image-name&gt;
+          Run container with a specific name
+      
+      
+          docker run --rm &lt;image-name&gt;
+          Run container and remove it when it exits
+      
+      
+          docker stop &lt;container-id&gt;
+          Stop a running container
+      
+      
+          docker start &lt;container-id&gt;
+          Start a stopped container
+      
+      
+          docker restart &lt;container-id&gt;
+          Restart a container
+      
+      
+          docker rm &lt;container-id&gt;
+          Remove a container
+      
+      
+          docker rm -f &lt;container-id&gt;
+          Force remove a running container
+      
+      
+          docker exec -it &lt;container-id&gt; &lt;command&gt;
+          Execute a command in a running container
+      
+      
+          docker logs &lt;container-id&gt;
+          Fetch the logs of a container
+      
+      
+          docker logs -f &lt;container-id&gt;
+          Follow log output of a container
+      
+      
+          docker cp &lt;container-id&gt;:&lt;container-path&gt; &lt;host-path&gt;
+          Copy files from container to host
+      
+      
+          docker cp &lt;host-path&gt; &lt;container-id&gt;:&lt;container-path&gt;
+          Copy files from host to container
+      
+      
+          docker stats
+          Display live container resource usage
+      
+      
+          docker inspect &lt;container-id&gt;
+          Display detailed information about a container
+      
+      
+          docker top &lt;container-id&gt;
+          Display the running processes of a container
+      
+      
+          docker update --memory &lt;limit&gt; &lt;container-id&gt;
+          Update container resources
+      
+  
+
+
+  Docker Network Commands
+  #
+
+
+  
+      
+          Command
+          Description
+      
+  
+  
+      
+          docker network ls
+          List all networks
+      
+      
+          docker network create &lt;network-name&gt;
+          Create a network
+      
+      
+          docker network rm &lt;network-name&gt;
+          Remove a network
+      
+      
+          docker network inspect &lt;network-name&gt;
+          Display detailed information about a network
+      
+      
+          docker network connect &lt;network-name&gt; &lt;container-id&gt;
+          Connect a container to a network
+      
+      
+          docker network disconnect &lt;network-name&gt; &lt;container-id&gt;
+          Disconnect a container from a network
+      
+      
+          docker network prune
+          Remove all unused networks
+      
+  
+
+
+  Docker Volume Commands
+  #
+
+
+  
+      
+          Command
+          Description
+      
+  
+  
+      
+          docker volume ls
+          List all volumes
+      
+      
+          docker volume create &lt;volume-name&gt;
+          Create a volume
+      
+      
+          docker volume rm &lt;volume-name&gt;
+          Remove a volume
+      
+      
+          docker volume inspect &lt;volume-name&gt;
+          Display detailed information about a volume
+      
+      
+          docker volume prune
+          Remove all unused volumes
+      
+  
+
+
+  Dockerfile Instructions
+  #
+
+
+  
+      
+          Instruction
+          Description
+      
+  
+  
+      
+          FROM
+          Set base image
+      
+      
+          WORKDIR
+          Set working directory
+      
+      
+          COPY
+          Copy files from host to container
+      
+      
+          ADD
+          Copy files from host or URL to container
+      
+      
+          RUN
+          Execute command during build
+      
+      
+          ENV
+          Set environment variable
+      
+      
+          ARG
+          Define build-time variable
+      
+      
+          EXPOSE
+          Expose port
+      
+      
+          VOLUME
+          Create mount point
+      
+      
+          CMD
+          Default command for container
+      
+      
+          ENTRYPOINT
+          Configure container executable
+      
+      
+          LABEL
+          Add metadata to image
+      
+      
+          USER
+          Set user for container
+      
+      
+          HEALTHCHECK
+          Check container health
+      
+  
+
+
+  Common Docker Run Options
+  #
+
+
+  
+      
+          Option
+          Description
+      
+  
+  
+      
+          -d, --detach
+          Run container in background
+      
+      
+          -e, --env
+          Set environment variables
+      
+      
+          -p, --publish
+          Publish container&rsquo;s port to the host
+      
+      
+          -v, --volume
+          Bind mount a volume
+      
+      
+          --name
+          Assign a name to the container
+      
+      
+          --network
+          Connect to a network
+      
+      
+          --restart
+          Restart policy (no, on-failure, always, unless-stopped)
+      
+      
+          --rm
+          Remove container when it exits
+      
+      
+          -it
+          Interactive mode with TTY
+      
+      
+          --memory
+          Memory limit
+      
+      
+          --cpus
+          Number of CPUs
+      
+  
+
+
+  Docker Command Examples
+  #
+
+
+  Running a Nginx Web Server
+  #
+
+docker run -d -p 8080:80 --name my-nginx nginx
+
+  Building a Custom Image
+  #
+
+docker build -t my-app:1.0 .
+
+  Running a Container with Environment Variables
+  #
+
+docker run -d -p 3000:3000 -e NODE_ENV=production --name my-node-app my-node-app
+
+  Creating a Docker Network and Connecting Containers
+  #
+
+docker network create my-network
+docker run -d --name db --network my-network mongo
+docker run -d --name app --network my-network -p 8000:8000 my-app
+
+  Volume Mounting for Persistence
+  #
+
+docker run -d -p 27017:27017 -v mongodb-data:/data/db --name mongodb mongo
+
+  Running a MySQL Container with Environment Variables
+  #
+
+docker run -d -p 3306:3306 \
+  -e MYSQL_ROOT_PASSWORD=secretpassword \
+  -e MYSQL_DATABASE=mydb \
+  -e MYSQL_USER=user \
+  -e MYSQL_PASSWORD=password \
+  -v mysql-data:/var/lib/mysql \
+  --name mysql \
+  mysql:8.0
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/lecture-resources/lecture-3/docker-cheatsheet/">
+  <meta property="og:site_name" content="Distributed Systems Lab">
+  <meta property="og:title" content="Docker Command Cheat Sheet">
+  <meta property="og:description" content="Docker Command Cheat Sheet # This cheat sheet provides a quick reference for commonly used Docker commands.
+Docker System Commands # Command Description docker version Display Docker version information docker info Display system-wide information docker system prune Remove all unused containers, networks, images, and build cache docker system df Show Docker disk usage Docker Image Commands # Command Description docker images List all images docker pull &lt;image-name&gt; Pull an image from registry docker build -t &lt;name:tag&gt; &lt;path&gt; Build an image from Dockerfile docker rmi &lt;image-id&gt; Remove an image docker image prune Remove unused images docker tag &lt;source-image&gt; &lt;target-image&gt; Create a tag for image docker history &lt;image-name&gt; Show history of an image docker save -o &lt;file.tar&gt; &lt;image-name&gt; Save image to a tar archive docker load -i &lt;file.tar&gt; Load image from a tar archive docker inspect &lt;image-id&gt; Display detailed information about an image Docker Container Commands # Command Description docker ps List running containers docker ps -a List all containers (including stopped) docker run &lt;image-name&gt; Run a container docker run -it &lt;image-name&gt; &lt;command&gt; Run container interactively docker run -d &lt;image-name&gt; Run container in detached mode docker run -p &lt;host-port&gt;:&lt;container-port&gt; &lt;image-name&gt; Run container with port mapping docker run -v &lt;host-path&gt;:&lt;container-path&gt; &lt;image-name&gt; Run container with volume mount docker run --name &lt;container-name&gt; &lt;image-name&gt; Run container with a specific name docker run --rm &lt;image-name&gt; Run container and remove it when it exits docker stop &lt;container-id&gt; Stop a running container docker start &lt;container-id&gt; Start a stopped container docker restart &lt;container-id&gt; Restart a container docker rm &lt;container-id&gt; Remove a container docker rm -f &lt;container-id&gt; Force remove a running container docker exec -it &lt;container-id&gt; &lt;command&gt; Execute a command in a running container docker logs &lt;container-id&gt; Fetch the logs of a container docker logs -f &lt;container-id&gt; Follow log output of a container docker cp &lt;container-id&gt;:&lt;container-path&gt; &lt;host-path&gt; Copy files from container to host docker cp &lt;host-path&gt; &lt;container-id&gt;:&lt;container-path&gt; Copy files from host to container docker stats Display live container resource usage docker inspect &lt;container-id&gt; Display detailed information about a container docker top &lt;container-id&gt; Display the running processes of a container docker update --memory &lt;limit&gt; &lt;container-id&gt; Update container resources Docker Network Commands # Command Description docker network ls List all networks docker network create &lt;network-name&gt; Create a network docker network rm &lt;network-name&gt; Remove a network docker network inspect &lt;network-name&gt; Display detailed information about a network docker network connect &lt;network-name&gt; &lt;container-id&gt; Connect a container to a network docker network disconnect &lt;network-name&gt; &lt;container-id&gt; Disconnect a container from a network docker network prune Remove all unused networks Docker Volume Commands # Command Description docker volume ls List all volumes docker volume create &lt;volume-name&gt; Create a volume docker volume rm &lt;volume-name&gt; Remove a volume docker volume inspect &lt;volume-name&gt; Display detailed information about a volume docker volume prune Remove all unused volumes Dockerfile Instructions # Instruction Description FROM Set base image WORKDIR Set working directory COPY Copy files from host to container ADD Copy files from host or URL to container RUN Execute command during build ENV Set environment variable ARG Define build-time variable EXPOSE Expose port VOLUME Create mount point CMD Default command for container ENTRYPOINT Configure container executable LABEL Add metadata to image USER Set user for container HEALTHCHECK Check container health Common Docker Run Options # Option Description -d, --detach Run container in background -e, --env Set environment variables -p, --publish Publish container’s port to the host -v, --volume Bind mount a volume --name Assign a name to the container --network Connect to a network --restart Restart policy (no, on-failure, always, unless-stopped) --rm Remove container when it exits -it Interactive mode with TTY --memory Memory limit --cpus Number of CPUs Docker Command Examples # Running a Nginx Web Server # docker run -d -p 8080:80 --name my-nginx nginx Building a Custom Image # docker build -t my-app:1.0 . Running a Container with Environment Variables # docker run -d -p 3000:3000 -e NODE_ENV=production --name my-node-app my-node-app Creating a Docker Network and Connecting Containers # docker network create my-network docker run -d --name db --network my-network mongo docker run -d --name app --network my-network -p 8000:8000 my-app Volume Mounting for Persistence # docker run -d -p 27017:27017 -v mongodb-data:/data/db --name mongodb mongo Running a MySQL Container with Environment Variables # docker run -d -p 3306:3306 \ -e MYSQL_ROOT_PASSWORD=secretpassword \ -e MYSQL_DATABASE=mydb \ -e MYSQL_USER=user \ -e MYSQL_PASSWORD=password \ -v mysql-data:/var/lib/mysql \ --name mysql \ mysql:8.0">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>Docker Command Cheat Sheet | Distributed Systems Lab</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/lecture-resources/lecture-3/docker-cheatsheet/">
+<link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.1e6eb7e71ced2f0312ed3343993e9a70aa9161793b0479e05902a6ff94d2257f.js" integrity="sha256-Hm635xztLwMS7TNDmT6acKqRYXk7BHngWQKm/5TSJX8=" crossorigin="anonymous"></script>
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1GNGFG1C4"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-T1GNGFG1C4');
+        }
+      </script><!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+
+
+
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Distributed Systems Lab</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/details/" class="">Details</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/timeline/" class="">Course Timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/prerequisites/" class="">Prerequisites</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/tools/" class="">Tools</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-546b9044c321d8afbf101ab5c84d42f6" class="toggle" checked />
+    <label for="section-546b9044c321d8afbf101ab5c84d42f6" class="flex justify-between">
+      <a role="button" class="">Lecture Resources</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="toggle"  />
+    <label for="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="flex justify-between">
+      <a role="button" class="">Lecture 1: Introduction</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/cs/" class="">Centralized Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ds/" class="">Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/types-ds/" class="">Types of Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ms/" class="">Microservices</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-a7062be986807b90f862fe3e30dfe2c8" class="toggle"  />
+    <label for="section-a7062be986807b90f862fe3e30dfe2c8" class="flex justify-between">
+      <a href="/docs/lecture-resources/lecture-2/" class="">Lecture 2: Proxies in Distributed Systems</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-2/proxy/" class="">Proxy Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-2/reverse-proxy/" class="">Reverse Proxy Implementation</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-a10ab1c6fa9bd8f6efd555c5ce792946" class="toggle" checked />
+    <label for="section-a10ab1c6fa9bd8f6efd555c5ce792946" class="flex justify-between">
+      <a href="/docs/lecture-resources/lecture-3/" class="">Lecture 3: Containerization with Docker</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker/" class="">Docker</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-lab/" class="">Docker Hands-On Lab</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-lab-go/" class="">Docker Lab with Go</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-cheatsheet/" class="active">Docker Command Cheat Sheet</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-best-practices/" class="">Docker Best Practices</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-1/" class="">Phase 1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-2/" class="">Phase 2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-3/" class="">Phase 3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-4/" class="">Phase 4</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-5/" class="">Phase 5</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-6/" class="">Phase 6</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/system-design/" class="">Systems Design Problems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/exploration/" class="">Some Distributed Systems Exploration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/career-path/" class="">Career Path</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/about-me/" class="">About Me</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Docker Command Cheat Sheet</h3>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#docker-system-commands">Docker System Commands</a></li>
+    <li><a href="#docker-image-commands">Docker Image Commands</a></li>
+    <li><a href="#docker-container-commands">Docker Container Commands</a></li>
+    <li><a href="#docker-network-commands">Docker Network Commands</a></li>
+    <li><a href="#docker-volume-commands">Docker Volume Commands</a></li>
+    <li><a href="#dockerfile-instructions">Dockerfile Instructions</a></li>
+    <li><a href="#common-docker-run-options">Common Docker Run Options</a></li>
+    <li><a href="#docker-command-examples">Docker Command Examples</a>
+      <ul>
+        <li><a href="#running-a-nginx-web-server">Running a Nginx Web Server</a></li>
+        <li><a href="#building-a-custom-image">Building a Custom Image</a></li>
+        <li><a href="#running-a-container-with-environment-variables">Running a Container with Environment Variables</a></li>
+        <li><a href="#creating-a-docker-network-and-connecting-containers">Creating a Docker Network and Connecting Containers</a></li>
+        <li><a href="#volume-mounting-for-persistence">Volume Mounting for Persistence</a></li>
+        <li><a href="#running-a-mysql-container-with-environment-variables">Running a MySQL Container with Environment Variables</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="docker-command-cheat-sheet">
+  Docker Command Cheat Sheet
+  <a class="anchor" href="#docker-command-cheat-sheet">#</a>
+</h1>
+<p>This cheat sheet provides a quick reference for commonly used Docker commands.</p>
+<h2 id="docker-system-commands">
+  Docker System Commands
+  <a class="anchor" href="#docker-system-commands">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Command</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>docker version</code></td>
+          <td>Display Docker version information</td>
+      </tr>
+      <tr>
+          <td><code>docker info</code></td>
+          <td>Display system-wide information</td>
+      </tr>
+      <tr>
+          <td><code>docker system prune</code></td>
+          <td>Remove all unused containers, networks, images, and build cache</td>
+      </tr>
+      <tr>
+          <td><code>docker system df</code></td>
+          <td>Show Docker disk usage</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="docker-image-commands">
+  Docker Image Commands
+  <a class="anchor" href="#docker-image-commands">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Command</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>docker images</code></td>
+          <td>List all images</td>
+      </tr>
+      <tr>
+          <td><code>docker pull &lt;image-name&gt;</code></td>
+          <td>Pull an image from registry</td>
+      </tr>
+      <tr>
+          <td><code>docker build -t &lt;name:tag&gt; &lt;path&gt;</code></td>
+          <td>Build an image from Dockerfile</td>
+      </tr>
+      <tr>
+          <td><code>docker rmi &lt;image-id&gt;</code></td>
+          <td>Remove an image</td>
+      </tr>
+      <tr>
+          <td><code>docker image prune</code></td>
+          <td>Remove unused images</td>
+      </tr>
+      <tr>
+          <td><code>docker tag &lt;source-image&gt; &lt;target-image&gt;</code></td>
+          <td>Create a tag for image</td>
+      </tr>
+      <tr>
+          <td><code>docker history &lt;image-name&gt;</code></td>
+          <td>Show history of an image</td>
+      </tr>
+      <tr>
+          <td><code>docker save -o &lt;file.tar&gt; &lt;image-name&gt;</code></td>
+          <td>Save image to a tar archive</td>
+      </tr>
+      <tr>
+          <td><code>docker load -i &lt;file.tar&gt;</code></td>
+          <td>Load image from a tar archive</td>
+      </tr>
+      <tr>
+          <td><code>docker inspect &lt;image-id&gt;</code></td>
+          <td>Display detailed information about an image</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="docker-container-commands">
+  Docker Container Commands
+  <a class="anchor" href="#docker-container-commands">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Command</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>docker ps</code></td>
+          <td>List running containers</td>
+      </tr>
+      <tr>
+          <td><code>docker ps -a</code></td>
+          <td>List all containers (including stopped)</td>
+      </tr>
+      <tr>
+          <td><code>docker run &lt;image-name&gt;</code></td>
+          <td>Run a container</td>
+      </tr>
+      <tr>
+          <td><code>docker run -it &lt;image-name&gt; &lt;command&gt;</code></td>
+          <td>Run container interactively</td>
+      </tr>
+      <tr>
+          <td><code>docker run -d &lt;image-name&gt;</code></td>
+          <td>Run container in detached mode</td>
+      </tr>
+      <tr>
+          <td><code>docker run -p &lt;host-port&gt;:&lt;container-port&gt; &lt;image-name&gt;</code></td>
+          <td>Run container with port mapping</td>
+      </tr>
+      <tr>
+          <td><code>docker run -v &lt;host-path&gt;:&lt;container-path&gt; &lt;image-name&gt;</code></td>
+          <td>Run container with volume mount</td>
+      </tr>
+      <tr>
+          <td><code>docker run --name &lt;container-name&gt; &lt;image-name&gt;</code></td>
+          <td>Run container with a specific name</td>
+      </tr>
+      <tr>
+          <td><code>docker run --rm &lt;image-name&gt;</code></td>
+          <td>Run container and remove it when it exits</td>
+      </tr>
+      <tr>
+          <td><code>docker stop &lt;container-id&gt;</code></td>
+          <td>Stop a running container</td>
+      </tr>
+      <tr>
+          <td><code>docker start &lt;container-id&gt;</code></td>
+          <td>Start a stopped container</td>
+      </tr>
+      <tr>
+          <td><code>docker restart &lt;container-id&gt;</code></td>
+          <td>Restart a container</td>
+      </tr>
+      <tr>
+          <td><code>docker rm &lt;container-id&gt;</code></td>
+          <td>Remove a container</td>
+      </tr>
+      <tr>
+          <td><code>docker rm -f &lt;container-id&gt;</code></td>
+          <td>Force remove a running container</td>
+      </tr>
+      <tr>
+          <td><code>docker exec -it &lt;container-id&gt; &lt;command&gt;</code></td>
+          <td>Execute a command in a running container</td>
+      </tr>
+      <tr>
+          <td><code>docker logs &lt;container-id&gt;</code></td>
+          <td>Fetch the logs of a container</td>
+      </tr>
+      <tr>
+          <td><code>docker logs -f &lt;container-id&gt;</code></td>
+          <td>Follow log output of a container</td>
+      </tr>
+      <tr>
+          <td><code>docker cp &lt;container-id&gt;:&lt;container-path&gt; &lt;host-path&gt;</code></td>
+          <td>Copy files from container to host</td>
+      </tr>
+      <tr>
+          <td><code>docker cp &lt;host-path&gt; &lt;container-id&gt;:&lt;container-path&gt;</code></td>
+          <td>Copy files from host to container</td>
+      </tr>
+      <tr>
+          <td><code>docker stats</code></td>
+          <td>Display live container resource usage</td>
+      </tr>
+      <tr>
+          <td><code>docker inspect &lt;container-id&gt;</code></td>
+          <td>Display detailed information about a container</td>
+      </tr>
+      <tr>
+          <td><code>docker top &lt;container-id&gt;</code></td>
+          <td>Display the running processes of a container</td>
+      </tr>
+      <tr>
+          <td><code>docker update --memory &lt;limit&gt; &lt;container-id&gt;</code></td>
+          <td>Update container resources</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="docker-network-commands">
+  Docker Network Commands
+  <a class="anchor" href="#docker-network-commands">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Command</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>docker network ls</code></td>
+          <td>List all networks</td>
+      </tr>
+      <tr>
+          <td><code>docker network create &lt;network-name&gt;</code></td>
+          <td>Create a network</td>
+      </tr>
+      <tr>
+          <td><code>docker network rm &lt;network-name&gt;</code></td>
+          <td>Remove a network</td>
+      </tr>
+      <tr>
+          <td><code>docker network inspect &lt;network-name&gt;</code></td>
+          <td>Display detailed information about a network</td>
+      </tr>
+      <tr>
+          <td><code>docker network connect &lt;network-name&gt; &lt;container-id&gt;</code></td>
+          <td>Connect a container to a network</td>
+      </tr>
+      <tr>
+          <td><code>docker network disconnect &lt;network-name&gt; &lt;container-id&gt;</code></td>
+          <td>Disconnect a container from a network</td>
+      </tr>
+      <tr>
+          <td><code>docker network prune</code></td>
+          <td>Remove all unused networks</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="docker-volume-commands">
+  Docker Volume Commands
+  <a class="anchor" href="#docker-volume-commands">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Command</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>docker volume ls</code></td>
+          <td>List all volumes</td>
+      </tr>
+      <tr>
+          <td><code>docker volume create &lt;volume-name&gt;</code></td>
+          <td>Create a volume</td>
+      </tr>
+      <tr>
+          <td><code>docker volume rm &lt;volume-name&gt;</code></td>
+          <td>Remove a volume</td>
+      </tr>
+      <tr>
+          <td><code>docker volume inspect &lt;volume-name&gt;</code></td>
+          <td>Display detailed information about a volume</td>
+      </tr>
+      <tr>
+          <td><code>docker volume prune</code></td>
+          <td>Remove all unused volumes</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="dockerfile-instructions">
+  Dockerfile Instructions
+  <a class="anchor" href="#dockerfile-instructions">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Instruction</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>FROM</code></td>
+          <td>Set base image</td>
+      </tr>
+      <tr>
+          <td><code>WORKDIR</code></td>
+          <td>Set working directory</td>
+      </tr>
+      <tr>
+          <td><code>COPY</code></td>
+          <td>Copy files from host to container</td>
+      </tr>
+      <tr>
+          <td><code>ADD</code></td>
+          <td>Copy files from host or URL to container</td>
+      </tr>
+      <tr>
+          <td><code>RUN</code></td>
+          <td>Execute command during build</td>
+      </tr>
+      <tr>
+          <td><code>ENV</code></td>
+          <td>Set environment variable</td>
+      </tr>
+      <tr>
+          <td><code>ARG</code></td>
+          <td>Define build-time variable</td>
+      </tr>
+      <tr>
+          <td><code>EXPOSE</code></td>
+          <td>Expose port</td>
+      </tr>
+      <tr>
+          <td><code>VOLUME</code></td>
+          <td>Create mount point</td>
+      </tr>
+      <tr>
+          <td><code>CMD</code></td>
+          <td>Default command for container</td>
+      </tr>
+      <tr>
+          <td><code>ENTRYPOINT</code></td>
+          <td>Configure container executable</td>
+      </tr>
+      <tr>
+          <td><code>LABEL</code></td>
+          <td>Add metadata to image</td>
+      </tr>
+      <tr>
+          <td><code>USER</code></td>
+          <td>Set user for container</td>
+      </tr>
+      <tr>
+          <td><code>HEALTHCHECK</code></td>
+          <td>Check container health</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="common-docker-run-options">
+  Common Docker Run Options
+  <a class="anchor" href="#common-docker-run-options">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Option</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>-d, --detach</code></td>
+          <td>Run container in background</td>
+      </tr>
+      <tr>
+          <td><code>-e, --env</code></td>
+          <td>Set environment variables</td>
+      </tr>
+      <tr>
+          <td><code>-p, --publish</code></td>
+          <td>Publish container&rsquo;s port to the host</td>
+      </tr>
+      <tr>
+          <td><code>-v, --volume</code></td>
+          <td>Bind mount a volume</td>
+      </tr>
+      <tr>
+          <td><code>--name</code></td>
+          <td>Assign a name to the container</td>
+      </tr>
+      <tr>
+          <td><code>--network</code></td>
+          <td>Connect to a network</td>
+      </tr>
+      <tr>
+          <td><code>--restart</code></td>
+          <td>Restart policy (no, on-failure, always, unless-stopped)</td>
+      </tr>
+      <tr>
+          <td><code>--rm</code></td>
+          <td>Remove container when it exits</td>
+      </tr>
+      <tr>
+          <td><code>-it</code></td>
+          <td>Interactive mode with TTY</td>
+      </tr>
+      <tr>
+          <td><code>--memory</code></td>
+          <td>Memory limit</td>
+      </tr>
+      <tr>
+          <td><code>--cpus</code></td>
+          <td>Number of CPUs</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="docker-command-examples">
+  Docker Command Examples
+  <a class="anchor" href="#docker-command-examples">#</a>
+</h2>
+<h3 id="running-a-nginx-web-server">
+  Running a Nginx Web Server
+  <a class="anchor" href="#running-a-nginx-web-server">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run -d -p 8080:80 --name my-nginx nginx
+</span></span></code></pre></div><h3 id="building-a-custom-image">
+  Building a Custom Image
+  <a class="anchor" href="#building-a-custom-image">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker build -t my-app:1.0 .
+</span></span></code></pre></div><h3 id="running-a-container-with-environment-variables">
+  Running a Container with Environment Variables
+  <a class="anchor" href="#running-a-container-with-environment-variables">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run -d -p 3000:3000 -e NODE_ENV<span style="color:#f92672">=</span>production --name my-node-app my-node-app
+</span></span></code></pre></div><h3 id="creating-a-docker-network-and-connecting-containers">
+  Creating a Docker Network and Connecting Containers
+  <a class="anchor" href="#creating-a-docker-network-and-connecting-containers">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker network create my-network
+</span></span><span style="display:flex;"><span>docker run -d --name db --network my-network mongo
+</span></span><span style="display:flex;"><span>docker run -d --name app --network my-network -p 8000:8000 my-app
+</span></span></code></pre></div><h3 id="volume-mounting-for-persistence">
+  Volume Mounting for Persistence
+  <a class="anchor" href="#volume-mounting-for-persistence">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run -d -p 27017:27017 -v mongodb-data:/data/db --name mongodb mongo
+</span></span></code></pre></div><h3 id="running-a-mysql-container-with-environment-variables">
+  Running a MySQL Container with Environment Variables
+  <a class="anchor" href="#running-a-mysql-container-with-environment-variables">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run -d -p 3306:3306 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -e MYSQL_ROOT_PASSWORD<span style="color:#f92672">=</span>secretpassword <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -e MYSQL_DATABASE<span style="color:#f92672">=</span>mydb <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -e MYSQL_USER<span style="color:#f92672">=</span>user <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -e MYSQL_PASSWORD<span style="color:#f92672">=</span>password <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -v mysql-data:/var/lib/mysql <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --name mysql <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  mysql:8.0
+</span></span></code></pre></div></article>
+ 
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3938526066745812"
+     data-ad-slot="9958014946"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3938526066745812"
+     data-ad-slot="3338364768"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#docker-system-commands">Docker System Commands</a></li>
+    <li><a href="#docker-image-commands">Docker Image Commands</a></li>
+    <li><a href="#docker-container-commands">Docker Container Commands</a></li>
+    <li><a href="#docker-network-commands">Docker Network Commands</a></li>
+    <li><a href="#docker-volume-commands">Docker Volume Commands</a></li>
+    <li><a href="#dockerfile-instructions">Dockerfile Instructions</a></li>
+    <li><a href="#common-docker-run-options">Common Docker Run Options</a></li>
+    <li><a href="#docker-command-examples">Docker Command Examples</a>
+      <ul>
+        <li><a href="#running-a-nginx-web-server">Running a Nginx Web Server</a></li>
+        <li><a href="#building-a-custom-image">Building a Custom Image</a></li>
+        <li><a href="#running-a-container-with-environment-variables">Running a Container with Environment Variables</a></li>
+        <li><a href="#creating-a-docker-network-and-connecting-containers">Creating a Docker Network and Connecting Containers</a></li>
+        <li><a href="#volume-mounting-for-persistence">Volume Mounting for Persistence</a></li>
+        <li><a href="#running-a-mysql-container-with-environment-variables">Running a MySQL Container with Environment Variables</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

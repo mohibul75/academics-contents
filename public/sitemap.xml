@@ -48,6 +48,18 @@
   </url><url>
     <loc>http://localhost:1313/docs/lecture-resources/lecture-2/reverse-proxy/</loc>
   </url><url>
+    <loc>http://localhost:1313/docs/lecture-resources/lecture-3/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/lecture-resources/lecture-3/docker/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/lecture-resources/lecture-3/docker-lab/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/lecture-resources/lecture-3/docker-lab-go/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/lecture-resources/lecture-3/docker-cheatsheet/</loc>
+  </url><url>
+    <loc>http://localhost:1313/docs/lecture-resources/lecture-3/docker-best-practices/</loc>
+  </url><url>
     <loc>http://localhost:1313/categories/</loc>
   </url><url>
     <loc>http://localhost:1313/</loc>

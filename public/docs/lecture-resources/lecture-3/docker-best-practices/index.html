@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  Docker Best Practices
+  #
+
+This document outlines recommended practices for effectively developing, deploying, and managing Docker containers in production environments.
+
+  Image Building Best Practices
+  #
+
+
+  Use Specific Base Image Tags
+  #
+
+Always use specific version tags for base images rather than latest to ensure consistency and reproducibility.
+# Bad practice
+FROM node:latest
+
+# Good practice
+FROM node:18.16.0-slim
+
+  Keep Images Small
+  #
+
+
+Use lightweight base images (Alpine, slim variants)
+Minimize layers by combining related commands
+Remove unnecessary files in the same layer they were created
+
+# Bad practice
+FROM ubuntu:22.04
+RUN apt-get update
+RUN apt-get install -y python3
+RUN apt-get install -y python3-pip
+RUN pip install requests
+
+# Good practice
+FROM python:3.11-alpine
+RUN pip install --no-cache-dir requests
+
+  Use Multi-Stage Builds
+  #
+
+Use multi-stage builds to separate build-time dependencies from runtime dependencies, resulting in smaller final images.">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/lecture-resources/lecture-3/docker-best-practices/">
+  <meta property="og:site_name" content="Distributed Systems Lab">
+  <meta property="og:title" content="Docker Best Practices">
+  <meta property="og:description" content="Docker Best Practices # This document outlines recommended practices for effectively developing, deploying, and managing Docker containers in production environments.
+Image Building Best Practices # Use Specific Base Image Tags # Always use specific version tags for base images rather than latest to ensure consistency and reproducibility.
+# Bad practice FROM node:latest # Good practice FROM node:18.16.0-slim Keep Images Small # Use lightweight base images (Alpine, slim variants) Minimize layers by combining related commands Remove unnecessary files in the same layer they were created # Bad practice FROM ubuntu:22.04 RUN apt-get update RUN apt-get install -y python3 RUN apt-get install -y python3-pip RUN pip install requests # Good practice FROM python:3.11-alpine RUN pip install --no-cache-dir requests Use Multi-Stage Builds # Use multi-stage builds to separate build-time dependencies from runtime dependencies, resulting in smaller final images.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>Docker Best Practices | Distributed Systems Lab</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/lecture-resources/lecture-3/docker-best-practices/">
+<link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.1e6eb7e71ced2f0312ed3343993e9a70aa9161793b0479e05902a6ff94d2257f.js" integrity="sha256-Hm635xztLwMS7TNDmT6acKqRYXk7BHngWQKm/5TSJX8=" crossorigin="anonymous"></script>
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1GNGFG1C4"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-T1GNGFG1C4');
+        }
+      </script><!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+
+
+
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Distributed Systems Lab</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/details/" class="">Details</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/timeline/" class="">Course Timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/prerequisites/" class="">Prerequisites</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/tools/" class="">Tools</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-546b9044c321d8afbf101ab5c84d42f6" class="toggle" checked />
+    <label for="section-546b9044c321d8afbf101ab5c84d42f6" class="flex justify-between">
+      <a role="button" class="">Lecture Resources</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="toggle"  />
+    <label for="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="flex justify-between">
+      <a role="button" class="">Lecture 1: Introduction</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/cs/" class="">Centralized Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ds/" class="">Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/types-ds/" class="">Types of Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ms/" class="">Microservices</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-a7062be986807b90f862fe3e30dfe2c8" class="toggle"  />
+    <label for="section-a7062be986807b90f862fe3e30dfe2c8" class="flex justify-between">
+      <a href="/docs/lecture-resources/lecture-2/" class="">Lecture 2: Proxies in Distributed Systems</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-2/proxy/" class="">Proxy Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-2/reverse-proxy/" class="">Reverse Proxy Implementation</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-a10ab1c6fa9bd8f6efd555c5ce792946" class="toggle" checked />
+    <label for="section-a10ab1c6fa9bd8f6efd555c5ce792946" class="flex justify-between">
+      <a href="/docs/lecture-resources/lecture-3/" class="">Lecture 3: Containerization with Docker</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker/" class="">Docker</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-lab/" class="">Docker Hands-On Lab</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-lab-go/" class="">Docker Lab with Go</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-cheatsheet/" class="">Docker Command Cheat Sheet</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-best-practices/" class="active">Docker Best Practices</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-1/" class="">Phase 1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-2/" class="">Phase 2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-3/" class="">Phase 3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-4/" class="">Phase 4</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-5/" class="">Phase 5</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-6/" class="">Phase 6</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/system-design/" class="">Systems Design Problems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/exploration/" class="">Some Distributed Systems Exploration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/career-path/" class="">Career Path</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/about-me/" class="">About Me</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Docker Best Practices</h3>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#image-building-best-practices">Image Building Best Practices</a>
+      <ul>
+        <li><a href="#use-specific-base-image-tags">Use Specific Base Image Tags</a></li>
+        <li><a href="#keep-images-small">Keep Images Small</a></li>
+        <li><a href="#use-multi-stage-builds">Use Multi-Stage Builds</a></li>
+        <li><a href="#leverage-build-cache-effectively">Leverage Build Cache Effectively</a></li>
+        <li><a href="#avoid-running-as-root">Avoid Running as Root</a></li>
+      </ul>
+    </li>
+    <li><a href="#container-runtime-best-practices">Container Runtime Best Practices</a>
+      <ul>
+        <li><a href="#use-environment-variables-for-configuration">Use Environment Variables for Configuration</a></li>
+        <li><a href="#set-health-checks">Set Health Checks</a></li>
+        <li><a href="#implement-proper-logging">Implement Proper Logging</a></li>
+        <li><a href="#define-resource-limits">Define Resource Limits</a></li>
+        <li><a href="#use-volumes-for-persistent-data">Use Volumes for Persistent Data</a></li>
+      </ul>
+    </li>
+    <li><a href="#security-best-practices">Security Best Practices</a>
+      <ul>
+        <li><a href="#scan-images-for-vulnerabilities">Scan Images for Vulnerabilities</a></li>
+        <li><a href="#sign-and-verify-images">Sign and Verify Images</a></li>
+        <li><a href="#keep-base-images-updated">Keep Base Images Updated</a></li>
+        <li><a href="#limit-capabilities">Limit Capabilities</a></li>
+        <li><a href="#use-read-only-filesystem">Use Read-Only Filesystem</a></li>
+      </ul>
+    </li>
+    <li><a href="#development-workflow-best-practices">Development Workflow Best Practices</a>
+      <ul>
+        <li><a href="#use-docker-for-local-development">Use Docker for Local Development</a></li>
+        <li><a href="#implement-cicd-for-docker-images">Implement CI/CD for Docker Images</a></li>
+        <li><a href="#use-docker-buildkit">Use Docker BuildKit</a></li>
+      </ul>
+    </li>
+    <li><a href="#monitoring-and-maintenance">Monitoring and Maintenance</a>
+      <ul>
+        <li><a href="#set-up-container-monitoring">Set Up Container Monitoring</a></li>
+        <li><a href="#log-aggregation">Log Aggregation</a></li>
+        <li><a href="#regular-cleanup">Regular Cleanup</a></li>
+      </ul>
+    </li>
+    <li><a href="#production-deployment-considerations">Production Deployment Considerations</a>
+      <ul>
+        <li><a href="#use-orchestration-tools">Use Orchestration Tools</a></li>
+        <li><a href="#implement-rolling-updates">Implement Rolling Updates</a></li>
+        <li><a href="#backup-strategies">Backup Strategies</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="docker-best-practices">
+  Docker Best Practices
+  <a class="anchor" href="#docker-best-practices">#</a>
+</h1>
+<p>This document outlines recommended practices for effectively developing, deploying, and managing Docker containers in production environments.</p>
+<h2 id="image-building-best-practices">
+  Image Building Best Practices
+  <a class="anchor" href="#image-building-best-practices">#</a>
+</h2>
+<h3 id="use-specific-base-image-tags">
+  Use Specific Base Image Tags
+  <a class="anchor" href="#use-specific-base-image-tags">#</a>
+</h3>
+<p>Always use specific version tags for base images rather than <code>latest</code> to ensure consistency and reproducibility.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#75715e"># Bad practice</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> node:latest</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Good practice</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> node:18.16.0-slim</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h3 id="keep-images-small">
+  Keep Images Small
+  <a class="anchor" href="#keep-images-small">#</a>
+</h3>
+<ul>
+<li>Use lightweight base images (Alpine, slim variants)</li>
+<li>Minimize layers by combining related commands</li>
+<li>Remove unnecessary files in the same layer they were created</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#75715e"># Bad practice</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> ubuntu:22.04</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apt-get update<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apt-get install -y python3<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> apt-get install -y python3-pip<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> pip install requests<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Good practice</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> python:3.11-alpine</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> pip install --no-cache-dir requests<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h3 id="use-multi-stage-builds">
+  Use Multi-Stage Builds
+  <a class="anchor" href="#use-multi-stage-builds">#</a>
+</h3>
+<p>Use multi-stage builds to separate build-time dependencies from runtime dependencies, resulting in smaller final images.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#75715e"># Build stage</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> node:18 AS build</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /app</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> package*.json ./<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> npm ci<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> . .<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> npm run build<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Production stage</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> node:18-alpine</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /app</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> --from<span style="color:#f92672">=</span>build /app/dist ./dist<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> --from<span style="color:#f92672">=</span>build /app/package*.json ./<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> npm ci --only<span style="color:#f92672">=</span>production<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">EXPOSE</span><span style="color:#e6db74"> 3000</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;npm&#34;</span>, <span style="color:#e6db74">&#34;start&#34;</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h3 id="leverage-build-cache-effectively">
+  Leverage Build Cache Effectively
+  <a class="anchor" href="#leverage-build-cache-effectively">#</a>
+</h3>
+<p>Order Dockerfile instructions from least to most frequently changing to optimize build cache usage.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#75715e"># Optimal order for caching</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> node:18-alpine</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /app</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Rarely changes</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> package*.json ./<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> npm ci<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># More frequently changes</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> . .<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> npm run build<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;npm&#34;</span>, <span style="color:#e6db74">&#34;start&#34;</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h3 id="avoid-running-as-root">
+  Avoid Running as Root
+  <a class="anchor" href="#avoid-running-as-root">#</a>
+</h3>
+<p>Run containers with a non-root user for security.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> node:18-alpine</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /app</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> --chown<span style="color:#f92672">=</span>node:node . .<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">USER</span><span style="color:#e6db74"> node</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;node&#34;</span>, <span style="color:#e6db74">&#34;server.js&#34;</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h2 id="container-runtime-best-practices">
+  Container Runtime Best Practices
+  <a class="anchor" href="#container-runtime-best-practices">#</a>
+</h2>
+<h3 id="use-environment-variables-for-configuration">
+  Use Environment Variables for Configuration
+  <a class="anchor" href="#use-environment-variables-for-configuration">#</a>
+</h3>
+<p>Externalize configuration using environment variables.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> node:18-alpine</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /app</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> . .<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;node&#34;</span>, <span style="color:#e6db74">&#34;server.js&#34;</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Run with: docker run -e DB_HOST=mongodb -e API_KEY=12345 my-app</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h3 id="set-health-checks">
+  Set Health Checks
+  <a class="anchor" href="#set-health-checks">#</a>
+</h3>
+<p>Define health checks to enable automated monitoring and container replacement.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> nginx:alpine</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> ./config/nginx.conf /etc/nginx/conf.d/default.conf<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">HEALTHCHECK --interval=30s --timeout=3s \
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">  </span><span style="color:#66d9ef">CMD</span> curl -f http://localhost/ <span style="color:#f92672">||</span> exit <span style="color:#ae81ff">1</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h3 id="implement-proper-logging">
+  Implement Proper Logging
+  <a class="anchor" href="#implement-proper-logging">#</a>
+</h3>
+<p>Configure applications to log to stdout/stderr for integration with Docker&rsquo;s logging system.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#75715e"># Application should log to stdout/stderr</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#75715e"># Then view logs with: docker logs container_name</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h3 id="define-resource-limits">
+  Define Resource Limits
+  <a class="anchor" href="#define-resource-limits">#</a>
+</h3>
+<p>Always set resource constraints for containers in production.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Set memory and CPU limits</span>
+</span></span><span style="display:flex;"><span>docker run --memory<span style="color:#f92672">=</span>512m --cpus<span style="color:#f92672">=</span>0.5 my-application
+</span></span></code></pre></div><h3 id="use-volumes-for-persistent-data">
+  Use Volumes for Persistent Data
+  <a class="anchor" href="#use-volumes-for-persistent-data">#</a>
+</h3>
+<p>Use named volumes for data that needs to persist beyond container lifecycle.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Create a named volume</span>
+</span></span><span style="display:flex;"><span>docker volume create my-data
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Use the volume</span>
+</span></span><span style="display:flex;"><span>docker run -v my-data:/app/data my-application
+</span></span></code></pre></div><h2 id="security-best-practices">
+  Security Best Practices
+  <a class="anchor" href="#security-best-practices">#</a>
+</h2>
+<h3 id="scan-images-for-vulnerabilities">
+  Scan Images for Vulnerabilities
+  <a class="anchor" href="#scan-images-for-vulnerabilities">#</a>
+</h3>
+<p>Regularly scan your Docker images for known vulnerabilities.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Example using Trivy</span>
+</span></span><span style="display:flex;"><span>trivy image myapp:1.0
+</span></span></code></pre></div><h3 id="sign-and-verify-images">
+  Sign and Verify Images
+  <a class="anchor" href="#sign-and-verify-images">#</a>
+</h3>
+<p>Sign your images and verify signatures before deployment for supply chain security.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Sign image</span>
+</span></span><span style="display:flex;"><span>docker trust sign myapp:1.0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Only run verified images</span>
+</span></span><span style="display:flex;"><span>docker trust inspect --pretty myapp:1.0
+</span></span></code></pre></div><h3 id="keep-base-images-updated">
+  Keep Base Images Updated
+  <a class="anchor" href="#keep-base-images-updated">#</a>
+</h3>
+<p>Regularly update base images to include security patches.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Pull latest version of the specific tag you use</span>
+</span></span><span style="display:flex;"><span>docker pull node:18-alpine
+</span></span></code></pre></div><h3 id="limit-capabilities">
+  Limit Capabilities
+  <a class="anchor" href="#limit-capabilities">#</a>
+</h3>
+<p>Run containers with minimal required Linux capabilities.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run --cap-drop<span style="color:#f92672">=</span>ALL --cap-add<span style="color:#f92672">=</span>NET_BIND_SERVICE my-app
+</span></span></code></pre></div><h3 id="use-read-only-filesystem">
+  Use Read-Only Filesystem
+  <a class="anchor" href="#use-read-only-filesystem">#</a>
+</h3>
+<p>Mount the container filesystem as read-only when possible.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker run --read-only my-application
+</span></span></code></pre></div><h2 id="development-workflow-best-practices">
+  Development Workflow Best Practices
+  <a class="anchor" href="#development-workflow-best-practices">#</a>
+</h2>
+<h3 id="use-docker-for-local-development">
+  Use Docker for Local Development
+  <a class="anchor" href="#use-docker-for-local-development">#</a>
+</h3>
+<p>Create development-specific Dockerfiles for your application.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-dockerfile" data-lang="dockerfile"><span style="display:flex;"><span><span style="color:#75715e"># Dockerfile.dev</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> node:18-alpine</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">WORKDIR</span><span style="color:#e6db74"> /app</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> package*.json ./<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">RUN</span> npm install<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> . .<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">CMD</span> [<span style="color:#e6db74">&#34;npm&#34;</span>, <span style="color:#e6db74">&#34;run&#34;</span>, <span style="color:#e6db74">&#34;dev&#34;</span>]<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>Run with:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>docker build -f Dockerfile.dev -t myapp-dev .
+</span></span><span style="display:flex;"><span>docker run -v <span style="color:#66d9ef">$(</span>pwd<span style="color:#66d9ef">)</span>/src:/app/src -p 3000:3000 myapp-dev
+</span></span></code></pre></div><h3 id="implement-cicd-for-docker-images">
+  Implement CI/CD for Docker Images
+  <a class="anchor" href="#implement-cicd-for-docker-images">#</a>
+</h3>
+<p>Automate building, testing, and deploying Docker images.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># Example GitHub Actions workflow</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">name</span>: <span style="color:#ae81ff">Docker Build and Push</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">on</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">push</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">branches</span>: [ <span style="color:#ae81ff">main ]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">jobs</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">build</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">runs-on</span>: <span style="color:#ae81ff">ubuntu-latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">steps</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">uses</span>: <span style="color:#ae81ff">actions/checkout@v3</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Build and test</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          docker build -t myapp:test .
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          docker run myapp:test npm test</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Push to registry</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">if</span>: <span style="color:#ae81ff">success()</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">run</span>: |<span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          docker tag myapp:test myorg/myapp:${{ github.sha }}
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          docker push myorg/myapp:${{ github.sha }}</span>
+</span></span></code></pre></div><h3 id="use-docker-buildkit">
+  Use Docker BuildKit
+  <a class="anchor" href="#use-docker-buildkit">#</a>
+</h3>
+<p>Enable BuildKit for faster, more efficient builds.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Enable BuildKit</span>
+</span></span><span style="display:flex;"><span>export DOCKER_BUILDKIT<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>docker build .
+</span></span></code></pre></div><h2 id="monitoring-and-maintenance">
+  Monitoring and Maintenance
+  <a class="anchor" href="#monitoring-and-maintenance">#</a>
+</h2>
+<h3 id="set-up-container-monitoring">
+  Set Up Container Monitoring
+  <a class="anchor" href="#set-up-container-monitoring">#</a>
+</h3>
+<p>Implement monitoring for all Docker containers in production.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Example using Prometheus and cAdvisor</span>
+</span></span><span style="display:flex;"><span>docker run -d <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --volume<span style="color:#f92672">=</span>/:/rootfs:ro <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --volume<span style="color:#f92672">=</span>/var/run:/var/run:ro <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --volume<span style="color:#f92672">=</span>/sys:/sys:ro <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --volume<span style="color:#f92672">=</span>/var/lib/docker/:/var/lib/docker:ro <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --publish<span style="color:#f92672">=</span>8080:8080 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --name<span style="color:#f92672">=</span>cadvisor <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  gcr.io/cadvisor/cadvisor:latest
+</span></span></code></pre></div><h3 id="log-aggregation">
+  Log Aggregation
+  <a class="anchor" href="#log-aggregation">#</a>
+</h3>
+<p>Implement centralized logging for all containers.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Run ELK stack for log aggregation</span>
+</span></span><span style="display:flex;"><span>docker run -d <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --name elasticsearch <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -p 9200:9200 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -e <span style="color:#e6db74">&#34;discovery.type=single-node&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  elasticsearch:7.14.0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker run -d <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --name logstash <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --link elasticsearch <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -v <span style="color:#e6db74">&#34;</span>$PWD<span style="color:#e6db74">/logstash.conf:/usr/share/logstash/pipeline/logstash.conf&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  logstash:7.14.0
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>docker run -d <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --name kibana <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --link elasticsearch <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -p 5601:5601 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  kibana:7.14.0
+</span></span></code></pre></div><h3 id="regular-cleanup">
+  Regular Cleanup
+  <a class="anchor" href="#regular-cleanup">#</a>
+</h3>
+<p>Implement regular cleanup of unused Docker objects.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Create a cleanup cron job</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span> <span style="color:#ae81ff">0</span> * * * docker system prune -af --volumes &gt; /var/log/docker-cleanup.log 2&gt;&amp;<span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><h2 id="production-deployment-considerations">
+  Production Deployment Considerations
+  <a class="anchor" href="#production-deployment-considerations">#</a>
+</h2>
+<h3 id="use-orchestration-tools">
+  Use Orchestration Tools
+  <a class="anchor" href="#use-orchestration-tools">#</a>
+</h3>
+<p>For production environments with multiple containers, use orchestration tools like Kubernetes or Docker Swarm.</p>
+<h3 id="implement-rolling-updates">
+  Implement Rolling Updates
+  <a class="anchor" href="#implement-rolling-updates">#</a>
+</h3>
+<p>Configure services for zero-downtime updates.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Docker Swarm example</span>
+</span></span><span style="display:flex;"><span>docker service create --name myapp --replicas <span style="color:#ae81ff">3</span> myapp:1.0
+</span></span><span style="display:flex;"><span>docker service update --image myapp:1.1 myapp
+</span></span></code></pre></div><h3 id="backup-strategies">
+  Backup Strategies
+  <a class="anchor" href="#backup-strategies">#</a>
+</h3>
+<p>Implement regular backups for all persistent data.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Example backup script for a volume</span>
+</span></span><span style="display:flex;"><span>docker run --rm -v my_volume:/data -v <span style="color:#66d9ef">$(</span>pwd<span style="color:#66d9ef">)</span>/backup:/backup alpine <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  tar -czf /backup/my_volume_<span style="color:#66d9ef">$(</span>date +%Y%m%d_%H%M%S<span style="color:#66d9ef">)</span>.tar.gz -C /data .
+</span></span></code></pre></div><h2 id="conclusion">
+  Conclusion
+  <a class="anchor" href="#conclusion">#</a>
+</h2>
+<p>Following these best practices will help you build more secure, efficient, and maintainable Docker-based applications. Remember that Docker is constantly evolving, so it&rsquo;s important to stay updated with the latest recommendations and security advisories.</p>
+</article>
+ 
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3938526066745812"
+     data-ad-slot="9958014946"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3938526066745812"
+     data-ad-slot="3338364768"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#image-building-best-practices">Image Building Best Practices</a>
+      <ul>
+        <li><a href="#use-specific-base-image-tags">Use Specific Base Image Tags</a></li>
+        <li><a href="#keep-images-small">Keep Images Small</a></li>
+        <li><a href="#use-multi-stage-builds">Use Multi-Stage Builds</a></li>
+        <li><a href="#leverage-build-cache-effectively">Leverage Build Cache Effectively</a></li>
+        <li><a href="#avoid-running-as-root">Avoid Running as Root</a></li>
+      </ul>
+    </li>
+    <li><a href="#container-runtime-best-practices">Container Runtime Best Practices</a>
+      <ul>
+        <li><a href="#use-environment-variables-for-configuration">Use Environment Variables for Configuration</a></li>
+        <li><a href="#set-health-checks">Set Health Checks</a></li>
+        <li><a href="#implement-proper-logging">Implement Proper Logging</a></li>
+        <li><a href="#define-resource-limits">Define Resource Limits</a></li>
+        <li><a href="#use-volumes-for-persistent-data">Use Volumes for Persistent Data</a></li>
+      </ul>
+    </li>
+    <li><a href="#security-best-practices">Security Best Practices</a>
+      <ul>
+        <li><a href="#scan-images-for-vulnerabilities">Scan Images for Vulnerabilities</a></li>
+        <li><a href="#sign-and-verify-images">Sign and Verify Images</a></li>
+        <li><a href="#keep-base-images-updated">Keep Base Images Updated</a></li>
+        <li><a href="#limit-capabilities">Limit Capabilities</a></li>
+        <li><a href="#use-read-only-filesystem">Use Read-Only Filesystem</a></li>
+      </ul>
+    </li>
+    <li><a href="#development-workflow-best-practices">Development Workflow Best Practices</a>
+      <ul>
+        <li><a href="#use-docker-for-local-development">Use Docker for Local Development</a></li>
+        <li><a href="#implement-cicd-for-docker-images">Implement CI/CD for Docker Images</a></li>
+        <li><a href="#use-docker-buildkit">Use Docker BuildKit</a></li>
+      </ul>
+    </li>
+    <li><a href="#monitoring-and-maintenance">Monitoring and Maintenance</a>
+      <ul>
+        <li><a href="#set-up-container-monitoring">Set Up Container Monitoring</a></li>
+        <li><a href="#log-aggregation">Log Aggregation</a></li>
+        <li><a href="#regular-cleanup">Regular Cleanup</a></li>
+      </ul>
+    </li>
+    <li><a href="#production-deployment-considerations">Production Deployment Considerations</a>
+      <ul>
+        <li><a href="#use-orchestration-tools">Use Orchestration Tools</a></li>
+        <li><a href="#implement-rolling-updates">Implement Rolling Updates</a></li>
+        <li><a href="#backup-strategies">Backup Strategies</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
