@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  🐳 Docker Swarm: Container Orchestration Made Simple
+  #
+
+
+  🌐 Why Do We Need a Container Orchestrator?
+  #
+
+While Docker allows us to package and run applications in containers, managing those containers at scale—especially in production—requires much more. That&rsquo;s where container orchestrators like Docker Swarm or Kubernetes come in.
+All the limitations of standalone Docker containers discussed previously are solved by introducing a Container Orchestrator:
+
+✅ High Availability: No single point of failure
+✅ Auto-scaling: Adjust to changing workloads
+✅ Load Balancing: Distribute traffic efficiently
+✅ Service Discovery: Containers can find each other
+✅ Rolling Updates: Zero-downtime deployments
+✅ Health Monitoring: Automatic recovery from failures
+
+
+  📊 Docker Swarm Architecture
+  #
+
+
+  Single Manager Architecture
+  #
+
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/lecture-resources/lecture-4/docker-swarm/">
+  <meta property="og:site_name" content="Distributed Systems Lab">
+  <meta property="og:title" content="Docker Swarm">
+  <meta property="og:description" content="🐳 Docker Swarm: Container Orchestration Made Simple # 🌐 Why Do We Need a Container Orchestrator? # While Docker allows us to package and run applications in containers, managing those containers at scale—especially in production—requires much more. That’s where container orchestrators like Docker Swarm or Kubernetes come in.
+All the limitations of standalone Docker containers discussed previously are solved by introducing a Container Orchestrator:
+✅ High Availability: No single point of failure ✅ Auto-scaling: Adjust to changing workloads ✅ Load Balancing: Distribute traffic efficiently ✅ Service Discovery: Containers can find each other ✅ Rolling Updates: Zero-downtime deployments ✅ Health Monitoring: Automatic recovery from failures 📊 Docker Swarm Architecture # Single Manager Architecture #">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>Docker Swarm | Distributed Systems Lab</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/lecture-resources/lecture-4/docker-swarm/">
+<link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.b5edf284c9d5e557fe090bf95ae9b9d642d1485076861a7b23f432746bfa4e6a.js" integrity="sha256-te3yhMnV5Vf&#43;CQv5Wum51kLRSFB2hhp7I/QydGv6Tmo=" crossorigin="anonymous"></script>
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1GNGFG1C4"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-T1GNGFG1C4');
+        }
+      </script><!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+
+
+
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Distributed Systems Lab</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/details/" class="">Details</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/timeline/" class="">Course Timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/prerequisites/" class="">Prerequisites</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/tools/" class="">Tools</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-546b9044c321d8afbf101ab5c84d42f6" class="toggle" checked />
+    <label for="section-546b9044c321d8afbf101ab5c84d42f6" class="flex justify-between">
+      <a role="button" class="">Lecture Resources</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="toggle"  />
+    <label for="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="flex justify-between">
+      <a role="button" class="">Lecture 1: Introduction</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/cs/" class="">Centralized Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ds/" class="">Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/types-ds/" class="">Types of Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ms/" class="">Microservices</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-a7062be986807b90f862fe3e30dfe2c8" class="toggle"  />
+    <label for="section-a7062be986807b90f862fe3e30dfe2c8" class="flex justify-between">
+      <a href="/docs/lecture-resources/lecture-2/" class="">Lecture 2: Proxies in Distributed Systems</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-2/proxy/" class="">Proxy Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-2/reverse-proxy/" class="">Reverse Proxy Implementation</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-a10ab1c6fa9bd8f6efd555c5ce792946" class="toggle"  />
+    <label for="section-a10ab1c6fa9bd8f6efd555c5ce792946" class="flex justify-between">
+      <a href="/docs/lecture-resources/lecture-3/" class="">Lecture 3: Containerization with Docker</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker/" class="">Docker</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-lab/" class="">Docker Hands-On Lab</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-lab-go/" class="">Docker Lab with Go</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-cheatsheet/" class="">Docker Command Cheat Sheet</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-best-practices/" class="">Docker Best Practices</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-e5aba20a409ad03e13d1c637e559b6c0" class="toggle" checked />
+    <label for="section-e5aba20a409ad03e13d1c637e559b6c0" class="flex justify-between">
+      <a href="/docs/lecture-resources/lecture-4/" class="">Lecture 4: Docker Swarm</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-4/docker-swarm/" class="active">Docker Swarm</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-4/docker-swarm-concepts/" class="">Docker Swarm Concepts</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-1/" class="">Phase 1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-2/" class="">Phase 2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-3/" class="">Phase 3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-4/" class="">Phase 4</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-5/" class="">Phase 5</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-6/" class="">Phase 6</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/system-design/" class="">Systems Design Problems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/exploration/" class="">Some Distributed Systems Exploration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/career-path/" class="">Career Path</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/about-me/" class="">About Me</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Docker Swarm</h3>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#-why-do-we-need-a-container-orchestrator">🌐 Why Do We Need a Container Orchestrator?</a></li>
+    <li><a href="#-docker-swarm-architecture">📊 Docker Swarm Architecture</a>
+      <ul>
+        <li><a href="#single-manager-architecture">Single Manager Architecture</a></li>
+        <li><a href="#multi-manager-architecture">Multi-Manager Architecture</a></li>
+      </ul>
+    </li>
+    <li><a href="#-key-features-of-docker-swarm">🔑 Key Features of Docker Swarm</a>
+      <ul>
+        <li><a href="#-1-native-docker-integration">⚙️ 1. Native Docker Integration</a></li>
+        <li><a href="#-2-cluster-management">🖥️ 2. Cluster Management</a></li>
+        <li><a href="#-3-service-oriented-deployment">🔁 3. Service-Oriented Deployment</a></li>
+        <li><a href="#-4-load-balancing">📦 4. Load Balancing</a></li>
+        <li><a href="#-5-rolling-updates">🔄 5. Rolling Updates</a></li>
+        <li><a href="#-6-health-checks-and-self-healing">❤️ 6. Health Checks and Self-Healing</a></li>
+        <li><a href="#-7-built-in-security">🔒 7. Built-in Security</a></li>
+        <li><a href="#-8-auto-scaling-manual-triggers">📈 8. Auto-Scaling (Manual Triggers)</a></li>
+        <li><a href="#-9-declarative-service-model">📦 9. Declarative Service Model</a></li>
+        <li><a href="#-10-multi-host-networking">🌐 10. Multi-Host Networking</a></li>
+        <li><a href="#-11-simplified-operations">🔍 11. Simplified Operations</a></li>
+      </ul>
+    </li>
+    <li><a href="#-getting-started-with-docker-swarm">🚀 Getting Started with Docker Swarm</a>
+      <ul>
+        <li><a href="#initialize-a-swarm">Initialize a Swarm</a></li>
+        <li><a href="#join-workers-to-the-swarm">Join Workers to the Swarm</a></li>
+        <li><a href="#deploy-a-stack">Deploy a Stack</a></li>
+        <li><a href="#manage-services">Manage Services</a></li>
+      </ul>
+    </li>
+    <li><a href="#-docker-swarm-vs-kubernetes">🔄 Docker Swarm vs Kubernetes</a></li>
+    <li><a href="#-conclusion">📚 Conclusion</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="-docker-swarm-container-orchestration-made-simple">
+  🐳 Docker Swarm: Container Orchestration Made Simple
+  <a class="anchor" href="#-docker-swarm-container-orchestration-made-simple">#</a>
+</h1>
+<h2 id="-why-do-we-need-a-container-orchestrator">
+  🌐 Why Do We Need a Container Orchestrator?
+  <a class="anchor" href="#-why-do-we-need-a-container-orchestrator">#</a>
+</h2>
+<p>While Docker allows us to package and run applications in containers, managing those containers at scale—especially in production—requires much more. That&rsquo;s where container orchestrators like Docker Swarm or Kubernetes come in.</p>
+<p>All the limitations of standalone Docker containers discussed previously are solved by introducing a Container Orchestrator:</p>
+<ul>
+<li>✅ <strong>High Availability</strong>: No single point of failure</li>
+<li>✅ <strong>Auto-scaling</strong>: Adjust to changing workloads</li>
+<li>✅ <strong>Load Balancing</strong>: Distribute traffic efficiently</li>
+<li>✅ <strong>Service Discovery</strong>: Containers can find each other</li>
+<li>✅ <strong>Rolling Updates</strong>: Zero-downtime deployments</li>
+<li>✅ <strong>Health Monitoring</strong>: Automatic recovery from failures</li>
+</ul>
+<h2 id="-docker-swarm-architecture">
+  📊 Docker Swarm Architecture
+  <a class="anchor" href="#-docker-swarm-architecture">#</a>
+</h2>
+<h3 id="single-manager-architecture">
+  Single Manager Architecture
+  <a class="anchor" href="#single-manager-architecture">#</a>
+</h3>
+<p><img src="/images/ds-1.png" alt="Docker Swarm with one manager" /></p>
+<p>In this setup:</p>
+<ul>
+<li>One manager node controls the entire cluster</li>
+<li>Multiple worker nodes run the actual containers</li>
+<li>Simple but lacks high availability for the manager</li>
+</ul>
+<h3 id="multi-manager-architecture">
+  Multi-Manager Architecture
+  <a class="anchor" href="#multi-manager-architecture">#</a>
+</h3>
+<p><img src="/images/swarm-diagram.webp" alt="Docker Swarm with multi managers" /></p>
+<p><em>Source: <a href="https://docs.docker.com/engine/swarm/how-swarm-mode-works/nodes/">Docker Documentation</a></em></p>
+<p>In this setup:</p>
+<ul>
+<li>Multiple manager nodes ensure high availability</li>
+<li>Raft consensus algorithm keeps managers in sync</li>
+<li>Worker nodes are distributed across managers</li>
+<li>Provides resilience against manager node failures</li>
+</ul>
+<h2 id="-key-features-of-docker-swarm">
+  🔑 Key Features of Docker Swarm
+  <a class="anchor" href="#-key-features-of-docker-swarm">#</a>
+</h2>
+<h3 id="-1-native-docker-integration">
+  ⚙️ 1. Native Docker Integration
+  <a class="anchor" href="#-1-native-docker-integration">#</a>
+</h3>
+<ul>
+<li>Uses the same CLI and Docker Compose files you&rsquo;re already familiar with</li>
+<li>No need to learn new tooling—Swarm works seamlessly with the Docker ecosystem</li>
+<li>Minimal learning curve for teams already using Docker</li>
+</ul>
+<h3 id="-2-cluster-management">
+  🖥️ 2. Cluster Management
+  <a class="anchor" href="#-2-cluster-management">#</a>
+</h3>
+<ul>
+<li>Turns a group of Docker nodes into a single, virtual Docker engine</li>
+<li>Supports manager and worker node roles for scalability and fault tolerance</li>
+<li>Managers handle the control plane (orchestration and cluster management)</li>
+<li>Workers execute the containers (data plane)</li>
+</ul>
+<h3 id="-3-service-oriented-deployment">
+  🔁 3. Service-Oriented Deployment
+  <a class="anchor" href="#-3-service-oriented-deployment">#</a>
+</h3>
+<ul>
+<li>Applications are deployed as services rather than individual containers</li>
+<li>Each service can have multiple replicas, running across different nodes</li>
+<li>Services are defined declaratively, specifying the desired state</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># Example docker-compose.yml for Swarm</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;3.8&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">web</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx:latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">deploy</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">resources</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">limits</span>:
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">cpus</span>: <span style="color:#e6db74">&#39;0.5&#39;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">memory</span>: <span style="color:#ae81ff">512M</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">restart_policy</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">condition</span>: <span style="color:#66d9ef">on</span>-<span style="color:#ae81ff">failure</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;80:80&#34;</span>
+</span></span></code></pre></div><h3 id="-4-load-balancing">
+  📦 4. Load Balancing
+  <a class="anchor" href="#-4-load-balancing">#</a>
+</h3>
+<ul>
+<li>Internal load balancer automatically distributes traffic across all active replicas of a service</li>
+<li>Supports both ingress and host networking modes</li>
+<li>Routing mesh ensures requests reach the right service regardless of which node receives the request</li>
+</ul>
+<h3 id="-5-rolling-updates">
+  🔄 5. Rolling Updates
+  <a class="anchor" href="#-5-rolling-updates">#</a>
+</h3>
+<ul>
+<li>Update services with zero downtime using built-in rolling updates</li>
+<li>Can define update policies (e.g., one container at a time)</li>
+<li>Automatic rollback if update fails</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Example rolling update command</span>
+</span></span><span style="display:flex;"><span>docker service update --image nginx:1.21 --update-parallelism <span style="color:#ae81ff">2</span> --update-delay 20s my_web_service
+</span></span></code></pre></div><h3 id="-6-health-checks-and-self-healing">
+  ❤️ 6. Health Checks and Self-Healing
+  <a class="anchor" href="#-6-health-checks-and-self-healing">#</a>
+</h3>
+<ul>
+<li>Automatically restarts failed containers</li>
+<li>Redistributes tasks from failed nodes to healthy ones</li>
+<li>Custom health checks can be defined to monitor application health</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># Health check example</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">healthcheck</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">test</span>: [<span style="color:#e6db74">&#34;CMD&#34;</span>, <span style="color:#e6db74">&#34;curl&#34;</span>, <span style="color:#e6db74">&#34;-f&#34;</span>, <span style="color:#e6db74">&#34;http://localhost&#34;</span>]
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">interval</span>: <span style="color:#ae81ff">30s</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">timeout</span>: <span style="color:#ae81ff">10s</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">retries</span>: <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">start_period</span>: <span style="color:#ae81ff">40s</span>
+</span></span></code></pre></div><h3 id="-7-built-in-security">
+  🔒 7. Built-in Security
+  <a class="anchor" href="#-7-built-in-security">#</a>
+</h3>
+<ul>
+<li>Mutual TLS encryption between nodes by default</li>
+<li>Secure communication and automatic certificate rotation</li>
+<li>Node join tokens ensure only authorized nodes can join the cluster</li>
+</ul>
+<h3 id="-8-auto-scaling-manual-triggers">
+  📈 8. Auto-Scaling (Manual Triggers)
+  <a class="anchor" href="#-8-auto-scaling-manual-triggers">#</a>
+</h3>
+<ul>
+<li>While not fully automatic, services can be scaled up/down easily with a single CLI command</li>
+<li>Ideal for predictable workloads</li>
+<li>Can be automated with external monitoring tools</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Scale a service to 10 replicas</span>
+</span></span><span style="display:flex;"><span>docker service scale my_web_service<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>
+</span></span></code></pre></div><h3 id="-9-declarative-service-model">
+  📦 9. Declarative Service Model
+  <a class="anchor" href="#-9-declarative-service-model">#</a>
+</h3>
+<ul>
+<li>Define the desired state (number of replicas, constraints, etc.)</li>
+<li>Swarm constantly ensures the actual state matches the desired state</li>
+<li>Infrastructure as code approach</li>
+</ul>
+<h3 id="-10-multi-host-networking">
+  🌐 10. Multi-Host Networking
+  <a class="anchor" href="#-10-multi-host-networking">#</a>
+</h3>
+<ul>
+<li>Swarm mode enables overlay networks that span across multiple hosts</li>
+<li>Containers can communicate securely, regardless of the host they&rsquo;re on</li>
+<li>Multiple network types: overlay, bridge, macvlan, etc.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Create an overlay network</span>
+</span></span><span style="display:flex;"><span>docker network create --driver overlay my-swarm-network
+</span></span></code></pre></div><h3 id="-11-simplified-operations">
+  🔍 11. Simplified Operations
+  <a class="anchor" href="#-11-simplified-operations">#</a>
+</h3>
+<ul>
+<li>Easy to set up and manage compared to more complex orchestrators</li>
+<li>Ideal for small-to-medium-sized production deployments</li>
+<li>Perfect for DevOps teams getting started with container orchestration</li>
+</ul>
+<h2 id="-getting-started-with-docker-swarm">
+  🚀 Getting Started with Docker Swarm
+  <a class="anchor" href="#-getting-started-with-docker-swarm">#</a>
+</h2>
+<h3 id="initialize-a-swarm">
+  Initialize a Swarm
+  <a class="anchor" href="#initialize-a-swarm">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Initialize a new swarm on the current node (becomes manager)</span>
+</span></span><span style="display:flex;"><span>docker swarm init --advertise-addr &lt;MANAGER-IP&gt;
+</span></span></code></pre></div><h3 id="join-workers-to-the-swarm">
+  Join Workers to the Swarm
+  <a class="anchor" href="#join-workers-to-the-swarm">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># On worker nodes, run the join command provided by the manager</span>
+</span></span><span style="display:flex;"><span>docker swarm join --token &lt;WORKER-TOKEN&gt; &lt;MANAGER-IP&gt;:2377
+</span></span></code></pre></div><h3 id="deploy-a-stack">
+  Deploy a Stack
+  <a class="anchor" href="#deploy-a-stack">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Deploy a stack from a compose file</span>
+</span></span><span style="display:flex;"><span>docker stack deploy -c docker-compose.yml my_application
+</span></span></code></pre></div><h3 id="manage-services">
+  Manage Services
+  <a class="anchor" href="#manage-services">#</a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># List all services</span>
+</span></span><span style="display:flex;"><span>docker service ls
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Inspect a service</span>
+</span></span><span style="display:flex;"><span>docker service inspect my_application_web
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># View service logs</span>
+</span></span><span style="display:flex;"><span>docker service logs my_application_web
+</span></span></code></pre></div><h2 id="-docker-swarm-vs-kubernetes">
+  🔄 Docker Swarm vs Kubernetes
+  <a class="anchor" href="#-docker-swarm-vs-kubernetes">#</a>
+</h2>
+<table>
+  <thead>
+      <tr>
+          <th>Feature</th>
+          <th>Docker Swarm</th>
+          <th>Kubernetes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Learning Curve</td>
+          <td>Low - Simple setup</td>
+          <td>High - Complex architecture</td>
+      </tr>
+      <tr>
+          <td>Scalability</td>
+          <td>Good for small/medium deployments</td>
+          <td>Excellent for large-scale</td>
+      </tr>
+      <tr>
+          <td>Community</td>
+          <td>Smaller</td>
+          <td>Very large and active</td>
+      </tr>
+      <tr>
+          <td>Setup Time</td>
+          <td>Minutes</td>
+          <td>Hours/Days</td>
+      </tr>
+      <tr>
+          <td>Auto-scaling</td>
+          <td>Manual triggers</td>
+          <td>Automatic based on metrics</td>
+      </tr>
+      <tr>
+          <td>GUI</td>
+          <td>Limited (Docker Desktop)</td>
+          <td>Multiple options (Dashboard, etc.)</td>
+      </tr>
+      <tr>
+          <td>Cloud Support</td>
+          <td>Limited</td>
+          <td>Extensive (AKS, EKS, GKE)</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="-conclusion">
+  📚 Conclusion
+  <a class="anchor" href="#-conclusion">#</a>
+</h2>
+<p>Docker Swarm provides an excellent entry point into container orchestration with its simplicity and tight Docker integration. While it may not have all the advanced features of Kubernetes, it offers a perfect balance of functionality and ease of use for many production workloads.</p>
+</article>
+ 
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3938526066745812"
+     data-ad-slot="9958014946"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3938526066745812"
+     data-ad-slot="3338364768"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#-why-do-we-need-a-container-orchestrator">🌐 Why Do We Need a Container Orchestrator?</a></li>
+    <li><a href="#-docker-swarm-architecture">📊 Docker Swarm Architecture</a>
+      <ul>
+        <li><a href="#single-manager-architecture">Single Manager Architecture</a></li>
+        <li><a href="#multi-manager-architecture">Multi-Manager Architecture</a></li>
+      </ul>
+    </li>
+    <li><a href="#-key-features-of-docker-swarm">🔑 Key Features of Docker Swarm</a>
+      <ul>
+        <li><a href="#-1-native-docker-integration">⚙️ 1. Native Docker Integration</a></li>
+        <li><a href="#-2-cluster-management">🖥️ 2. Cluster Management</a></li>
+        <li><a href="#-3-service-oriented-deployment">🔁 3. Service-Oriented Deployment</a></li>
+        <li><a href="#-4-load-balancing">📦 4. Load Balancing</a></li>
+        <li><a href="#-5-rolling-updates">🔄 5. Rolling Updates</a></li>
+        <li><a href="#-6-health-checks-and-self-healing">❤️ 6. Health Checks and Self-Healing</a></li>
+        <li><a href="#-7-built-in-security">🔒 7. Built-in Security</a></li>
+        <li><a href="#-8-auto-scaling-manual-triggers">📈 8. Auto-Scaling (Manual Triggers)</a></li>
+        <li><a href="#-9-declarative-service-model">📦 9. Declarative Service Model</a></li>
+        <li><a href="#-10-multi-host-networking">🌐 10. Multi-Host Networking</a></li>
+        <li><a href="#-11-simplified-operations">🔍 11. Simplified Operations</a></li>
+      </ul>
+    </li>
+    <li><a href="#-getting-started-with-docker-swarm">🚀 Getting Started with Docker Swarm</a>
+      <ul>
+        <li><a href="#initialize-a-swarm">Initialize a Swarm</a></li>
+        <li><a href="#join-workers-to-the-swarm">Join Workers to the Swarm</a></li>
+        <li><a href="#deploy-a-stack">Deploy a Stack</a></li>
+        <li><a href="#manage-services">Manage Services</a></li>
+      </ul>
+    </li>
+    <li><a href="#-docker-swarm-vs-kubernetes">🔄 Docker Swarm vs Kubernetes</a></li>
+    <li><a href="#-conclusion">📚 Conclusion</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

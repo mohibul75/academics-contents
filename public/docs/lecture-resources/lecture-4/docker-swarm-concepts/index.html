@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  🚀 Deploying Applications on Docker Swarm
+  #
+
+Docker Swarm is a native container orchestration tool that allows you to deploy and manage containerized applications across a cluster of Docker nodes with ease. Understanding the core concepts helps you grasp how your application runs inside the Swarm.
+
+Source: Docker Documentation
+
+  📦 Core Concepts
+  #
+
+Docker Swarm operates with four key hierarchical components:
+
+  1. Container
+  #
+
+
+The actual running instance of your application image
+Similar to a pod container in Kubernetes
+Executes the application code and its dependencies
+Isolated from other containers but shares the host OS kernel
+
+
+  2. Task
+  #
+
+
+A Swarm-managed unit of work that runs exactly one container
+The atomic scheduling unit in Swarm
+Has a lifecycle: assigned → prepared → running → complete (or failed)
+If a task fails, the scheduler creates a new task to maintain the desired state
+
+
+  3. Service
+  #
+
+
+A declarative definition of an application running in the Swarm
+Specifies how many copies (tasks) of a container to run
+Defines the container image, ports, networks, volumes, and resource constraints
+Two service modes:
+
+Replicated: Run a specified number of replicas across the cluster
+Global: Run one task on every node in the cluster
+
+
+
+
+  4. Stack
+  #
+
+
+A collection of related services deployed together
+Defined by a single Docker Compose file
+Simplifies managing multiple services as a single unit
+Includes networks and volumes required by the services
+
+
+  🔄 Service Deployment Workflow
+  #
+
+When you deploy a service to Docker Swarm, the following happens:">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/lecture-resources/lecture-4/docker-swarm-concepts/">
+  <meta property="og:site_name" content="Distributed Systems Lab">
+  <meta property="og:title" content="Docker Swarm Concepts">
+  <meta property="og:description" content="🚀 Deploying Applications on Docker Swarm # Docker Swarm is a native container orchestration tool that allows you to deploy and manage containerized applications across a cluster of Docker nodes with ease. Understanding the core concepts helps you grasp how your application runs inside the Swarm.
+Source: Docker Documentation
+📦 Core Concepts # Docker Swarm operates with four key hierarchical components:
+1. Container # The actual running instance of your application image Similar to a pod container in Kubernetes Executes the application code and its dependencies Isolated from other containers but shares the host OS kernel 2. Task # A Swarm-managed unit of work that runs exactly one container The atomic scheduling unit in Swarm Has a lifecycle: assigned → prepared → running → complete (or failed) If a task fails, the scheduler creates a new task to maintain the desired state 3. Service # A declarative definition of an application running in the Swarm Specifies how many copies (tasks) of a container to run Defines the container image, ports, networks, volumes, and resource constraints Two service modes: Replicated: Run a specified number of replicas across the cluster Global: Run one task on every node in the cluster 4. Stack # A collection of related services deployed together Defined by a single Docker Compose file Simplifies managing multiple services as a single unit Includes networks and volumes required by the services 🔄 Service Deployment Workflow # When you deploy a service to Docker Swarm, the following happens:">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>Docker Swarm Concepts | Distributed Systems Lab</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/lecture-resources/lecture-4/docker-swarm-concepts/">
+<link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.b5edf284c9d5e557fe090bf95ae9b9d642d1485076861a7b23f432746bfa4e6a.js" integrity="sha256-te3yhMnV5Vf&#43;CQv5Wum51kLRSFB2hhp7I/QydGv6Tmo=" crossorigin="anonymous"></script>
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1GNGFG1C4"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-T1GNGFG1C4');
+        }
+      </script><!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+
+
+
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Distributed Systems Lab</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/details/" class="">Details</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/timeline/" class="">Course Timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/prerequisites/" class="">Prerequisites</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/tools/" class="">Tools</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-546b9044c321d8afbf101ab5c84d42f6" class="toggle" checked />
+    <label for="section-546b9044c321d8afbf101ab5c84d42f6" class="flex justify-between">
+      <a role="button" class="">Lecture Resources</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="toggle"  />
+    <label for="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="flex justify-between">
+      <a role="button" class="">Lecture 1: Introduction</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/cs/" class="">Centralized Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ds/" class="">Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/types-ds/" class="">Types of Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ms/" class="">Microservices</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-a7062be986807b90f862fe3e30dfe2c8" class="toggle"  />
+    <label for="section-a7062be986807b90f862fe3e30dfe2c8" class="flex justify-between">
+      <a href="/docs/lecture-resources/lecture-2/" class="">Lecture 2: Proxies in Distributed Systems</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-2/proxy/" class="">Proxy Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-2/reverse-proxy/" class="">Reverse Proxy Implementation</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-a10ab1c6fa9bd8f6efd555c5ce792946" class="toggle"  />
+    <label for="section-a10ab1c6fa9bd8f6efd555c5ce792946" class="flex justify-between">
+      <a href="/docs/lecture-resources/lecture-3/" class="">Lecture 3: Containerization with Docker</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker/" class="">Docker</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-lab/" class="">Docker Hands-On Lab</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-lab-go/" class="">Docker Lab with Go</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-cheatsheet/" class="">Docker Command Cheat Sheet</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-best-practices/" class="">Docker Best Practices</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-e5aba20a409ad03e13d1c637e559b6c0" class="toggle" checked />
+    <label for="section-e5aba20a409ad03e13d1c637e559b6c0" class="flex justify-between">
+      <a href="/docs/lecture-resources/lecture-4/" class="">Lecture 4: Docker Swarm</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-4/docker-swarm/" class="">Docker Swarm</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-4/docker-swarm-concepts/" class="active">Docker Swarm Concepts</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-1/" class="">Phase 1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-2/" class="">Phase 2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-3/" class="">Phase 3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-4/" class="">Phase 4</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-5/" class="">Phase 5</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-6/" class="">Phase 6</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/system-design/" class="">Systems Design Problems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/exploration/" class="">Some Distributed Systems Exploration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/career-path/" class="">Career Path</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/about-me/" class="">About Me</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Docker Swarm Concepts</h3>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#-core-concepts">📦 Core Concepts</a>
+      <ul>
+        <li><a href="#1-container">1. Container</a></li>
+        <li><a href="#2-task">2. Task</a></li>
+        <li><a href="#3-service">3. Service</a></li>
+        <li><a href="#4-stack">4. Stack</a></li>
+      </ul>
+    </li>
+    <li><a href="#-service-deployment-workflow">🔄 Service Deployment Workflow</a></li>
+    <li><a href="#-example-deploying-a-web-application">📝 Example: Deploying a Web Application</a></li>
+    <li><a href="#-common-commands">🛠️ Common Commands</a></li>
+    <li><a href="#-service-inspection-and-troubleshooting">🔍 Service Inspection and Troubleshooting</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="-deploying-applications-on-docker-swarm">
+  🚀 Deploying Applications on Docker Swarm
+  <a class="anchor" href="#-deploying-applications-on-docker-swarm">#</a>
+</h1>
+<p>Docker Swarm is a native container orchestration tool that allows you to deploy and manage containerized applications across a cluster of Docker nodes with ease. Understanding the core concepts helps you grasp how your application runs inside the Swarm.</p>
+<p><img src="/images/services-diagram.webp" alt="Docker Swarm Service" /></p>
+<p><em>Source: <a href="https://docs.docker.com/engine/swarm/how-swarm-mode-works/services/">Docker Documentation</a></em></p>
+<h2 id="-core-concepts">
+  📦 Core Concepts
+  <a class="anchor" href="#-core-concepts">#</a>
+</h2>
+<p>Docker Swarm operates with four key hierarchical components:</p>
+<h3 id="1-container">
+  1. Container
+  <a class="anchor" href="#1-container">#</a>
+</h3>
+<ul>
+<li>The actual running instance of your application image</li>
+<li>Similar to a pod container in Kubernetes</li>
+<li>Executes the application code and its dependencies</li>
+<li>Isolated from other containers but shares the host OS kernel</li>
+</ul>
+<h3 id="2-task">
+  2. Task
+  <a class="anchor" href="#2-task">#</a>
+</h3>
+<ul>
+<li>A Swarm-managed unit of work that runs exactly one container</li>
+<li>The atomic scheduling unit in Swarm</li>
+<li>Has a lifecycle: assigned → prepared → running → complete (or failed)</li>
+<li>If a task fails, the scheduler creates a new task to maintain the desired state</li>
+</ul>
+<h3 id="3-service">
+  3. Service
+  <a class="anchor" href="#3-service">#</a>
+</h3>
+<ul>
+<li>A declarative definition of an application running in the Swarm</li>
+<li>Specifies how many copies (tasks) of a container to run</li>
+<li>Defines the container image, ports, networks, volumes, and resource constraints</li>
+<li>Two service modes:
+<ul>
+<li><strong>Replicated</strong>: Run a specified number of replicas across the cluster</li>
+<li><strong>Global</strong>: Run one task on every node in the cluster</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-stack">
+  4. Stack
+  <a class="anchor" href="#4-stack">#</a>
+</h3>
+<ul>
+<li>A collection of related services deployed together</li>
+<li>Defined by a single Docker Compose file</li>
+<li>Simplifies managing multiple services as a single unit</li>
+<li>Includes networks and volumes required by the services</li>
+</ul>
+<h2 id="-service-deployment-workflow">
+  🔄 Service Deployment Workflow
+  <a class="anchor" href="#-service-deployment-workflow">#</a>
+</h2>
+<p>When you deploy a service to Docker Swarm, the following happens:</p>
+<ol>
+<li><strong>Define Service</strong>: You specify the container image, number of replicas, and other parameters</li>
+<li><strong>Service Creation</strong>: The Swarm manager accepts the service definition</li>
+<li><strong>Task Scheduling</strong>: The scheduler assigns tasks to available worker nodes</li>
+<li><strong>Container Creation</strong>: Each worker node creates containers for its assigned tasks</li>
+<li><strong>Service Discovery</strong>: The internal DNS registers the service for discovery by other services</li>
+<li><strong>Load Balancing</strong>: Incoming requests are distributed across all tasks of the service</li>
+</ol>
+<h2 id="-example-deploying-a-web-application">
+  📝 Example: Deploying a Web Application
+  <a class="anchor" href="#-example-deploying-a-web-application">#</a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#75715e"># docker-compose.yml for a web application stack</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;3.8&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">web</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx:latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">deploy</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">update_config</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">parallelism</span>: <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">delay</span>: <span style="color:#ae81ff">10s</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">restart_policy</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">condition</span>: <span style="color:#66d9ef">on</span>-<span style="color:#ae81ff">failure</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;80:80&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">networks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">webnet</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">database</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">postgres:13</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">environment</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">POSTGRES_PASSWORD</span>: <span style="color:#ae81ff">example</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">db-data:/var/lib/postgresql/data</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">networks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">webnet</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">deploy</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">placement</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">constraints</span>:
+</span></span><span style="display:flex;"><span>          - <span style="color:#e6db74">&#34;node.role==worker&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">networks</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">webnet</span>:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">db-data</span>:
+</span></span></code></pre></div><h2 id="-common-commands">
+  🛠️ Common Commands
+  <a class="anchor" href="#-common-commands">#</a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Deploy a stack</span>
+</span></span><span style="display:flex;"><span>docker stack deploy -c docker-compose.yml myapp
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># List all services in a stack</span>
+</span></span><span style="display:flex;"><span>docker stack services myapp
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Scale a service</span>
+</span></span><span style="display:flex;"><span>docker service scale myapp_web<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Update a service</span>
+</span></span><span style="display:flex;"><span>docker service update --image nginx:1.21 myapp_web
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Remove a stack</span>
+</span></span><span style="display:flex;"><span>docker stack rm myapp
+</span></span></code></pre></div><h2 id="-service-inspection-and-troubleshooting">
+  🔍 Service Inspection and Troubleshooting
+  <a class="anchor" href="#-service-inspection-and-troubleshooting">#</a>
+</h2>
+<p>To inspect and troubleshoot services:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># View service details</span>
+</span></span><span style="display:flex;"><span>docker service inspect myapp_web
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># View service logs</span>
+</span></span><span style="display:flex;"><span>docker service logs myapp_web
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># List tasks for a service</span>
+</span></span><span style="display:flex;"><span>docker service ps myapp_web
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># View task logs</span>
+</span></span><span style="display:flex;"><span>docker logs &lt;task-container-id&gt;
+</span></span></code></pre></div><p>Understanding these concepts and commands will help you effectively deploy, manage, and troubleshoot applications on Docker Swarm.</p>
+</article>
+ 
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3938526066745812"
+     data-ad-slot="9958014946"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3938526066745812"
+     data-ad-slot="3338364768"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#-core-concepts">📦 Core Concepts</a>
+      <ul>
+        <li><a href="#1-container">1. Container</a></li>
+        <li><a href="#2-task">2. Task</a></li>
+        <li><a href="#3-service">3. Service</a></li>
+        <li><a href="#4-stack">4. Stack</a></li>
+      </ul>
+    </li>
+    <li><a href="#-service-deployment-workflow">🔄 Service Deployment Workflow</a></li>
+    <li><a href="#-example-deploying-a-web-application">📝 Example: Deploying a Web Application</a></li>
+    <li><a href="#-common-commands">🛠️ Common Commands</a></li>
+    <li><a href="#-service-inspection-and-troubleshooting">🔍 Service Inspection and Troubleshooting</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
