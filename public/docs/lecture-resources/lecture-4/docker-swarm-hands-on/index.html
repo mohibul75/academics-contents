@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="
+  🛠️ Docker Swarm: Hands-On Lab
+  #
+
+This practical guide will walk you through setting up a Docker Swarm cluster with one manager node and two worker nodes, then deploying and managing services on it.
+
+  🎯 Lab Objectives
+  #
+
+
+Set up a three-node Docker Swarm cluster
+Initialize the Swarm on the manager node
+Join worker nodes to the Swarm
+Deploy and scale services
+Inspect and manage the cluster
+
+
+  🖥️ Lab Environment
+  #
+
+For this lab, we&rsquo;ll use three machines (physical, virtual, or cloud instances):">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#343a40">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="http://localhost:1313/docs/lecture-resources/lecture-4/docker-swarm-hands-on/">
+  <meta property="og:site_name" content="Distributed Systems Lab">
+  <meta property="og:title" content="Docker Swarm Hands On">
+  <meta property="og:description" content="🛠️ Docker Swarm: Hands-On Lab # This practical guide will walk you through setting up a Docker Swarm cluster with one manager node and two worker nodes, then deploying and managing services on it.
+🎯 Lab Objectives # Set up a three-node Docker Swarm cluster Initialize the Swarm on the manager node Join worker nodes to the Swarm Deploy and scale services Inspect and manage the cluster 🖥️ Lab Environment # For this lab, we’ll use three machines (physical, virtual, or cloud instances):">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+<title>Docker Swarm Hands On | Distributed Systems Lab</title>
+<link rel="icon" href="/favicon.png" >
+<link rel="manifest" href="/manifest.json">
+<link rel="canonical" href="http://localhost:1313/docs/lecture-resources/lecture-4/docker-swarm-hands-on/">
+<link rel="stylesheet" href="/book.min.a7616cf2799b58bddffce9438e31fdbfc6393687cfc0950a4a17cd1cce7e35f6.css" integrity="sha256-p2Fs8nmbWL3f/OlDjjH9v8Y5NofPwJUKShfNHM5&#43;NfY=" crossorigin="anonymous">
+  <script defer src="/fuse.min.js"></script>
+  <script defer src="/en.search.min.10a051b3ec317989197667b55ecc607899b3413c1a2c0882f88c36180d8ba539.js" integrity="sha256-EKBRs&#43;wxeYkZdme1XsxgeJmzQTwaLAiC&#43;Iw2GA2LpTk=" crossorigin="anonymous"></script>
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1GNGFG1C4"></script>
+      <script>
+        var doNotTrack = false;
+        if ( false ) {
+          var dnt = (navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack);
+          var doNotTrack = (dnt == "1" || dnt == "yes");
+        }
+        if (!doNotTrack) {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-T1GNGFG1C4');
+        }
+      </script><!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+
+
+
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>Distributed Systems Lab</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input type="text" id="book-search-input" placeholder="Search" aria-label="Search" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/details/" class="">Details</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/timeline/" class="">Course Timeline</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/prerequisites/" class="">Prerequisites</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/tools/" class="">Tools</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-546b9044c321d8afbf101ab5c84d42f6" class="toggle" checked />
+    <label for="section-546b9044c321d8afbf101ab5c84d42f6" class="flex justify-between">
+      <a role="button" class="">Lecture Resources</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="toggle"  />
+    <label for="section-d7f3f9449785bfbb0af0fb6dbe44c078" class="flex justify-between">
+      <a role="button" class="">Lecture 1: Introduction</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/cs/" class="">Centralized Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ds/" class="">Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/types-ds/" class="">Types of Distributed Systems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-1/ms/" class="">Microservices</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-a7062be986807b90f862fe3e30dfe2c8" class="toggle"  />
+    <label for="section-a7062be986807b90f862fe3e30dfe2c8" class="flex justify-between">
+      <a href="/docs/lecture-resources/lecture-2/" class="">Lecture 2: Proxies in Distributed Systems</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-2/proxy/" class="">Proxy Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-2/reverse-proxy/" class="">Reverse Proxy Implementation</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-a10ab1c6fa9bd8f6efd555c5ce792946" class="toggle"  />
+    <label for="section-a10ab1c6fa9bd8f6efd555c5ce792946" class="flex justify-between">
+      <a href="/docs/lecture-resources/lecture-3/" class="">Lecture 3: Containerization with Docker</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker/" class="">Docker</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-lab/" class="">Docker Hands-On Lab</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-lab-go/" class="">Docker Lab with Go</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-cheatsheet/" class="">Docker Command Cheat Sheet</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-3/docker-best-practices/" class="">Docker Best Practices</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <input type="checkbox" id="section-e5aba20a409ad03e13d1c637e559b6c0" class="toggle" checked />
+    <label for="section-e5aba20a409ad03e13d1c637e559b6c0" class="flex justify-between">
+      <a href="/docs/lecture-resources/lecture-4/" class="">Lecture 4: Docker Swarm</a>
+    </label>
+  
+
+          
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-4/docker-swarm/" class="">Docker Swarm</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-4/docker-swarm-concepts/" class="">Docker Swarm Concepts</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/lecture-resources/lecture-4/docker-swarm-hands-on/" class="active">Docker Swarm Hands On</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+  </ul>
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-1/" class="">Phase 1</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-2/" class="">Phase 2</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-3/" class="">Phase 3</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-4/" class="">Phase 4</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-5/" class="">Phase 5</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/phase-6/" class="">Phase 6</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/system-design/" class="">Systems Design Problems</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/exploration/" class="">Some Distributed Systems Exploration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/career-path/" class="">Career Path</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/docs/about-me/" class="">About Me</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Docker Swarm Hands On</h3>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#-lab-objectives">🎯 Lab Objectives</a></li>
+    <li><a href="#-lab-environment">🖥️ Lab Environment</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+      </ul>
+    </li>
+    <li><a href="#-step-1-install-docker-on-all-nodes">📋 Step 1: Install Docker on All Nodes</a></li>
+    <li><a href="#-step-2-initialize-the-swarm-on-manager-node">🚀 Step 2: Initialize the Swarm on Manager Node</a></li>
+    <li><a href="#-step-3-join-worker-nodes-to-the-swarm">🔄 Step 3: Join Worker Nodes to the Swarm</a></li>
+    <li><a href="#-step-4-verify-the-swarm-cluster">🔍 Step 4: Verify the Swarm Cluster</a></li>
+    <li><a href="#-step-5-deploy-a-service-to-the-swarm">🌐 Step 5: Deploy a Service to the Swarm</a></li>
+    <li><a href="#-step-6-manage-and-inspect-the-service">📊 Step 6: Manage and Inspect the Service</a></li>
+    <li><a href="#-step-7-test-the-service">🧪 Step 7: Test the Service</a></li>
+    <li><a href="#-step-8-create-a-multi-service-stack">🔄 Step 8: Create a Multi-Service Stack</a></li>
+    <li><a href="#-step-9-clean-up-when-finished">🧹 Step 9: Clean Up (When Finished)</a></li>
+    <li><a href="#-key-takeaways">🎓 Key Takeaways</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="-docker-swarm-hands-on-lab">
+  🛠️ Docker Swarm: Hands-On Lab
+  <a class="anchor" href="#-docker-swarm-hands-on-lab">#</a>
+</h1>
+<p>This practical guide will walk you through setting up a Docker Swarm cluster with one manager node and two worker nodes, then deploying and managing services on it.</p>
+<h2 id="-lab-objectives">
+  🎯 Lab Objectives
+  <a class="anchor" href="#-lab-objectives">#</a>
+</h2>
+<ul>
+<li>Set up a three-node Docker Swarm cluster</li>
+<li>Initialize the Swarm on the manager node</li>
+<li>Join worker nodes to the Swarm</li>
+<li>Deploy and scale services</li>
+<li>Inspect and manage the cluster</li>
+</ul>
+<h2 id="-lab-environment">
+  🖥️ Lab Environment
+  <a class="anchor" href="#-lab-environment">#</a>
+</h2>
+<p>For this lab, we&rsquo;ll use three machines (physical, virtual, or cloud instances):</p>
+<ul>
+<li><strong>Manager Node</strong>: Controls the Swarm cluster</li>
+<li><strong>Worker Node 1</strong>: Runs containerized workloads</li>
+<li><strong>Worker Node 2</strong>: Runs containerized workloads</li>
+</ul>
+<h3 id="prerequisites">
+  Prerequisites
+  <a class="anchor" href="#prerequisites">#</a>
+</h3>
+<ul>
+<li>Three Linux machines with network connectivity between them</li>
+<li>All machines must be in the same network (e.g., 10.0.0.0/16)</li>
+<li>The following ports must be open between all nodes:
+<ul>
+<li>TCP port 2377 - Cluster management communications</li>
+<li>TCP and UDP port 7946 - Node-to-node communication</li>
+<li>UDP port 4789 - Overlay network traffic</li>
+</ul>
+</li>
+</ul>
+<h2 id="-step-1-install-docker-on-all-nodes">
+  📋 Step 1: Install Docker on All Nodes
+  <a class="anchor" href="#-step-1-install-docker-on-all-nodes">#</a>
+</h2>
+<p>Run the following commands on all three nodes:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Remove any existing Docker installations</span>
+</span></span><span style="display:flex;"><span>sudo apt remove docker docker.io containerd runc
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Update package index</span>
+</span></span><span style="display:flex;"><span>sudo apt update
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Install prerequisites</span>
+</span></span><span style="display:flex;"><span>sudo apt install -y ca-certificates curl gnupg
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Set up Docker&#39;s apt repository</span>
+</span></span><span style="display:flex;"><span>sudo install -m <span style="color:#ae81ff">0755</span> -d /etc/apt/keyrings
+</span></span><span style="display:flex;"><span>curl -fsSL https://download.docker.com/linux/ubuntu/gpg | <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+</span></span><span style="display:flex;"><span>echo <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  <span style="color:#e6db74">&#34;deb [arch=</span><span style="color:#66d9ef">$(</span>dpkg --print-architecture<span style="color:#66d9ef">)</span><span style="color:#e6db74"> \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  signed-by=/etc/apt/keyrings/docker.gpg] \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  https://download.docker.com/linux/ubuntu \
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  </span><span style="color:#66d9ef">$(</span>lsb_release -cs<span style="color:#66d9ef">)</span><span style="color:#e6db74"> stable&#34;</span> | <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Install Docker Engine</span>
+</span></span><span style="display:flex;"><span>sudo apt update
+</span></span><span style="display:flex;"><span>sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Add your user to the docker group to run Docker without sudo</span>
+</span></span><span style="display:flex;"><span>sudo groupadd docker
+</span></span><span style="display:flex;"><span>sudo usermod -aG docker $USER
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Apply group changes to current shell session</span>
+</span></span><span style="display:flex;"><span>newgrp docker
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Verify Docker installation</span>
+</span></span><span style="display:flex;"><span>docker --version
+</span></span><span style="display:flex;"><span>docker run hello-world
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># IP forwarding for routing mesh</span>
+</span></span><span style="display:flex;"><span>sysctl net.ipv4.ip_forward
+</span></span><span style="display:flex;"><span>sudo sysctl -w net.ipv4.ip_forward<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><h2 id="-step-2-initialize-the-swarm-on-manager-node">
+  🚀 Step 2: Initialize the Swarm on Manager Node
+  <a class="anchor" href="#-step-2-initialize-the-swarm-on-manager-node">#</a>
+</h2>
+<p>On the manager node only:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Initialize the swarm with the manager node&#39;s IP address</span>
+</span></span><span style="display:flex;"><span>docker swarm init --advertise-addr &lt;MANAGER-IP&gt;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># The output will include a token for worker nodes to join</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Save this token for the next step</span>
+</span></span></code></pre></div><p>The output will look like:</p>
+<pre tabindex="0"><code>Swarm initialized: current node (dxn1zf6l61qsb1josjja83ngz) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-49nj1cmql0jkz5s954yi3oex3nedyz0fb0xx14ie39trti4wxv-8vxv8rssmk743ojnwacrr2e7c 192.168.99.100:2377
+
+To add a manager to this swarm, run &#39;docker swarm join-token manager&#39; and follow the instructions.
+</code></pre><h2 id="-step-3-join-worker-nodes-to-the-swarm">
+  🔄 Step 3: Join Worker Nodes to the Swarm
+  <a class="anchor" href="#-step-3-join-worker-nodes-to-the-swarm">#</a>
+</h2>
+<p>On each worker node, run the join command from the previous step&rsquo;s output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Example (use the actual token from your manager node)</span>
+</span></span><span style="display:flex;"><span>docker swarm join --token SWMTKN-1-49nj1cmql0jkz5s954yi3oex3nedyz0fb0xx14ie39trti4wxv-8vxv8rssmk743ojnwacrr2e7c &lt;MANAGER-IP&gt;:2377
+</span></span></code></pre></div><p>The output should confirm:</p>
+<pre tabindex="0"><code>This node joined a swarm as a worker.
+</code></pre><h2 id="-step-4-verify-the-swarm-cluster">
+  🔍 Step 4: Verify the Swarm Cluster
+  <a class="anchor" href="#-step-4-verify-the-swarm-cluster">#</a>
+</h2>
+<p>On the manager node:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># List all nodes in the swarm</span>
+</span></span><span style="display:flex;"><span>docker node ls
+</span></span></code></pre></div><p>You should see output similar to:</p>
+<pre tabindex="0"><code>ID                            HOSTNAME            STATUS    AVAILABILITY    MANAGER STATUS    ENGINE VERSION
+dxn1zf6l61qsb1josjja83ngz *  manager             Ready     Active          Leader            20.10.17
+yu3hbegvwsdpy9esh4f9fmq7z    worker1             Ready     Active                            20.10.17
+ca7a0bxe9gc2hm5kixwz2tgpy    worker2             Ready     Active                            20.10.17
+</code></pre><h2 id="-step-5-deploy-a-service-to-the-swarm">
+  🌐 Step 5: Deploy a Service to the Swarm
+  <a class="anchor" href="#-step-5-deploy-a-service-to-the-swarm">#</a>
+</h2>
+<p>On the manager node:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Create a service with 3 replicas</span>
+</span></span><span style="display:flex;"><span>docker service create --name web-server <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --replicas <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --publish 8080:80 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  nginx:latest
+</span></span></code></pre></div><h2 id="-step-6-manage-and-inspect-the-service">
+  📊 Step 6: Manage and Inspect the Service
+  <a class="anchor" href="#-step-6-manage-and-inspect-the-service">#</a>
+</h2>
+<p>On the manager node:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># List all services</span>
+</span></span><span style="display:flex;"><span>docker service ls
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># View detailed information about the service</span>
+</span></span><span style="display:flex;"><span>docker service ps web-server
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Scale the service to 5 replicas</span>
+</span></span><span style="display:flex;"><span>docker service scale web-server<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Check service logs</span>
+</span></span><span style="display:flex;"><span>docker service logs web-server
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Update the service to a newer image version</span>
+</span></span><span style="display:flex;"><span>docker service update --image nginx:1.21 web-server
+</span></span></code></pre></div><h2 id="-step-7-test-the-service">
+  🧪 Step 7: Test the Service
+  <a class="anchor" href="#-step-7-test-the-service">#</a>
+</h2>
+<p>Open a web browser and navigate to:</p>
+<ul>
+<li><code>http://&lt;MANAGER-IP&gt;:8080</code></li>
+<li><code>http://&lt;WORKER1-IP&gt;:8080</code></li>
+<li><code>http://&lt;WORKER2-IP&gt;:8080</code></li>
+</ul>
+<p>You should see the Nginx welcome page on all three addresses due to the routing mesh.</p>
+<h2 id="-step-8-create-a-multi-service-stack">
+  🔄 Step 8: Create a Multi-Service Stack
+  <a class="anchor" href="#-step-8-create-a-multi-service-stack">#</a>
+</h2>
+<p>Create a file named <code>docker-compose.yml</code> on the manager node:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">version</span>: <span style="color:#e6db74">&#39;3.8&#39;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">services</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">web</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx:latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">deploy</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">restart_policy</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">condition</span>: <span style="color:#66d9ef">on</span>-<span style="color:#ae81ff">failure</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;8080:80&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">networks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">webnet</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">visualizer</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">dockersamples/visualizer:latest</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">ports</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#34;8081:8080&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">volumes</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">/var/run/docker.sock:/var/run/docker.sock</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">deploy</span>:
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">placement</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">constraints</span>: [<span style="color:#ae81ff">node.role == manager]</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">networks</span>:
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">webnet</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">networks</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">webnet</span>:
+</span></span></code></pre></div><p>Deploy the stack:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Deploy the stack</span>
+</span></span><span style="display:flex;"><span>docker stack deploy -c docker-compose.yml myapp
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># List all stacks</span>
+</span></span><span style="display:flex;"><span>docker stack ls
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># List services in the stack</span>
+</span></span><span style="display:flex;"><span>docker stack services myapp
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># List tasks in the stack</span>
+</span></span><span style="display:flex;"><span>docker stack ps myapp
+</span></span></code></pre></div><h2 id="-step-9-clean-up-when-finished">
+  🧹 Step 9: Clean Up (When Finished)
+  <a class="anchor" href="#-step-9-clean-up-when-finished">#</a>
+</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Remove the stack</span>
+</span></span><span style="display:flex;"><span>docker stack rm myapp
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Remove the service</span>
+</span></span><span style="display:flex;"><span>docker service rm web-server
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Leave the swarm (on worker nodes)</span>
+</span></span><span style="display:flex;"><span>docker swarm leave
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Force leave and remove the swarm (on manager node)</span>
+</span></span><span style="display:flex;"><span>docker swarm leave --force
+</span></span></code></pre></div><h2 id="-key-takeaways">
+  🎓 Key Takeaways
+  <a class="anchor" href="#-key-takeaways">#</a>
+</h2>
+<ul>
+<li>Docker Swarm provides native clustering and orchestration for Docker</li>
+<li>The Swarm consists of manager nodes (control plane) and worker nodes (data plane)</li>
+<li>Services are the primary unit of deployment in Swarm</li>
+<li>Swarm&rsquo;s routing mesh ensures services are accessible from any node in the cluster</li>
+<li>Docker Compose files can be used to deploy multi-service applications as stacks</li>
+</ul>
+</article>
+ 
+      
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-3938526066745812"
+     data-ad-slot="9958014946"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3938526066745812"
+     crossorigin="anonymous"></script>
+
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-3938526066745812"
+     data-ad-slot="3338364768"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+      </footer>
+
+      
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#-lab-objectives">🎯 Lab Objectives</a></li>
+    <li><a href="#-lab-environment">🖥️ Lab Environment</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+      </ul>
+    </li>
+    <li><a href="#-step-1-install-docker-on-all-nodes">📋 Step 1: Install Docker on All Nodes</a></li>
+    <li><a href="#-step-2-initialize-the-swarm-on-manager-node">🚀 Step 2: Initialize the Swarm on Manager Node</a></li>
+    <li><a href="#-step-3-join-worker-nodes-to-the-swarm">🔄 Step 3: Join Worker Nodes to the Swarm</a></li>
+    <li><a href="#-step-4-verify-the-swarm-cluster">🔍 Step 4: Verify the Swarm Cluster</a></li>
+    <li><a href="#-step-5-deploy-a-service-to-the-swarm">🌐 Step 5: Deploy a Service to the Swarm</a></li>
+    <li><a href="#-step-6-manage-and-inspect-the-service">📊 Step 6: Manage and Inspect the Service</a></li>
+    <li><a href="#-step-7-test-the-service">🧪 Step 7: Test the Service</a></li>
+    <li><a href="#-step-8-create-a-multi-service-stack">🔄 Step 8: Create a Multi-Service Stack</a></li>
+    <li><a href="#-step-9-clean-up-when-finished">🧹 Step 9: Clean Up (When Finished)</a></li>
+    <li><a href="#-key-takeaways">🎓 Key Takeaways</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
